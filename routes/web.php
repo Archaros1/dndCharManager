@@ -29,3 +29,7 @@ Route::middleware('App\Http\Middleware\isAdmin')->group(function() {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin_home');
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
