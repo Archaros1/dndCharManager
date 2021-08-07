@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Symfony\Component\Console\Descriptor\Descriptor;
+
+use App\Models\Features;
+
 
 class DndClass extends Model
 {
@@ -20,6 +22,7 @@ class DndClass extends Model
         'is_custom',
         'is_spellcaster',
         'casting_stat',
+        'description_id',
     ];
 
     /**
@@ -61,5 +64,10 @@ class DndClass extends Model
     public function hitDice()
     {
         return $this->hasOne(HitDice::class);
+    }
+
+    public function features()
+    {
+        return $this->hasMany(Features::class);
     }
 }

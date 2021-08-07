@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Character;
 use Illuminate\Http\Request;
 
+use App\Models\Background;
+use App\Models\Race;
+
 class CharacterController extends Controller
 {
     /**
@@ -24,7 +27,24 @@ class CharacterController extends Controller
      */
     public function create()
     {
-        return view('character/form');
+        $backgroundsCollec = Background::all();
+        $racesCollec = Race::all();
+
+        $backgrounds = [];
+        $races = [];
+
+        foreach ($backgroundsCollec as $background) {
+            $backgrounds[$background->id] = $background->name;
+        }
+
+        foreach ($racesCollec as $race) {
+            $races[$race->id] = $race->name;
+        }
+
+        return view('character/form', [
+            'backgrounds' => $backgrounds,
+            'races' => $races
+        ]);
     }
 
     /**

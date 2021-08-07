@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Character extends Model
+class Background extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,6 @@ class Character extends Model
      */
     protected $fillable = [
         'name',
-        'level',
     ];
 
     /**
@@ -34,35 +33,24 @@ class Character extends Model
      * @var array
      */
     protected $casts = [
-        'is_spellcaster',
-        'health',
+
     ];
 
     /**
-     * Get the creator of the character.
+     * Get the creator of the background if it's custom.
      */
     public function creator()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class) ?? null;
     }
 
-    public function hitDices()
+    public function features()
     {
-        return $this->hasMany(HitDice::class);
+        return $this->hasMany(Feature::class);
     }
 
-    public function calculateHP()
+    public function description()
     {
-        $totalHp = 0;
-        $hitDices = $this->hitDices();
-        foreach ($hitDices as $hitDice) {
-            $totalHp += $hitDice->rolled_value;
-        }
-        return $totalHp;
-    }
-
-    public function race()
-    {
-        return $this->hasOne(Race::class);
+        return $this->hasOne(Description::class);
     }
 }
