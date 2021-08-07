@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Character extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +16,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
+        'level',
+        'is_spellcaster',
+        'health',
     ];
 
     /**
@@ -28,8 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+
     ];
 
     /**
@@ -38,17 +36,29 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'is_admin' => 'boolean',
-        'email_verified_at' => 'datetime',
+
     ];
 
-    public function isAdmin()
+    /**
+     * Get the creator of the spell.
+     */
+    public function creator()
     {
-        return $this->is_admin;
+        return $this->hasOne(User::class);
     }
 
-    public function characters()
+    public function hitDices()
     {
-        return $this->hasMany(Character::class);
+        return $this->hasMany(HitDice::class);
+    }
+
+    public function calculateHP()
+    {
+        # code...
+    }
+
+    public function race()
+    {
+        return $this->hasOne(Race::class);
     }
 }

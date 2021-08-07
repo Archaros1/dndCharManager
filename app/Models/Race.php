@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Spell extends Model
+class Race extends Model
 {
     use HasFactory;
 
@@ -16,15 +16,9 @@ class Spell extends Model
      */
     protected $fillable = [
         'name',
-        'level',
-        'has_saving_throw',
-        'is_spell_attack',
-        'do_damage',
-        'roll',
-        'casting_time',
-        'school',
+        'description_id',
+        'stat_modif_id',
         'is_custom',
-        'creator',
     ];
 
     /**
@@ -46,26 +40,21 @@ class Spell extends Model
     ];
 
     /**
-     * Get the tags associated with the spell.
+     * Get the creator of the spell.
      */
-    public function tags()
+    public function spellList()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->hasMany(Spell::class);
     }
 
-    /**
-     * Get the description associated with the spell.
-     */
     public function description()
     {
-        return $this->hasOne(Description::class) ?? null;
+        return $this->hasOne(Description::class);
     }
 
-    /**
-     * Get the creator of the spell if the spell is custom.
-     */
-    public function creator()
+    public function statsModif()
     {
-        return $this->is_custom ? $this->hasOne(User::class) : null;
+        return $this->hasOne(StatPack::class);
     }
+
 }

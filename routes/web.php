@@ -25,11 +25,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin_home');
 // });
 
+// need to be admin
 Route::middleware('App\Http\Middleware\isAdmin')->group(function() {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin_home');
 
 });
 
+// need to be logged in
+Route::middleware('App\Http\Middleware\Authenticate')->group(function() {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/profil', [App\Http\Controllers\UserController::class, 'profil'])->name('profil');
+    Route::get('/character/create', [App\Http\Controllers\CharacterController::class, 'create'])->name('chara.create');
+    Route::get('/character/store', [App\Http\Controllers\CharacterController::class, 'store'])->name('chara.store');
+
+});
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
