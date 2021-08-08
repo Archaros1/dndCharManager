@@ -22,6 +22,7 @@ class DndClass extends Model
         'is_spellcaster',
         'casting_stat',
         'description_id',
+        'subClassObtentionLevel',
     ];
 
     /**
@@ -101,5 +102,19 @@ class DndClass extends Model
                 break;
         }
         return $level;
+    }
+
+    public function archetypeAmount(): int
+    {
+        $amount = 0;
+        $archetypes = [];
+        $subclasses = SubClass::where('class_id', '=', $this->id);
+        foreach ($subclasses as $subclass) {
+            if (!in_array($subclass->archetype, $archetypes)) {
+                $amount++;
+                array_push($archetypes, $subclass->archetype);
+            }
+        }
+        return $amount;
     }
 }

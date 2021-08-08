@@ -29,7 +29,7 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($step = 'basics')
+    public function create($step = 'basics', $idChara = null)
     {
         switch ($step) {
             case 'basics':
@@ -41,11 +41,11 @@ class CharacterController extends Controller
                 $races = [];
 
                 foreach ($backgroundsCollec as $background) {
-                    $backgrounds[$background->id] = $background->name;
+                    $backgrounds[$background->id] = ucwords($background->name);
                 }
 
                 foreach ($racesCollec as $race) {
-                    $races[$race->id] = $race->name;
+                    $races[$race->id] = ucwords($race->name);
                 }
 
                 return view('character/forms/basics', [
@@ -58,10 +58,23 @@ class CharacterController extends Controller
 
             case 'level1':
                 $classCollec = DndClass::all();
-                $subClassCollec = SubClass::whereIn('name', [
-                    'cleric',
-                    'sorcerer',
-                    'warlock'
+                $subClassCollec = SubClass::where('sub_class_obtention_level', '=', 1);
+
+                $dndClasses = [];
+                $subClasses = [];
+
+                foreach ($classCollec as $dndClass) {
+                    $dndClasses[$dndClass->id] = ucwords($dndClass->name);
+                }
+
+                foreach ($subClassCollec as $subClass) {
+                    $subClasses[$subClass->id] = ucwords($subClass->name);
+                }
+
+                return view('character/forms/level1', [
+                    'step' => $step,
+                    'dndClasses' => $dndClasses,
+                    'subClasses' => $subClasses,
                 ]);
 
                 break;
@@ -82,7 +95,7 @@ class CharacterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $step = 'basics')
+    public function store(Request $request, $step = 'basics', $idChara = null)
     {
         $inputs = $request->post();
 
@@ -105,7 +118,7 @@ class CharacterController extends Controller
 
         ]);
 
-        return redirect('character/create/level1');
+        return redirect('character/create/level1/'.$newCharacter->id);
     }
 
     /**

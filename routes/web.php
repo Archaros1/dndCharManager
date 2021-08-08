@@ -34,8 +34,8 @@ Route::middleware('App\Http\Middleware\isAdmin')->group(function () {
 Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/profil', [App\Http\Controllers\UserController::class, 'profil'])->name('profil');
-    Route::get('/character/create/{step}', [App\Http\Controllers\CharacterController::class, 'create'])->name('chara.create');
-    Route::post('/character/store/{step}', [App\Http\Controllers\CharacterController::class, 'store'])->name('chara.store');
+    Route::get('/character/create/{step}/{idChara?}', [App\Http\Controllers\CharacterController::class, 'create'])->name('chara.create');
+    Route::post('/character/store/{step}/{idChara?}', [App\Http\Controllers\CharacterController::class, 'store'])->name('chara.store');
 });
 
 Auth::routes();

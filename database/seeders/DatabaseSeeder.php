@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BackgroundSeeder::class,
             RaceSeeder::class,
             DndClassSeeder::class,
+            SubClassSeeder::class,
         ]);
     }
 }

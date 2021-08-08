@@ -60,7 +60,8 @@ class Character extends Model
         $totalHp = 0;
         $hitDices = $this->hitDices();
         foreach ($hitDices as $hitDice) {
-            $totalHp += $hitDice->rolled_value;
+            $plusHP = $hitDice->rolled_value + $this->getModifier('constitution');
+            $totalHp += ($plusHP > 0 ? $plusHP : 1);
         }
         return $totalHp;
     }
@@ -68,5 +69,18 @@ class Character extends Model
     public function race()
     {
         return $this->hasOne(Race::class);
+    }
+
+    public function statPack()
+    {
+        return $this->hasOne(statPack::class);
+    }
+
+    public function getModifier(string $statName): int
+    {
+        $stat = $this->statPack->$statName;
+        $modifier = floor(($stat - 10) / 2);
+
+        return (int) $modifier;
     }
 }
