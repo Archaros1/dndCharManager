@@ -17,6 +17,10 @@ class Character extends Model
     protected $fillable = [
         'name',
         'level',
+        'race_id',
+        'background_id',
+        'stat_pack_id',
+        'creator_id',
     ];
 
     /**

@@ -111,6 +111,5 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'intelligence',
             'description_id' => $description->id
         ]);
-
     }
 }

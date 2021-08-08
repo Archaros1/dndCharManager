@@ -17,11 +17,13 @@ class CreateCharactersTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('level');
-            $table->boolean('is_spellcaster');
-            $table->integer('health');
+            $table->boolean('is_spellcaster')->nullable();
+            $table->integer('health')->nullable();
 
             $table->foreignId('race_id')->constrained();
             $table->foreignId('stat_pack_id')->constrained();
+            $table->foreignId('background_id')->constrained();
+
             $table->unsignedBigInteger('creator_id');
             $table->foreign('creator_id')->references('id')->on('users');
 

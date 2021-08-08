@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Race extends Model
+class ClassInvestment extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,10 @@ class Race extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'description_id',
-        'stat_modif_id',
-        'is_custom',
+        'char_id',
+        'class_id',
+        'subclass_id',
+        'level',
     ];
 
     /**
@@ -39,21 +39,13 @@ class Race extends Model
 
     ];
 
-    /**
-     * Get the creator of the spell.
-     */
-    public function spellList()
+    public function dndClass()
     {
-        return $this->hasMany(Spell::class);
+        return $this->hasOne(DndClass::class);
     }
 
-    public function description()
+    public function subClass()
     {
-        return $this->hasOne(Description::class);
-    }
-
-    public function statsModif()
-    {
-        return $this->hasOne(StatPack::class);
+        return $this->hasOne(SubClass::class);
     }
 }

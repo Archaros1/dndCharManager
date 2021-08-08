@@ -1,0 +1,13 @@
+#rollOneStat{
+    width: 25px;
+    height: 25px;
+    background: url('../icons/dices.svg')
+}
+
+.pt-nav {
+    padding-top: 4rem !important;
+}
+
+.navbar {
+    z-index: 10000;
+}

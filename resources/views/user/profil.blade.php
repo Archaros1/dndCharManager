@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Bonjour {{ $user->name }}</h1>
         <div class="row">
-            <a href="{{ url('/character/create') }}" class="btn btn-primary" id="new-character">Nouveau personnage</a>
+            <a href="{{ url('/character/create/basics') }}" class="btn btn-primary" id="new-character">Nouveau personnage</a>
             @if (!empty($user->characters()))
                 @foreach ($user->characters() as $character)
                     <div class="card" style="width: 18rem;">

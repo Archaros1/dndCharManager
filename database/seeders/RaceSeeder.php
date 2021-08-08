@@ -236,8 +236,5 @@ class RaceSeeder extends Seeder
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
         ]);
-
-
-
     }
 }

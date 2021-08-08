@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    {{ Form::open(['/character/store' => 'chara.store']) }}
+    {{-- {!! Form::open(['action' =>'App\Http\Controllers\CharacterController@store']) !!} --}}
+    <form action="{{ route('chara.store', $step) }}" method="POST" accept-charset="UTF-8">
+    @csrf
 
     <div class="container">
         <div class="col">
@@ -23,8 +25,7 @@
                 {{ Form::select('background', $backgrounds, $attributes = ['class' => 'form-control', 'required' => null]) }}
             </div>
             <div class="row">
-                <h4>Statistiques</h4>
-                <div id="roll4d6"></div>
+                <h4>Statistiques</h4><img src="{{ asset('/icons/dices.svg') }}" alt="" id="rollOneStat" class="ml-2" title="Roll a stat">
             </div>
             <div id="stats" class="row">
                 <div id="strength" class="col-4 mb-2">
@@ -51,9 +52,10 @@
                     {{ Form::label('charisma', 'Charisme', $attributes = ['class' => 'control-label mr-3']) }}
                     {{ Form::number('charisma', $value = 10, $attributes = ['class' => 'form-control', 'required' => null]) }}
                 </div>
-
             </div>
-
+            <div class="row justify-content-center">
+                {{ Form::submit("Valider et passer à l'étape suivante", $attributes = ['class' => 'form-control btn btn-success mt-3']) }}
+            </div>
 
 
 

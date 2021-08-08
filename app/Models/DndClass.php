@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Features;
 
-
 class DndClass extends Model
 {
     use HasFactory;
@@ -30,18 +29,14 @@ class DndClass extends Model
      *
      * @var array
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
-
-    ];
+    protected $casts = [];
 
     /**
      * Get the creator of the spell.
@@ -68,6 +63,43 @@ class DndClass extends Model
 
     public function features()
     {
-        return $this->hasMany(Features::class);
+        return $this->hasMany(Feature::class);
+    }
+
+    public function subClasses()
+    {
+        return $this->hasMany(SubClass::class);
+    }
+
+    public function subClassLevel(): int
+    {
+        $level = 0;
+        switch ($this->name) {
+            case 'barbarian':
+            case 'bard':
+            case 'fighter':
+            case 'monk':
+            case 'paladin':
+            case 'ranger':
+            case 'rogue':
+                $level = 3;
+                break;
+
+            case 'druid':
+            case 'wizard':
+                $level = 2;
+                break;
+
+            case 'cleric':
+            case 'sorcerer':
+            case 'warlock':
+                $level = 1;
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        return $level;
     }
 }
