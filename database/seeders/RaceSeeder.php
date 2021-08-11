@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Description;
+use App\Models\FeatureList;
 use App\Models\Race;
 use App\Models\StatPack;
 use Symfony\Component\Console\Descriptor\Descriptor;
@@ -37,7 +38,11 @@ class RaceSeeder extends Seeder
         //     'is_custom' => 0,
         //     'stat_modif_id' => $stats->id,
         //     'description_id' => $description->id,
+        //     'feature_list_id' => $featureList->id
         // ]);
+
+        $featureList = FeatureList::create([
+        ]);
 
         //dwarf
         $description = Description::create([
@@ -59,6 +64,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // elf
@@ -81,6 +87,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // halfling
@@ -103,6 +110,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // human
@@ -125,6 +133,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // dragonborn
@@ -147,6 +156,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // gnome
@@ -169,6 +179,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // half-elf
@@ -191,6 +202,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // half-orc
@@ -213,6 +225,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
 
         // tiefling
@@ -235,6 +248,7 @@ class RaceSeeder extends Seeder
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
             'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
     }
 }

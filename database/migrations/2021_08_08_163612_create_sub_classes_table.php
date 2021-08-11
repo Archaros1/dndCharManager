@@ -25,6 +25,7 @@ class CreateSubClassesTable extends Migration
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('dnd_classes');
             $table->foreignId('description')->constrained()->nullable();
+            $table->foreignId('feature_list_id')->constrained()->nullable();
 
             $table->timestamps();
         });

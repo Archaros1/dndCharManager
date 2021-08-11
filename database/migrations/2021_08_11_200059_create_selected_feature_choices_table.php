@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBackgroundsTable extends Migration
+class CreateSelectedFeatureChoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateBackgroundsTable extends Migration
      */
     public function up()
     {
-        Schema::create('backgrounds', function (Blueprint $table) {
+        Schema::create('selected_feature_choices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('is_custom');
 
-            $table->foreignId('description_id')->constrained()->nullable();
-            $table->foreignId('feature_list_id')->constrained()->nullable();
+            $table->foreignId('character_id')->constrained();
+            $table->foreignId('feature_id')->constrained();
+            $table->foreignId('feature_choice_id')->constrained();
 
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateBackgroundsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('backgrounds');
+        Schema::dropIfExists('selected_feature_choices');
     }
 }

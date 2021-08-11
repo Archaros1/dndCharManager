@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Background extends Model
+class FeatureList extends Model
 {
     use HasFactory;
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
+
     ];
 
     /**
@@ -36,26 +36,9 @@ class Background extends Model
 
     ];
 
-    /**
-     * Get the creator of the background if it's custom.
-     */
-    public function creator()
-    {
-        return $this->hasOne(User::class) ?? null;
-    }
-
-    // public function features()
-    // {
-    //     return $this->hasOne(FeatureList::class)->hasMany(Feature::class);
-    // }
-
     public function features()
     {
-        return $this->hasManyThrough(Feature::class, FeatureList::class);
-    }
-
-    public function description()
-    {
-        return $this->hasOne(Description::class);
+        return $this->hasMany(Feature::class);
     }
 }
+

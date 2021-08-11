@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Background;
 use App\Models\Description;
+use App\Models\FeatureList;
 use Illuminate\Database\Seeder;
 
 class BackgroundSeeder extends Seeder
@@ -20,10 +21,14 @@ class BackgroundSeeder extends Seeder
             'is_custom' => 0
         ]);
 
+        $featureList = FeatureList::create([
+        ]);
+
         Background::create([
             'name' => 'test',
             'is_custom' => 0,
-            'description_id' => $description->id
+            'description_id' => $description->id,
+            'feature_list_id' => $featureList->id
         ]);
     }
 }

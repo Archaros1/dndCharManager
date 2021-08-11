@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBackgroundsTable extends Migration
+class CreateFeatureListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class CreateBackgroundsTable extends Migration
      */
     public function up()
     {
-        Schema::create('backgrounds', function (Blueprint $table) {
+        Schema::create('feature_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('is_custom');
-
-            $table->foreignId('description_id')->constrained()->nullable();
-            $table->foreignId('feature_list_id')->constrained()->nullable();
-
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ class CreateBackgroundsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('backgrounds');
+        Schema::dropIfExists('feature_lists');
     }
 }

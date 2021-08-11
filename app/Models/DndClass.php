@@ -58,9 +58,14 @@ class DndClass extends Model
         return $this->hasOne(StatPack::class);
     }
 
+    // public function features()
+    // {
+    //     return $this->hasOne(FeatureList::class)->hasMany(Feature::class);
+    // }
+
     public function features()
     {
-        return $this->hasMany(Feature::class);
+        return $this->hasManyThrough(Feature::class, FeatureList::class);
     }
 
     public function subClasses()

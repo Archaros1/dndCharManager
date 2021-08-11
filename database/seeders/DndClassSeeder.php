@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DndClass;
 use App\Models\Description;
+use App\Models\FeatureList;
 use App\Models\HitDice;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +22,9 @@ class DndClassSeeder extends Seeder
             'is_custom' => 0
         ]);
 
+        $featureList = FeatureList::create([
+        ]);
+
         DndClass::create([
             'name' => 'artificer',
             'is_custom' => 0,
@@ -29,6 +33,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'barbarian',
@@ -38,6 +43,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 12,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'bard',
@@ -47,6 +53,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'cleric',
@@ -56,6 +63,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'druid',
@@ -65,6 +73,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 2,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'fighter',
@@ -74,6 +83,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'monk',
@@ -83,6 +93,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'paladin',
@@ -92,6 +103,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'ranger',
@@ -101,6 +113,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'rogue',
@@ -110,6 +123,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'sorcerer',
@@ -119,6 +133,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
             'hitdice' => 6,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'warlock',
@@ -128,6 +143,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
             'hitdice' => 8,
+            'feature_list_id' => $featureList->id
         ]);
         DndClass::create([
             'name' => 'wizard',
@@ -137,6 +153,7 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'sub_class_obtention_level' => 2,
             'hitdice' => 6,
+            'feature_list_id' => $featureList->id
         ]);
     }
 }

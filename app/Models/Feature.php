@@ -47,4 +47,9 @@ class Feature extends Model
     {
         return $this->hasOne(Description::class);
     }
+
+    public function list()
+    {
+        return $this->belongsTo(FeatureList::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DndClass;
 use App\Models\Description;
+use App\Models\FeatureList;
 use Illuminate\Database\Seeder;
 use App\Models\SubClass;
 
@@ -22,6 +23,9 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0
         ]);
 
+        $featureList = FeatureList::create([
+        ]);
+
         SubClass::create([
             'name' => 'Path of the Berzerker',
             'archetype' => 'Primal Path',
@@ -30,6 +34,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -40,6 +45,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -50,6 +56,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'wisdom',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -60,6 +67,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'wisdom',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -70,6 +78,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'wisdom',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -80,6 +89,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -90,6 +100,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -100,6 +111,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'charisma',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -110,6 +122,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -120,6 +133,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -130,6 +144,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -140,6 +155,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -150,6 +166,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'charisma',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -160,6 +177,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'charisma',
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -170,6 +188,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -180,6 +199,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'casting_stat' => null,
+            'feature_list_id' => $featureList->id
         ]);
 
         SubClass::create([
@@ -190,6 +210,7 @@ class SubClassSeeder extends Seeder
             'is_custom' => 0,
             'is_spellcaster' => 1,
             'casting_stat' => 'intelligence',
+            'feature_list_id' => $featureList->id
         ]);
 
     }

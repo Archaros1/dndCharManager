@@ -4,18 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Background extends Model
+class SelectedFeatureChoice extends Model
 {
     use HasFactory;
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
+        'character_id',
+        'feature_id',
+        'feature_choice_id',
     ];
 
     /**
@@ -36,26 +39,18 @@ class Background extends Model
 
     ];
 
-    /**
-     * Get the creator of the background if it's custom.
-     */
-    public function creator()
+    public function character()
     {
-        return $this->hasOne(User::class) ?? null;
+        return $this->belongsTo(Character::class);
     }
 
-    // public function features()
-    // {
-    //     return $this->hasOne(FeatureList::class)->hasMany(Feature::class);
-    // }
-
-    public function features()
+    public function feature()
     {
-        return $this->hasManyThrough(Feature::class, FeatureList::class);
+        return $this->belongsTo(Feature::class);
     }
 
-    public function description()
+    public function featureChoice()
     {
-        return $this->hasOne(Description::class);
+        return $this->belongsTo(FeatureChoice::class);
     }
 }

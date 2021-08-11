@@ -23,6 +23,7 @@ class CreateDndClassesTable extends Migration
             $table->integer('hitdice');
 
             $table->foreignId('description_id')->constrained()->nullable();
+            $table->foreignId('feature_list_id')->constrained()->nullable();
 
             $table->timestamps();
         });
