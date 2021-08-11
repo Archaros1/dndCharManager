@@ -45,7 +45,7 @@ class SubClass extends Model
 
     public function parentClass()
     {
-        return $this->hasOne(DndClass::class);
+        return $this->belongsTo(DndClass::class);
     }
 
     public function description()

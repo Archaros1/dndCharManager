@@ -39,3 +39,8 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
 });
 
 Auth::routes();
+
+Route::get('/class/{id}/showsubclasses', [App\Http\Controllers\DndClassController::class, 'showSubClass'])->name('show.subClass');
+Route::get('/class/{id}/showsubclassesbylevel/{level}', [App\Http\Controllers\DndClassController::class, 'showSubClassLevelN'])->name('show.subClassLevelN');
+Route::get('/class/{id}/showarchetype', [App\Http\Controllers\DndClassController::class, 'showArchetype'])->name('show.archetype');
+

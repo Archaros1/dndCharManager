@@ -23,8 +23,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'path of the berzerker',
-            'archetype' => 'primal path',
+            'name' => 'Path of the Berzerker',
+            'archetype' => 'Primal Path',
             'class_id' => DndClass::firstWhere('name', '=', 'barbarian')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -33,8 +33,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'college of lore',
-            'archetype' => 'bard college',
+            'name' => 'College of Lore',
+            'archetype' => 'Bard College',
             'class_id' => DndClass::firstWhere('name', '=', 'bard')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -43,8 +43,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'knowledge domain',
-            'archetype' => 'divine domain',
+            'name' => 'Knowledge Domain',
+            'archetype' => 'Divine Domain',
             'class_id' => DndClass::firstWhere('name', '=', 'cleric')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -53,8 +53,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'life domain',
-            'archetype' => 'divine domain',
+            'name' => 'Life Domain',
+            'archetype' => 'Divine Domain',
             'class_id' => DndClass::firstWhere('name', '=', 'cleric')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -63,8 +63,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'circle of the land',
-            'archetype' => 'druid circle',
+            'name' => 'Circle of the Land',
+            'archetype' => 'Druid Circle',
             'class_id' => DndClass::firstWhere('name', '=', 'druid')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -73,8 +73,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'champion',
-            'archetype' => 'martial archetype',
+            'name' => 'Champion',
+            'archetype' => 'Martial Archetype',
             'class_id' => DndClass::firstWhere('name', '=', 'fighter')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -83,8 +83,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'way of the open hand',
-            'archetype' => 'monastic tradition',
+            'name' => 'Way of the Open Hand',
+            'archetype' => 'Monastic Tradition',
             'class_id' => DndClass::firstWhere('name', '=', 'monk')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -93,8 +93,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'oath of devotion',
-            'archetype' => 'sacred oath',
+            'name' => 'Oath of Devotion',
+            'archetype' => 'Sacred Oath',
             'class_id' => DndClass::firstWhere('name', '=', 'paladin')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -103,8 +103,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'hunter',
-            'archetype' => 'ranger archetype',
+            'name' => 'Hunter',
+            'archetype' => 'Ranger Archetype',
             'class_id' => DndClass::firstWhere('name', '=', 'ranger')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -113,8 +113,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'thief',
-            'archetype' => 'roguish archetype',
+            'name' => 'Thief',
+            'archetype' => 'Roguish Archetype',
             'class_id' => DndClass::firstWhere('name', '=', 'rogue')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -123,8 +123,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'draconic bloodline',
-            'archetype' => 'sorcerous origin',
+            'name' => 'Draconic Bloodline',
+            'archetype' => 'Sorcerous Origin',
             'class_id' => DndClass::firstWhere('name', '=', 'sorcerer')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -133,8 +133,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'wild magic',
-            'archetype' => 'sorcerous origin',
+            'name' => 'Wild Magic',
+            'archetype' => 'Sorcerous Origin',
             'class_id' => DndClass::firstWhere('name', '=', 'sorcerer')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -143,8 +143,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'the fiend',
-            'archetype' => 'otherworldly patron',
+            'name' => 'The Fiend',
+            'archetype' => 'Otherworldly Patron',
             'class_id' => DndClass::firstWhere('name', '=', 'warlock')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -153,8 +153,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'the great old one',
-            'archetype' => 'otherworldly patron',
+            'name' => 'The Great Old One',
+            'archetype' => 'Otherworldly Patron',
             'class_id' => DndClass::firstWhere('name', '=', 'warlock')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -163,8 +163,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'school of abjuration',
-            'archetype' => 'arcane tradition',
+            'name' => 'School of Abjuration',
+            'archetype' => 'Arcane Tradition',
             'class_id' => DndClass::firstWhere('name', '=', 'wizard')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -173,8 +173,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'alchemist',
-            'archetype' => 'artificer specialist',
+            'name' => 'Alchemist',
+            'archetype' => 'Artificer Specialist',
             'class_id' => DndClass::firstWhere('name', '=', 'artificer')->id,
             'description' => $description->id,
             'is_custom' => 0,
@@ -183,8 +183,8 @@ class SubClassSeeder extends Seeder
         ]);
 
         SubClass::create([
-            'name' => 'armorer',
-            'archetype' => 'artificer specialist',
+            'name' => 'Armorer',
+            'archetype' => 'Artificer Specialist',
             'class_id' => DndClass::firstWhere('name', '=', 'artificer')->id,
             'description' => $description->id,
             'is_custom' => 0,

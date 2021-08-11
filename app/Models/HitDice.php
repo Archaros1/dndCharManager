@@ -18,6 +18,7 @@ class HitDice extends Model
         'max_value',
         'rolled_value',
         'amount',
+        'character_id',
     ];
 
     /**
@@ -37,4 +38,9 @@ class HitDice extends Model
     protected $casts = [
 
     ];
+
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
+    }
 }

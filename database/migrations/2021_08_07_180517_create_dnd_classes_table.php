@@ -20,6 +20,7 @@ class CreateDndClassesTable extends Migration
             $table->boolean('is_custom');
             $table->string('casting_stat')->nullable();
             $table->integer('sub_class_obtention_level');
+            $table->integer('hitdice');
 
             $table->foreignId('description_id')->constrained()->nullable();
 

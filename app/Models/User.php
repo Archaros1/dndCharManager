@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function characters()
     {
-        return $this->hasMany(Character::class);
+        return $this->hasMany(Character::class, 'creator_id');
     }
 }

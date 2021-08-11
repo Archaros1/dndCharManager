@@ -1882,6 +1882,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./custom */ "./resources/js/custom.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
 /**
  * The following block of code may be used to automatically register your
@@ -1947,6 +1949,50 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/custom.js":
+/*!********************************!*\
+  !*** ./resources/js/custom.js ***!
+  \********************************/
+/***/ (() => {
+
+$(function () {
+  console.log("ready !");
+  setSubClasses();
+  $('#dnd_class').change(function () {
+    setSubClasses();
+  });
+});
+
+function changeSelectOption(yourSelectList, new_options) {
+  /* Remove all options from the select list */
+  $(yourSelectList).empty();
+  /* Insert the new ones from the array above */
+
+  new_options.forEach(function (option) {
+    $(yourSelectList).append('<option value="' + option.id + '">' + option.name + '</option>');
+  });
+}
+
+function setSubClasses() {
+  var dndClass = $('#dnd_class').val();
+  $.ajax({
+    type: 'GET',
+    url: "/class/" + dndClass + "/showsubclassesbylevel/1",
+    success: function success(result) {
+      if (result == 'ko') {
+        $('#subclasses').hide();
+      } else {
+        $('#subclasses').show();
+        new_options = JSON.parse(result);
+        changeSelectOption('#sub_class', new_options);
+        $('#subclass_label').text(new_options[0].archetype);
+      }
+    }
+  });
+}
 
 /***/ }),
 

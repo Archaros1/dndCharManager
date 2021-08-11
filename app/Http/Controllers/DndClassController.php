@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DndClass;
+use App\Models\SubClass;
 use Illuminate\Http\Request;
 
 class DndClassController extends Controller
@@ -81,5 +82,20 @@ class DndClassController extends Controller
     public function destroy(DndClass $dndClass)
     {
         //
+    }
+
+    public function showSubClass(int $classId)
+    {
+        $subclasses = DndClass::find($classId)->subclasses;
+        return json_encode($subclasses);
+    }
+
+    public function showSubClassLevelN(int $classId, int $level = 1)
+    {
+        $dndClass = DndClass::find($classId);
+
+        return ($dndClass->sub_class_obtention_level !== $level) ?
+            'ko' :
+            $this->showSubClass($classId);
     }
 }

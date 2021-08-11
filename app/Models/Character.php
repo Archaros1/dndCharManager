@@ -47,7 +47,7 @@ class Character extends Model
      */
     public function creator()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function hitDices()
@@ -82,5 +82,10 @@ class Character extends Model
         $modifier = floor(($stat - 10) / 2);
 
         return (int) $modifier;
+    }
+
+    public function classInvestments()
+    {
+        return $this->hasMany(ClassInvestment::class);
     }
 }

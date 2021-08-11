@@ -23,6 +23,7 @@ class DndClass extends Model
         'casting_stat',
         'description_id',
         'subClassObtentionLevel',
+        'hitdice',
     ];
 
     /**
@@ -57,11 +58,6 @@ class DndClass extends Model
         return $this->hasOne(StatPack::class);
     }
 
-    public function hitDice()
-    {
-        return $this->hasOne(HitDice::class);
-    }
-
     public function features()
     {
         return $this->hasMany(Feature::class);
@@ -69,7 +65,7 @@ class DndClass extends Model
 
     public function subClasses()
     {
-        return $this->hasMany(SubClass::class);
+        return $this->hasMany(SubClass::class, 'class_id');
     }
 
     public function subClassLevel(): int

@@ -15,6 +15,11 @@ class CreateFeaturesTable extends Migration
     {
         Schema::create('features', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_spellcasting');
+            $table->string('name');
+            $table->string('display_name');
+            $table->boolean('is_action');
+            $table->boolean('is_custom');
 
             $table->foreignId('description')->constrained()->nullable();
 

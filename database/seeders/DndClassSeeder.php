@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DndClass;
 use App\Models\Description;
+use App\Models\HitDice;
 use Illuminate\Database\Seeder;
 
 class DndClassSeeder extends Seeder
@@ -27,6 +28,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'intelligence',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'barbarian',
@@ -35,6 +37,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => null,
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 12,
         ]);
         DndClass::create([
             'name' => 'bard',
@@ -43,6 +46,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'cleric',
@@ -51,6 +55,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'druid',
@@ -59,6 +64,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 2,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'fighter',
@@ -67,6 +73,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => null,
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 10,
         ]);
         DndClass::create([
             'name' => 'monk',
@@ -75,6 +82,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => null,
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'paladin',
@@ -83,6 +91,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => null,
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 10,
         ]);
         DndClass::create([
             'name' => 'ranger',
@@ -91,6 +100,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 10,
         ]);
         DndClass::create([
             'name' => 'rogue',
@@ -99,6 +109,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => null,
             'description_id' => $description->id,
             'sub_class_obtention_level' => 3,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'sorcerer',
@@ -107,6 +118,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
+            'hitdice' => 6,
         ]);
         DndClass::create([
             'name' => 'warlock',
@@ -115,6 +127,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 1,
+            'hitdice' => 8,
         ]);
         DndClass::create([
             'name' => 'wizard',
@@ -123,6 +136,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'intelligence',
             'description_id' => $description->id,
             'sub_class_obtention_level' => 2,
+            'hitdice' => 6,
         ]);
     }
 }

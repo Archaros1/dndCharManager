@@ -20,7 +20,7 @@ class CreateClassInvestmentsTable extends Migration
             $table->foreignId('character_id')->constrained();
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('dnd_classes');
-            $table->unsignedBigInteger('subclass_id');
+            $table->unsignedBigInteger('subclass_id')->nullable();
             $table->foreign('subclass_id')->references('id')->on('sub_classes');
             $table->timestamps();
         });

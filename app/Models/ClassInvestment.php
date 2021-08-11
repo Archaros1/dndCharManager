@@ -15,7 +15,7 @@ class ClassInvestment extends Model
      * @var array
      */
     protected $fillable = [
-        'char_id',
+        'character_id',
         'class_id',
         'subclass_id',
         'level',
@@ -47,5 +47,10 @@ class ClassInvestment extends Model
     public function subClass()
     {
         return $this->hasOne(SubClass::class);
+    }
+
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
     }
 }

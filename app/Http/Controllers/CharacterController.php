@@ -7,7 +7,9 @@ use App\Models\StatPack;
 use Illuminate\Http\Request;
 
 use App\Models\Background;
+use App\Models\ClassInvestment;
 use App\Models\DndClass;
+use App\Models\HitDice;
 use App\Models\Race;
 use App\Models\SubClass;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +75,7 @@ class CharacterController extends Controller
 
                 return view('character/forms/level1', [
                     'step' => $step,
+                    'idChara' => $idChara,
                     'dndClasses' => $dndClasses,
                     'subClasses' => $subClasses,
                 ]);
@@ -99,26 +102,54 @@ class CharacterController extends Controller
     {
         $inputs = $request->post();
 
-        $stats = StatPack::create([
-            'strength' => $inputs['strength'],
-            'dexterity' => $inputs['dexterity'],
-            'constitution' => $inputs['constitution'],
-            'intelligence' => $inputs['intelligence'],
-            'wisdom' => $inputs['wisdom'],
-            'charisma' => $inputs['charisma'],
-        ]);
+        switch ($step) {
+            case 'basics':
+                $stats = StatPack::create([
+                    'strength' => $inputs['strength'],
+                    'dexterity' => $inputs['dexterity'],
+                    'constitution' => $inputs['constitution'],
+                    'intelligence' => $inputs['intelligence'],
+                    'wisdom' => $inputs['wisdom'],
+                    'charisma' => $inputs['charisma'],
+                ]);
 
-        $newCharacter = Character::create([
-            'name' => $inputs['name'],
-            'level' => $inputs['level'],
-            'race_id' => $inputs['race'],
-            'background_id' => $inputs['background'],
-            'stat_pack_id' => $stats->id,
-            'creator_id' => Auth::user()->id,
+                $newCharacter = Character::create([
+                    'name' => $inputs['name'],
+                    'level' => $inputs['level'],
+                    'race_id' => $inputs['race'],
+                    'background_id' => $inputs['background'],
+                    'stat_pack_id' => $stats->id,
+                    'creator_id' => Auth::user()->id,
 
-        ]);
+                ]);
 
-        return redirect('character/create/level1/'.$newCharacter->id);
+                return redirect('character/create/level1/' . $newCharacter->id);
+                break;
+
+            case 'level1':
+                $investment = ClassInvestment::create([
+                    'character_id' => $idChara,
+                    'class_id' => $inputs['dnd_class'],
+                    'subclass_id' => $inputs['sub_class'] ?? null,
+                    'level' => 1,
+                ]);
+
+                $dndClass = DndClass::find($inputs['dnd_class']);
+
+                $firstHitDice = HitDice::create([
+                    'max_value' => $dndClass->hitdice,
+                    'rolled_value' => $dndClass->hitdice,
+                    'amount' => 1,
+                    'character_id' => $idChara,
+                ]);
+
+                $character = Character::find($idChara);
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
     /**

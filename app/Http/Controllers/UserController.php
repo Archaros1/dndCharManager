@@ -14,9 +14,12 @@ class UserController extends Controller
     public function profil(Request $request)
     {
         if (Auth::user() && Auth::user()->id) {
-            $user = User::find(Auth::user()->id);
+            $user = Auth::user();
+            $characters = $user->characters;
+            // dd($characters);
             return view('user.profil', [
-                'user' => $user
+                'user' => $user,
+                'characters' => $characters,
             ]);
         }
 

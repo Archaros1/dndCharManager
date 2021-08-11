@@ -2,18 +2,30 @@
 
 @section('content')
     <div class="container">
-        <h1>Bonjour {{ $user->name }}</h1>
-        <div class="row">
+        <h1 class="">Bonjour {{ $user->name }}</h1>
+        <div class="row mb-4">
             <a href="{{ url('/character/create/basics') }}" class="btn btn-primary" id="new-character">Nouveau personnage</a>
-            @if (!empty($user->characters()))
-                @foreach ($user->characters() as $character)
+        </div>
+        <div class="row">
+            @if (!empty($characters))
+                @foreach ($characters as $character)
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <img class="card-img-top" src="..." alt="">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                the
-                                card's content.</p>
+                            <h5 class="card-title">{{ $character->name }}</h5>
+                            <p class="card-text">
+                                @isset($character->classInvestments)
+                                    @foreach ($character->classInvestments as $investment)
+                                    {{-- {{ $investment }} --}}
+                                        {{ ucfirst(\App\Models\DndClass::find($investment->class_id)->name) }}
+                                        @isset($investment->subclass_id)
+                                            ({{ ucfirst(\App\Models\SubClass::find($investment->subclass_id)->name) }})
+
+                                        @endisset
+                                        {{ $investment->level }}<br>
+                                    @endforeach
+                                @endisset
+                            </p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
