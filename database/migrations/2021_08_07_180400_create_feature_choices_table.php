@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFeaturesTable extends Migration
+class CreateFeatureChoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('features', function (Blueprint $table) {
+        Schema::create('feature_choices', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_spellcasting');
             $table->string('name');
-            $table->string('display_name');
             $table->boolean('is_action');
             $table->boolean('is_custom');
-            $table->boolean('has_choice');
+            $table->boolean('is_spellcasting');
 
+            $table->foreignId('feature')->constrained();
             $table->foreignId('description')->constrained()->nullable();
 
             $table->timestamps();
@@ -35,6 +34,6 @@ class CreateFeaturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('features');
+        Schema::dropIfExists('feature_choices');
     }
 }

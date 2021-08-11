@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Feature extends Model
+class FeatureChoice extends Model
 {
     use HasFactory;
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'level',
         'description_id',
         'is_spellcasting',
         'name',
         'display_name',
         'is_action',
         'is_custom',
-        'has_choice',
     ];
 
     /**
@@ -46,5 +44,10 @@ class Feature extends Model
     public function description()
     {
         return $this->hasOne(Description::class);
+    }
+
+    public function feature()
+    {
+        return $this->belongsTo(Feature::class);
     }
 }
