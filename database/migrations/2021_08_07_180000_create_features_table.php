@@ -15,6 +15,7 @@ class CreateFeaturesTable extends Migration
     {
         Schema::create('features', function (Blueprint $table) {
             $table->id();
+            $table->integer('level');
             $table->boolean('is_spellcasting');
             $table->string('name');
             $table->string('display_name');
@@ -22,7 +23,8 @@ class CreateFeaturesTable extends Migration
             $table->boolean('is_custom');
             $table->boolean('has_choice');
 
-            $table->foreignId('description')->constrained()->nullable();
+            $table->foreignId('description_id')->constrained()->nullable();
+            $table->foreignId('feature_list_id')->constrained()->nullable();
 
             $table->timestamps();
         });

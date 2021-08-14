@@ -39,18 +39,28 @@ class ClassInvestment extends Model
 
     ];
 
-    public function dndClass()
-    {
-        return $this->hasOne(DndClass::class);
-    }
-
-    public function subClass()
-    {
-        return $this->hasOne(SubClass::class);
-    }
-
     public function character()
     {
         return $this->belongsTo(Character::class);
+    }
+
+    // public function class()
+    // {
+    //     return DndClass::find($this->class_id);
+    // }
+
+    // public function subclass()
+    // {
+    //     return SubClass::find($this->subclass_id);
+    // }
+
+    public function class()
+    {
+        return $this->belongsTo(DndClass::class);
+    }
+
+    public function subclass()
+    {
+        return $this->belongsTo(SubClass::class);
     }
 }

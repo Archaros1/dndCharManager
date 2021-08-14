@@ -65,7 +65,12 @@ class DndClass extends Model
 
     public function features()
     {
-        return $this->hasManyThrough(Feature::class, FeatureList::class);
+        return $this->featureList()->hasMany(Feature::class);
+    }
+
+    public function featureList()
+    {
+        return FeatureList::find($this->feature_list_id);
     }
 
     public function subClasses()

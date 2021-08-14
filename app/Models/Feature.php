@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Descriptor\Descriptor;
 
 class Feature extends Model
 {
@@ -23,6 +24,7 @@ class Feature extends Model
         'is_action',
         'is_custom',
         'has_choice',
+        'feature_list_id',
     ];
 
     /**
@@ -43,13 +45,24 @@ class Feature extends Model
 
     ];
 
+    // public function description()
+    // {
+    //     $relation = $this->hasOne(Description::class);
+    //     dd($relation->());
+    // }
+
     public function description()
     {
-        return $this->hasOne(Description::class);
+        return Description::find($this->description_id);
     }
 
     public function list()
     {
         return $this->belongsTo(FeatureList::class);
+    }
+
+    public function hasChoice()
+    {
+        return $this->has_choice;
     }
 }

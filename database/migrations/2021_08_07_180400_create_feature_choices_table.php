@@ -16,12 +16,13 @@ class CreateFeatureChoicesTable extends Migration
         Schema::create('feature_choices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('display_name');
             $table->boolean('is_action');
             $table->boolean('is_custom');
             $table->boolean('is_spellcasting');
 
-            $table->foreignId('feature')->constrained();
-            $table->foreignId('description')->constrained()->nullable();
+            $table->foreignId('feature_id')->constrained();
+            $table->foreignId('description_id')->constrained()->nullable();
 
             $table->timestamps();
         });

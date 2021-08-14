@@ -36,6 +36,11 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::get('/profil', [App\Http\Controllers\UserController::class, 'profil'])->name('profil');
     Route::get('/character/create/{step}/{idChara?}', [App\Http\Controllers\CharacterController::class, 'create'])->name('chara.create');
     Route::post('/character/store/{step}/{idChara?}', [App\Http\Controllers\CharacterController::class, 'store'])->name('chara.store');
+    Route::post('/character/create/building/{idChara}', [App\Http\Controllers\CharacterController::class, 'building'])->name('chara.building');
+    Route::get('/character/show/{idChara}', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show');
+
+    Route::post('/character/store/building/feature_choice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingFeatureChoiceStore'])->name('chara.building.feature_choice.store');
+
 });
 
 Auth::routes();

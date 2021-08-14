@@ -44,18 +44,18 @@ class Background extends Model
         return $this->hasOne(User::class) ?? null;
     }
 
-    // public function features()
-    // {
-    //     return $this->hasOne(FeatureList::class)->hasMany(Feature::class);
-    // }
-
-    public function features()
-    {
-        return $this->hasManyThrough(Feature::class, FeatureList::class);
-    }
-
     public function description()
     {
         return $this->hasOne(Description::class);
+    }
+
+    public function features()
+    {
+        return $this->featureList()->hasMany(Feature::class);
+    }
+
+    public function featureList()
+    {
+        return FeatureList::find($this->feature_list_id);
     }
 }
