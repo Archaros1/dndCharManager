@@ -63,4 +63,14 @@ class ClassInvestment extends Model
     {
         return $this->belongsTo(SubClass::class);
     }
+
+    public function hitDices()
+    {
+        return $this->hasMany(HitDice::class);
+    }
+
+    public function hasMissingHitDice()
+    {
+        return count($this->hitDices) < $this->level;
+    }
 }

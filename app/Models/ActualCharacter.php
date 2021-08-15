@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StatPack extends Model
+class ActualCharacter extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,8 @@ class StatPack extends Model
      * @var array
      */
     protected $fillable = [
-        'strength',
-        'dexterity',
-        'constitution',
-        'intelligence',
-        'wisdom',
-        'charisma',
+        'left_health',
+        'character_id',
     ];
 
     /**
@@ -28,9 +24,7 @@ class StatPack extends Model
      *
      * @var array
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -38,20 +32,10 @@ class StatPack extends Model
      * @var array
      */
     protected $casts = [
-
     ];
 
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'strength' => 0,
-        'dexterity' => 0,
-        'constitution' => 0,
-        'intelligence' => 0,
-        'wisdom' => 0,
-        'charisma' => 0,
-    ];
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
+    }
 }

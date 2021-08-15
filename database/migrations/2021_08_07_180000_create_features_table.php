@@ -22,8 +22,10 @@ class CreateFeaturesTable extends Migration
             $table->boolean('is_action');
             $table->boolean('is_custom');
             $table->boolean('has_choice');
+            $table->boolean('modify_stats');
 
             $table->foreignId('description_id')->constrained()->nullable();
+            $table->foreignId('stat_pack_id')->constrained()->nullable();
             $table->foreignId('feature_list_id')->constrained()->nullable();
 
             $table->timestamps();

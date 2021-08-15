@@ -25,7 +25,8 @@
                 {{ Form::select('background', $backgrounds, $attributes = ['class' => 'form-control', 'required' => '']) }}
             </div>
             <div class="row">
-                <h4>Statistiques</h4><img src="{{ asset('/icons/dices.svg') }}" alt="" id="rollOneStat" class="ml-2" title="Roll a stat">
+                <h4>Statistiques</h4>
+                <img src="{{ asset('/icons/dices.svg') }}" alt="" id="rollOneStat" class="ml-2" title="Roll a stat">
             </div>
             <div id="stats" class="row">
                 <div id="strength" class="col-4 mb-2">

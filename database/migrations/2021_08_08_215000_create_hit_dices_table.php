@@ -17,9 +17,8 @@ class CreateHitDicesTable extends Migration
             $table->id();
             $table->integer('max_value');
             $table->integer('rolled_value')->nullable();
-            $table->integer('amount')->nullable();
 
-            $table->foreignId('character_id')->constrained()->nullable();
+            $table->foreignId('class_investment_id')->constrained()->nullable();
 
             $table->timestamps();
         });

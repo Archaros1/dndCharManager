@@ -6,7 +6,8 @@
 
     <div class="container">
         <div class="col">
-            <h1>Vous avez un choix à faire</h1>
+            <h1>Votre personnage n'est pas terminé</h1>
+            <h2>Vous avez un choix à faire</h2>
             <h4>{{ $feature->display_name }}</h4>
             <div class="row mb-4" id="classes">
                 <p id="description-feature">{{ $feature->description()->text }}</p>

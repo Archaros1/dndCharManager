@@ -50,7 +50,7 @@ class DndClass extends Model
 
     public function description()
     {
-        return $this->hasOne(Description::class);
+        return Description::find($this->description_id);
     }
 
     public function stats()

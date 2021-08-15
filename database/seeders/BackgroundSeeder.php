@@ -7,6 +7,7 @@ use App\Models\Description;
 use App\Models\Feature;
 use App\Models\FeatureChoice;
 use App\Models\FeatureList;
+use App\Models\StatPack;
 use Illuminate\Database\Seeder;
 
 class BackgroundSeeder extends Seeder
@@ -23,6 +24,8 @@ class BackgroundSeeder extends Seeder
             'is_custom' => 0
         ]);
 
+        $statPack = StatPack::create();
+
         $featureList = FeatureList::create();
 
         $feature1 = Feature::create([
@@ -35,6 +38,7 @@ class BackgroundSeeder extends Seeder
             'is_custom' => 0,
             'has_choice' => 0,
             'feature_list_id' => $featureList->id,
+            'stat_pack_id' => $statPack->id,
         ]);
 
         $feature2 = Feature::create([
@@ -47,6 +51,7 @@ class BackgroundSeeder extends Seeder
             'is_custom' => 0,
             'has_choice' => 1,
             'feature_list_id' => $featureList->id,
+            'stat_pack_id' => $statPack->id,
         ]);
 
         $choice1 = FeatureChoice::create([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActualCharacter;
 use App\Models\Character;
 use App\Models\StatPack;
 use Illuminate\Http\Request;
@@ -134,14 +135,26 @@ class CharacterController extends Controller
         $nextStep = $this->checkCharacterReady($character);
 
         if (is_null($nextStep)) {
-            $this->show($character);
+            $character->health = $character->calculateHP();
+
+            $character->save();
+            return redirect('character/show/' . $idChara);
         }
 
         switch ($nextStep['title']) {
             case 'missing subclass':
+
+                $subClassCollec = SubClass::where('class_id', '=', $nextStep['investment']->class_id)->get();
+                $subClasses = [];
+
+                foreach ($subClassCollec as $subClass) {
+                    $subClasses[$subClass->id] = ucwords($subClass->name);
+                }
+
                 return view('character/forms/building/subclass', [
                     'character' => $character,
                     'investment' => $nextStep['investment'],
+                    'subClasses' => $subClasses,
                 ]);
                 break;
 
@@ -161,14 +174,29 @@ class CharacterController extends Controller
                 break;
 
             case 'missing investment':
-                return view('character/forms/building/level', [
+                $classCollec = DndClass::all();
+
+                $dndClasses = [];
+
+                foreach ($classCollec as $dndClass) {
+                    $dndClasses[$dndClass->id] = ucwords($dndClass->name);
+                }
+
+                return view('character/forms/building/investment', [
                     'character' => $character,
+                    'dndClasses' => $dndClasses,
                 ]);
                 break;
 
             case 'missing hitdice':
+                $diceTab = [];
+                for ($i = 1; $i <= $nextStep['investment']->class->hitdice; $i++) {
+                    $diceTab[$i] = $i;
+                }
                 return view('character/forms/building/hitdice', [
                     'character' => $character,
+                    'investment' => $nextStep['investment'],
+                    'diceTab' => $diceTab,
                 ]);
                 break;
 
@@ -224,8 +252,7 @@ class CharacterController extends Controller
         $firstHitDice = HitDice::create([
             'max_value' => $dndClass->hitdice,
             'rolled_value' => $dndClass->hitdice,
-            'amount' => 1,
-            'character_id' => $idChara,
+            'class_investment_id' => $investment->id,
         ]);
 
         return redirect('character/create/building/' . $idChara);
@@ -240,10 +267,18 @@ class CharacterController extends Controller
 
             $totalInvestmentLevel += $investment->level;
 
-            if ($dndClass->subClassObtentionLevel >= $investment->level) {
+            if ($dndClass->sub_class_obtention_level <= $investment->level && empty($investment->subclass)) {
                 # gotta get that subclass
                 return [
                     'title' => 'missing subclass',
+                    'investment' => $investment,
+                ];
+            }
+
+            if (count($investment->hitDices) < $investment->level) {
+                # gotta roll these hitdices
+                return [
+                    'title' => 'missing hitdice',
                     'investment' => $investment,
                 ];
             }
@@ -275,14 +310,6 @@ class CharacterController extends Controller
             ];
         }
 
-        $hitDices = $character->hitDices;
-        if (count($hitDices) < $character->level) {
-            # gotta roll these hitdices
-            return [
-                'title' => 'missing hitdice',
-            ];
-        }
-
         return null;
     }
 
@@ -296,11 +323,88 @@ class CharacterController extends Controller
             'feature_choice_id' => $inputs['feature_choice'],
         ]);
 
-        return $this->building($idChara);
+        return redirect('/character/create/building/' . $idChara);
     }
 
+    public function buildingLevelStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
 
+        $investment = ClassInvestment::where([
+            'character_id' => $idChara,
+            'class_id' => $inputs['dnd_class'],
+        ])->first();
 
+        if (empty($investment)) {
+            $investment = ClassInvestment::create([
+                'character_id' => $idChara,
+                'class_id' => $inputs['dnd_class'],
+                'level' => 1,
+            ]);
+        } else {
+            $investment->level++;
+            $investment->save();
+        }
+
+        return redirect('/character/create/building/' . $idChara);
+    }
+
+    public function fastBuildingLevelStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
+        $character = Character::find($idChara);
+
+        $investment = ClassInvestment::where([
+            'character_id' => $idChara,
+            'class_id' => $inputs['dnd_class'],
+        ])->first();
+
+        if (empty($investment)) {
+            $investment = ClassInvestment::create([
+                'character_id' => $idChara,
+                'class_id' => $inputs['dnd_class'],
+                'level' => ($character->level - $character->investedLevel()),
+            ]);
+        } else {
+            $investment->level++;
+            $investment->save();
+        }
+
+        return redirect('/character/create/building/' . $idChara);
+    }
+
+    public function buildingSubClassStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
+
+        $investment = ClassInvestment::where([
+            'character_id' => $idChara,
+            'id' => $inputs['investment'],
+        ])->first();
+
+        $investment->subclass_id = (int) $inputs['sub_class'];
+        $investment->save();
+
+        return redirect('/character/create/building/' . $idChara);
+    }
+
+    public function buildingHitDiceStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
+
+        $investment = ClassInvestment::where([
+            'character_id' => $idChara,
+            'id' => $inputs['investment'],
+        ])->first();
+
+        $hitDice = HitDice::create([
+            'max_value' => $investment->class->hitdice,
+            'rolled_value' => $inputs['hitdice'],
+            'class_investment_id' => $investment->id,
+        ]);
+
+        return redirect('/character/create/building/' . $idChara);
+    }
 
     /**
      * Display the specified resource.
@@ -308,9 +412,29 @@ class CharacterController extends Controller
      * @param  \App\Models\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function show(Character $character)
+    public function show($idChara)
     {
-        //
+        $character = Character::find($idChara);
+        $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
+        if (empty($actualCharacter)) {
+            $actualCharacter = ActualCharacter::create([
+                'left_health' => $character->health,
+                'character_id' => $idChara,
+            ]);
+        }
+
+        $isMobile = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+        if ($isMobile) {
+            return view('character/show_mobile', [
+                'character' => $character,
+                'actualCharacter' => $actualCharacter,
+            ]);
+        } else {
+            return view('character/show', [
+                'character' => $character,
+                'actualCharacter' => $actualCharacter,
+            ]);
+        }
     }
 
     /**
@@ -342,8 +466,9 @@ class CharacterController extends Controller
      * @param  \App\Models\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Character $character)
+    public function destroy($id)
     {
-        //
+        Character::find($id)->delete();
+        return redirect('profil');
     }
 }

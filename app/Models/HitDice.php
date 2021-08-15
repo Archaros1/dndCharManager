@@ -17,8 +17,7 @@ class HitDice extends Model
     protected $fillable = [
         'max_value',
         'rolled_value',
-        'amount',
-        'character_id',
+        'class_investment_id',
     ];
 
     /**

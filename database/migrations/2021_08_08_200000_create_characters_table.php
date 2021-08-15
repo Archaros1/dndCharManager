@@ -28,6 +28,7 @@ class CreateCharactersTable extends Migration
             $table->foreign('creator_id')->references('id')->on('users');
 
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }
 

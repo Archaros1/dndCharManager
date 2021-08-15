@@ -26,7 +26,8 @@
                                     @endforeach
                                 @endisset
                             </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="{{ url('/character/create/building', $character->id) }}" class="btn btn-primary">Utiliser</a>
+                            <a href="{{ url('/character/destroy', $character->id) }}" class="btn btn-danger">Supprimer</a>
                         </div>
                     </div>
                 @endforeach
