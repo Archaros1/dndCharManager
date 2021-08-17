@@ -21,6 +21,7 @@ class FeatureChoice extends Model
         'display_name',
         'is_action',
         'is_custom',
+        'spell_list_id',
     ];
 
     /**
@@ -49,5 +50,13 @@ class FeatureChoice extends Model
     public function feature()
     {
         return $this->belongsTo(Feature::class);
+    }
+
+    /**
+     * Get the spell list.
+     */
+    public function spellList()
+    {
+        return $this->hasOne(SpellList::class);
     }
 }

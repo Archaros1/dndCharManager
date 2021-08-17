@@ -24,6 +24,7 @@ class CreateSubClassesTable extends Migration
             // $table->foreignId('dnd_class_id')->constrained();
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('dnd_classes');
+            $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('description')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 

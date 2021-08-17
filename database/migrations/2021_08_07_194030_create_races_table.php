@@ -20,9 +20,8 @@ class CreateRacesTable extends Migration
             $table->boolean('is_spellcaster');
             $table->string('casting_stat')->nullable();
 
-            // $table->foreignId('description')->constrained()->nullable();
+            $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            // $table->foreignId('feature_list_id')->constrained()->nullable();
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('stat_modif_id');
             $table->foreign('stat_modif_id')->references('id')->on('stat_packs');

@@ -45,10 +45,13 @@ class RaceSeeder extends Seeder
             'charisma' => 0,
         ]);
 
+        $featureList = FeatureList::create();
+
         $race = Race::create([
             'name' => 'elf',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $stats = StatPack::create([

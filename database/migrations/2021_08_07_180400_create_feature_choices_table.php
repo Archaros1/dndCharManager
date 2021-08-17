@@ -18,12 +18,14 @@ class CreateFeatureChoicesTable extends Migration
             $table->string('name');
             $table->string('display_name');
             $table->boolean('is_action');
+            $table->string('activation_time')->nullable();
+            $table->string('duration')->nullable();
             $table->boolean('is_custom');
             $table->boolean('is_spellcasting');
 
             $table->foreignId('feature_id')->constrained();
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-
+            $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

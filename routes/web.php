@@ -56,3 +56,5 @@ Route::get('/class/{id}/showsubclassesbylevel/{level}', [App\Http\Controllers\Dn
 Route::get('/class/{id}/showarchetype', [App\Http\Controllers\DndClassController::class, 'showArchetype'])->name('show.archetype');
 
 Route::get('/race/{id}/showsubraces', [App\Http\Controllers\RaceController::class, 'showSubraces'])->name('show.subrace');
+
+Route::get('/test/{id}/', [App\Http\Controllers\CharacterController::class, 'test'])->name('test');

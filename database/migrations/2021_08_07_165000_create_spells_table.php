@@ -24,6 +24,7 @@ class CreateSpellsTable extends Migration
             $table->string('casting_time');
             $table->string('school');
             $table->boolean('is_custom');
+            $table->boolean('enpowerable');
 
             $table->foreignId('description')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 

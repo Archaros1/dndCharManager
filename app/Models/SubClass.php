@@ -23,6 +23,7 @@ class SubClass extends Model
         'is_custom',
         'is_spellcaster',
         'casting_stat',
+        'spell_list_id',
     ];
 
     /**
@@ -61,5 +62,13 @@ class SubClass extends Model
     public function featureList()
     {
         return FeatureList::find($this->feature_list_id);
+    }
+
+    /**
+     * Get the spell list.
+     */
+    public function spellList()
+    {
+        return $this->hasOne(SpellList::class);
     }
 }

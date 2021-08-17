@@ -208,8 +208,8 @@ class CharacterController extends Controller
                 ]);
                 break;
 
-            case 'value':
-                # code...
+            case 'missing level1':
+                return redirect('character/create/level1/' . $idChara);
                 break;
 
             case 'value':
@@ -237,7 +237,7 @@ class CharacterController extends Controller
             'name' => $inputs['name'],
             'level' => $inputs['level'],
             'race_id' => $inputs['race'],
-            'sub_race_id' => $inputs['subrace'],
+            'sub_race_id' => $inputs['subrace'] ?? null,
             'background_id' => $inputs['background'],
             'stat_pack_id' => $stats->id,
             'creator_id' => Auth::user()->id,
@@ -270,6 +270,11 @@ class CharacterController extends Controller
     private function checkCharacterReady($character)
     {
         $investments = $character->classInvestments;
+        if ($investments->all() == []) {
+            return [
+                'title' => 'missing level1',
+            ];
+        }
         $totalInvestmentLevel = 0;
         foreach ($investments as $key => $investment) {
             $dndClass = $investment->class;
@@ -479,5 +484,12 @@ class CharacterController extends Controller
     {
         Character::find($id)->delete();
         return redirect('profil');
+    }
+
+    public function test($idChara)
+    {
+        $character = Character::find($idChara);
+
+        dd($character->isSpellcaster());
     }
 }

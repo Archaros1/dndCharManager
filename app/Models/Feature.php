@@ -16,17 +16,20 @@ class Feature extends Model
      * @var array
      */
     protected $fillable = [
-        'level',
-        'description_id',
-        'is_spellcasting',
         'name',
         'display_name',
+        'level',
+        'is_spellcasting',
         'is_action',
+        'activation_time',
+        'duration',
         'is_custom',
         'has_choice',
-        'feature_list_id',
         'modify_stats',
+        'feature_list_id',
+        'description_id',
         'stat_pack_id',
+        'spell_list_id',
     ];
 
     /**
@@ -53,14 +56,17 @@ class Feature extends Model
      * @var array
      */
     protected $attributes = [
+        'level' => 0,
         'modify_stats' => 0,
-        'stat_pack_id' => 0,
-        'description_id' => 0,
+        'is_spellcasting' => 0,
         'is_action' => 0,
+        'activation_time' => null,
+        'duration' => null,
         'is_custom' => 0,
         'has_choice' => 0,
-        'feature_list_id' => 0,
-
+        'description_id' => null,
+        'spell_list_id' => null,
+        'stat_pack_id' => null,
     ];
 
     public function description()
@@ -76,5 +82,13 @@ class Feature extends Model
     public function hasChoice()
     {
         return $this->has_choice;
+    }
+
+    /**
+     * Get the spell list.
+     */
+    public function spellList()
+    {
+        return $this->hasOne(SpellList::class);
     }
 }

@@ -23,6 +23,7 @@ class SubRace extends Model
         'description_id',
         'stat_modif_id',
         'feature_list_id',
+        'spell_list_id',
     ];
 
     /**
@@ -52,6 +53,7 @@ class SubRace extends Model
         'is_custom' => 0,
         'is_spellcaster' => 0,
         'casting_stat' => null,
+        'spell_list_id' => null,
 
     ];
 
@@ -73,5 +75,13 @@ class SubRace extends Model
     public function featureList()
     {
         return FeatureList::find($this->feature_list_id);
+    }
+
+    /**
+     * Get the spell list.
+     */
+    public function spellList()
+    {
+        return $this->hasOne(SpellList::class);
     }
 }

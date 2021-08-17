@@ -56,14 +56,6 @@ class Race extends Model
 
     ];
 
-    /**
-     * Get the creator of the spell.
-     */
-    public function spellList()
-    {
-        return $this->hasMany(Spell::class);
-    }
-
     public function description()
     {
         return $this->hasOne(Description::class);
@@ -87,5 +79,13 @@ class Race extends Model
     public function subRaces()
     {
         return $this->hasMany(SubRace::class);
+    }
+
+    /**
+     * Get the spell list.
+     */
+    public function spellList()
+    {
+        return $this->hasOne(SpellList::class);
     }
 }

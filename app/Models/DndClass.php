@@ -24,6 +24,7 @@ class DndClass extends Model
         'description_id',
         'subClassObtentionLevel',
         'hitdice',
+        'spell_list_id',
     ];
 
     /**
@@ -41,11 +42,11 @@ class DndClass extends Model
     protected $casts = [];
 
     /**
-     * Get the creator of the spell.
+     * Get the spell list.
      */
     public function spellList()
     {
-        return $this->hasMany(Spell::class);
+        return $this->hasOne(SpellList::class);
     }
 
     public function description()
@@ -57,11 +58,6 @@ class DndClass extends Model
     {
         return $this->hasOne(StatPack::class);
     }
-
-    // public function features()
-    // {
-    //     return $this->hasOne(FeatureList::class)->hasMany(Feature::class);
-    // }
 
     public function features()
     {

@@ -25,6 +25,8 @@ class Spell extends Model
         'school',
         'is_custom',
         'creator',
+        'enpowerable',
+        'description',
     ];
 
     /**
@@ -46,11 +48,38 @@ class Spell extends Model
     ];
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'has_saving_throw' => 0,
+        'is_spell_attack' => 0,
+        'do_damage' => 0,
+        'description' => null,
+        'feature_list_id' => null,
+        'roll' => null,
+        'casting_time' => null,
+        'is_custom' => 0,
+        'enpowerable' => 0,
+        'description' => null,
+
+    ];
+
+    /**
      * Get the tags associated with the spell.
      */
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Get the spell lists associated with the spell.
+     */
+    public function spellLists()
+    {
+        return $this->belongsToMany(SpellList::class);
     }
 
     /**

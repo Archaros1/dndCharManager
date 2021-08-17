@@ -169,20 +169,28 @@ class Character extends Model
         $characterFeatureIds = [];
 
         foreach ($this->background->features as $key => $feature) {
-            array_push($characterFeatureIds, $feature->id);
+            if ($feature->level <= $this->level) {
+                array_push($characterFeatureIds, $feature->id);
+            }
         }
 
         foreach ($this->race->features as $key => $feature) {
-            array_push($characterFeatureIds, $feature->id);
+            if ($feature->level <= $this->level) {
+                array_push($characterFeatureIds, $feature->id);
+            }
         }
 
         foreach ($this->class_investments as $key => $investment) {
             foreach ($investment->dndClass->features as $key => $feature) {
-                array_push($characterFeatureIds, $feature->id);
+                if ($feature->level <= $this->level) {
+                    array_push($characterFeatureIds, $feature->id);
+                }
             }
 
             foreach ($investment->subClass->features as $key => $feature) {
-                array_push($characterFeatureIds, $feature->id);
+                if ($feature->level <= $this->level) {
+                    array_push($characterFeatureIds, $feature->id);
+                }
             }
         }
 
@@ -196,52 +204,123 @@ class Character extends Model
 
     public function featuresWithChoices()
     {
-        $characterFeatureIds = [];
+        $characterFeature = [];
 
         foreach ($this->background->features as $key => $feature) {
-            if ($feature->hasChoice()) {
-                array_push($characterFeatureIds, $feature);
+            if ($feature->hasChoice() && $feature->level <= $this->level && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
             }
         }
 
         foreach ($this->race->features as $key => $feature) {
-            if ($feature->hasChoice()) {
-                array_push($characterFeatureIds, $feature);
+            if ($feature->hasChoice() && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
             }
         }
 
         foreach ($this->race->features as $key => $feature) {
-            if ($feature->hasChoice()) {
-                array_push($characterFeatureIds, $feature);
+            if ($feature->hasChoice() && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
             }
         }
 
         foreach ($this->classInvestments as $key => $investment) {
             foreach ($investment->class->features as $key => $feature) {
-                if ($feature->hasChoice()) {
-                    array_push($characterFeatureIds, $feature);
+                if ($feature->hasChoice() && $feature->level <= $this->level) {
+                    array_push($characterFeature, $feature);
                 }
             }
 
             if (!empty($investment->subClass)) {
                 foreach ($investment->subClass->features as $key => $feature) {
-                    if ($feature->hasChoice()) {
-                        array_push($characterFeatureIds, $feature);
+                    if ($feature->hasChoice() && $feature->level <= $this->level) {
+                        array_push($characterFeature, $feature);
                     }
                 }
             }
         }
 
-        return $characterFeatureIds;
+        return $characterFeature;
+    }
+
+    public function featuresWithSpellcasting()
+    {
+        $characterFeature = [];
+
+        foreach ($this->background->features as $key => $feature) {
+            if ($feature->is_spellcasting && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
+            }
+        }
+
+        foreach ($this->race->features as $key => $feature) {
+            if ($feature->is_spellcasting && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
+            }
+        }
+
+        foreach ($this->race->features as $key => $feature) {
+            if ($feature->is_spellcasting && $feature->level <= $this->level) {
+                array_push($characterFeature, $feature);
+            }
+        }
+
+        foreach ($this->classInvestments as $key => $investment) {
+            foreach ($investment->class->features as $key => $feature) {
+                if ($feature->is_spellcasting && $feature->level <= $this->level) {
+                    array_push($characterFeature, $feature);
+                }
+            }
+
+            if (!empty($investment->subClass)) {
+                foreach ($investment->subClass->features as $key => $feature) {
+                    if ($feature->is_spellcasting && $feature->level <= $this->level) {
+                        array_push($characterFeature, $feature);
+                    }
+                }
+            }
+        }
+
+        return $characterFeature;
+    }
+
+    public function featureChoicesWithSpellcasting()
+    {
+        $choicesWithSpellcasting = [];
+        $choices = $this->featureChoices;
+        foreach ($choices as $key => $choice) {
+            if ($choice->is_spellcasting) {
+                array_push($choicesWithSpellcasting, $choice);
+            }
+        }
+        return $choicesWithSpellcasting;
     }
 
     public function proficiencyBonus()
     {
-        return (1+ceil($this->level/4));
+        return (1 + ceil($this->level / 4));
     }
 
     public function ArmorClass()
     {
         return 8;
+    }
+
+    public function isSpellcaster()
+    {
+        $isSpellcaster = false;
+
+        $investments = $this->classInvestments;
+        foreach ($investments as $key => $investment) {
+            if ($investment->class->is_spellcaster || (!is_null($investment->subclass) && $investment->subclass->is_spellcaster)) {
+                $isSpellcaster = true;
+            }
+        }
+
+        if ($this->race->is_spellcaster || $this->subrace->is_spellcaster || count($this->featureChoicesWithSpellcasting()) !== 0 || count($this->featuresWithSpellcasting()) !== 0) {
+            $isSpellcaster = true;
+        }
+
+        return $isSpellcaster;
     }
 }
