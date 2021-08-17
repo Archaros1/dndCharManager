@@ -24,7 +24,7 @@ class CreateSubRacesTable extends Migration
             $table->unsignedBigInteger('stat_modif_id');
             $table->foreign('stat_modif_id')->references('id')->on('stat_packs');
             $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('description')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();

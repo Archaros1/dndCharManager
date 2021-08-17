@@ -7,7 +7,6 @@ use App\Models\Description;
 use App\Models\Feature;
 use App\Models\FeatureList;
 use App\Models\HitDice;
-use App\Models\Spell;
 use App\Models\SpellList;
 use Illuminate\Database\Seeder;
 
@@ -82,6 +81,8 @@ class DndClassSeeder extends Seeder
             'description_id' => $description->id,
             'feature_list_id' => $featureList->id,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'bard',
             'is_custom' => 0,
@@ -89,7 +90,10 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
+            'spell_list_id' => $spellList->id,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'cleric',
             'is_custom' => 0,
@@ -97,7 +101,10 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'sub_class_obtention_level' => 1,
             'hitdice' => 8,
+            'spell_list_id' => $spellList->id,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'druid',
             'is_custom' => 0,
@@ -105,7 +112,9 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'sub_class_obtention_level' => 2,
             'hitdice' => 8,
+            'spell_list_id' => $spellList->id,
         ]);
+
         DndClass::create([
             'name' => 'fighter',
             'is_custom' => 0,
@@ -114,6 +123,7 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
         ]);
+
         DndClass::create([
             'name' => 'monk',
             'is_custom' => 0,
@@ -122,6 +132,7 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
         ]);
+
         DndClass::create([
             'name' => 'paladin',
             'is_custom' => 0,
@@ -130,6 +141,8 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'ranger',
             'is_custom' => 0,
@@ -137,7 +150,9 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'wisdom',
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
+            'spell_list_id' => $spellList->id,
         ]);
+
         DndClass::create([
             'name' => 'rogue',
             'is_custom' => 0,
@@ -146,6 +161,8 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'sorcerer',
             'is_custom' => 0,
@@ -153,7 +170,10 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'sub_class_obtention_level' => 1,
             'hitdice' => 6,
+            'spell_list_id' => $spellList->id,
         ]);
+
+        $spellList = SpellList::create();
         DndClass::create([
             'name' => 'warlock',
             'is_custom' => 0,
@@ -161,25 +181,10 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'charisma',
             'sub_class_obtention_level' => 1,
             'hitdice' => 8,
+            'spell_list_id' => $spellList->id,
         ]);
 
         $spellList = SpellList::create();
-        $spell = Spell::create([
-            'name' => 'Acid Splash',
-            'level' => 0,
-            'school' => 'conjuration',
-            'has_saving_throw' => 1,
-            'saving_throw_attribute' => 'dexterity',
-            'is_spell_attack' => 0,
-            'do_damage' => 1,
-            'roll' => '1d6',
-            'casting_time' => '1 action',
-            'is_custom' => 0,
-        ]);
-
-        $spell->spellLists()->attach($spellList);
-        $spell->save();
-
         DndClass::create([
             'name' => 'wizard',
             'is_custom' => 0,

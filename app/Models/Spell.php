@@ -16,18 +16,25 @@ class Spell extends Model
      */
     protected $fillable = [
         'name',
+        'display_name',
         'level',
+        'range',
+        'components',
+        'material',
+        'concentration',
         'has_saving_throw',
         'saving_throw_attribute',
         'is_spell_attack',
+        'attack_type',
         'do_damage',
         'roll',
         'casting_time',
         'school',
+        'ritual',
         'is_custom',
         'creator',
         'enpowerable',
-        'description',
+        'description_id',
     ];
 
     /**
@@ -54,15 +61,20 @@ class Spell extends Model
      * @var array
      */
     protected $attributes = [
+        'components' => 'VSM',
+        'material' => null,
+        'concentration' => 0,
         'has_saving_throw' => 0,
         'is_spell_attack' => 0,
+        'attack_type' => null,
         'do_damage' => 0,
-        'description' => null,
+        'description_id' => null,
         'roll' => null,
         'casting_time' => null,
+        'ritual' => 0,
         'is_custom' => 0,
         'enpowerable' => 0,
-        'description' => null,
+        'description_id' => null,
 
     ];
 
@@ -87,7 +99,7 @@ class Spell extends Model
      */
     public function description()
     {
-        return $this->hasOne(Description::class) ?? null;
+        return $this->belongsTo(Description::class) ?? null;
     }
 
     /**

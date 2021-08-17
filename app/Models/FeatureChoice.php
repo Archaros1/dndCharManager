@@ -20,8 +20,10 @@ class FeatureChoice extends Model
         'display_name',
         'is_action',
         'is_custom',
+        'modify_stats',
         'description_id',
         'spell_list_id',
+        'stat_pack_id',
     ];
 
     /**
@@ -33,8 +35,10 @@ class FeatureChoice extends Model
         'is_spellcasting' => 0,
         'is_action' => 0,
         'is_custom' => 0,
+        'modify_stats' => 0,
         'description_id' => null,
         'spell_list_id' => null,
+        'stat_pack_id' => null,
     ];
 
     /**

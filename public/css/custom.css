@@ -114,4 +114,7 @@
 
 }
 
-
+.card-text.card-text-height-limit {
+    max-height: 150px;
+    overflow: scroll;
+}

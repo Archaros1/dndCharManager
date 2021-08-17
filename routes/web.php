@@ -57,4 +57,7 @@ Route::get('/class/{id}/showarchetype', [App\Http\Controllers\DndClassController
 
 Route::get('/race/{id}/showsubraces', [App\Http\Controllers\RaceController::class, 'showSubraces'])->name('show.subrace');
 
+Route::get('/spells/show/{id}', [App\Http\Controllers\SpellController::class, 'show'])->name('show.spell');
+Route::get('/spells/list', [App\Http\Controllers\SpellController::class, 'list'])->name('list.spell');
+
 Route::get('/test/{id}/', [App\Http\Controllers\DndClassController::class, 'test'])->name('test');

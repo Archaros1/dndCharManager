@@ -16,7 +16,6 @@ class UserController extends Controller
         if (Auth::user() && Auth::user()->id) {
             $user = Auth::user();
             $characters = $user->characters;
-            // dd($characters);
             return view('user.profil', [
                 'user' => $user,
                 'characters' => $characters,

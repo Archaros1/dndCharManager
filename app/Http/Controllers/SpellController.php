@@ -9,12 +9,16 @@ class SpellController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
-        //
+        $spells = Spell::all();
+        // $spell = Spell::find(1);
+
+        return view('spells/list', [
+            'spells' => $spells,
+            // 'spells' => [$spell],
+        ]);
     }
 
     /**

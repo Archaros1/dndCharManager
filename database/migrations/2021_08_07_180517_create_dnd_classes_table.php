@@ -22,9 +22,7 @@ class CreateDndClassesTable extends Migration
             $table->integer('sub_class_obtention_level');
             $table->integer('hitdice');
 
-            // $table->foreignId('description')->constrained()->nullable();
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            // $table->foreignId('feature_list_id')->constrained()->nullable();
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 

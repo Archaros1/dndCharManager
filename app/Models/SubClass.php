@@ -19,7 +19,7 @@ class SubClass extends Model
         'archetype',
         'class_id',
         'features',
-        'description',
+        'description_id',
         'is_custom',
         'is_spellcaster',
         'casting_stat',
