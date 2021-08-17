@@ -8,6 +8,7 @@ use App\Models\Description;
 use App\Models\FeatureList;
 use App\Models\Race;
 use App\Models\StatPack;
+use App\Models\SubRace;
 use Symfony\Component\Console\Descriptor\Descriptor;
 
 class RaceSeeder extends Seeder
@@ -19,37 +20,6 @@ class RaceSeeder extends Seeder
      */
     public function run()
     {
-        // $description = Description::create([
-        //     'text' => '',
-        //     'is_custom' => 0
-        // ]);
-
-        // $stats = StatPack::create([
-        //     'strength' => 0,
-        //     'dexterity' => 0,
-        //     'constitution' => 0,
-        //     'intelligence' => 0,
-        //     'wisdom' => 0,
-        //     'charisma' => 0,
-        // ]);
-
-        // Race::create([
-        //     'name' => '',
-        //     'is_custom' => 0,
-        //     'stat_modif_id' => $stats->id,
-        //     'description_id' => $description->id,
-        //     'feature_list_id' => $featureList->id
-        // ]);
-
-        $featureList = FeatureList::create([
-        ]);
-
-        //dwarf
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 0,
@@ -62,17 +32,10 @@ class RaceSeeder extends Seeder
         Race::create([
             'name' => 'dwarf',
             'is_custom' => 0,
-            'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
+            'stat_modif_id' => $stats->id
         ]);
 
         // elf
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 2,
@@ -82,20 +45,47 @@ class RaceSeeder extends Seeder
             'charisma' => 0,
         ]);
 
-        Race::create([
+        $race = Race::create([
             'name' => 'elf',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
+        ]);
+
+        $stats = StatPack::create([
+            'strength' => 0,
+            'dexterity' => 0,
+            'constitution' => 0,
+            'intelligence' => 0,
+            'wisdom' => 1,
+            'charisma' => 0,
+        ]);
+
+        SubRace::create([
+            'name' => 'wood elf',
+            'is_custom' => 0,
+            'is_spellcaster' => 0,
+            'race_id' => $race->id,
+            'stat_modif_id' => $stats->id,
+        ]);
+
+        $stats = StatPack::create([
+            'strength' => 0,
+            'dexterity' => 0,
+            'constitution' => 0,
+            'intelligence' => 1,
+            'wisdom' => 0,
+            'charisma' => 0,
+        ]);
+
+        SubRace::create([
+            'name' => 'high elf',
+            'is_custom' => 0,
+            'is_spellcaster' => 0,
+            'race_id' => $race->id,
+            'stat_modif_id' => $stats->id,
         ]);
 
         // halfling
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 2,
@@ -109,16 +99,9 @@ class RaceSeeder extends Seeder
             'name' => 'halfling',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // human
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 0,
@@ -132,16 +115,9 @@ class RaceSeeder extends Seeder
             'name' => 'human',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // dragonborn
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 2,
             'dexterity' => 0,
@@ -155,16 +131,9 @@ class RaceSeeder extends Seeder
             'name' => 'dragonborn',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // gnome
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 0,
@@ -178,16 +147,9 @@ class RaceSeeder extends Seeder
             'name' => 'gnome',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // half-elf
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 0,
@@ -201,16 +163,9 @@ class RaceSeeder extends Seeder
             'name' => 'half-elf',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // half-orc
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 2,
             'dexterity' => 0,
@@ -224,16 +179,9 @@ class RaceSeeder extends Seeder
             'name' => 'half-orc',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
 
         // tiefling
-        $description = Description::create([
-            'text' => '',
-            'is_custom' => 0
-        ]);
-
         $stats = StatPack::create([
             'strength' => 0,
             'dexterity' => 0,
@@ -247,8 +195,6 @@ class RaceSeeder extends Seeder
             'name' => 'tiefling',
             'is_custom' => 0,
             'stat_modif_id' => $stats->id,
-            'description_id' => $description->id,
-            'feature_list_id' => $featureList->id
         ]);
     }
 }

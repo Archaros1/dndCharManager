@@ -1961,8 +1961,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 $(function () {
   console.log("ready !");
   setSubClasses();
+  setSubRaces();
   $('#dnd_class').change(function () {
     setSubClasses();
+  });
+  $('#race').change(function () {
+    setSubRaces();
   });
 });
 
@@ -1982,13 +1986,34 @@ function setSubClasses() {
     type: 'GET',
     url: "/class/" + dndClass + "/showsubclassesbylevel/1",
     success: function success(result) {
-      if (result == 'ko') {
+      if (result == 'ko' || result == '[]') {
         $('#subclasses').hide();
+        $('#subclasse').val(null);
       } else {
         $('#subclasses').show();
         new_options = JSON.parse(result);
         changeSelectOption('#sub_class', new_options);
         $('#subclass_label').text(new_options[0].archetype);
+      }
+    }
+  });
+}
+
+function setSubRaces() {
+  var race = $('#race').val();
+  console.log(race);
+  $.ajax({
+    type: 'GET',
+    url: "/race/" + race + "/showsubraces",
+    success: function success(result) {
+      if (result == 'ko' || result == '[]') {
+        $('#subraces').hide();
+        $('#subrace').val(null);
+      } else {
+        $('#subraces').show();
+        new_options = JSON.parse(result);
+        changeSelectOption('#subrace', new_options);
+        $('#subrace_label').text(new_options[0].archetype);
       }
     }
   });

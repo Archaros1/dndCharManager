@@ -15,6 +15,7 @@ use App\Models\HitDice;
 use App\Models\Race;
 use App\Models\SelectedFeatureChoice;
 use App\Models\SubClass;
+use App\Models\SubRace;
 use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
@@ -84,9 +85,11 @@ class CharacterController extends Controller
     {
         $backgroundsCollec = Background::all();
         $racesCollec = Race::all();
+        $subracesCollec = SubRace::all();
 
         $backgrounds = [];
         $races = [];
+        $subraces = [];
 
         foreach ($backgroundsCollec as $background) {
             $backgrounds[$background->id] = ucwords($background->name);
@@ -96,9 +99,14 @@ class CharacterController extends Controller
             $races[$race->id] = ucwords($race->name);
         }
 
+        foreach ($subracesCollec as $subrace) {
+            $subraces[$subrace->id] = ucwords($subrace->name);
+        }
+
         return view('character/forms/basics', [
             'backgrounds' => $backgrounds,
             'races' => $races,
+            'subraces' => $subraces,
             'step' => 'basics',
         ]);
     }
@@ -229,6 +237,7 @@ class CharacterController extends Controller
             'name' => $inputs['name'],
             'level' => $inputs['level'],
             'race_id' => $inputs['race'],
+            'sub_race_id' => $inputs['subrace'],
             'background_id' => $inputs['background'],
             'stat_pack_id' => $stats->id,
             'creator_id' => Auth::user()->id,

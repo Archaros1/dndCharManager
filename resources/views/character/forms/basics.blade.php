@@ -16,9 +16,13 @@
                 {{ Form::label('level', 'Niveau', $attributes = ['class' => 'control-label mr-3']) }}
                 {{ Form::selectRange('level', 1, 20, $attributes = ['class' => 'form-control mr-4', 'required' => '']) }}
             </div>
-            <div class="row mb-4">
+            <div class="row mb-4" id="races">
                 {{ Form::label('race', 'Race', $attributes = ['class' => 'control-label mr-3']) }}
                 {{ Form::select('race', $races, $attributes = ['class' => 'form-control', 'required' => '']) }}
+            </div>
+            <div class="row mb-4" id="subraces">
+                {{ Form::label('subrace', 'Sous-Race', $attributes = ['class' => 'control-label mr-3', 'id' => 'subrace_label']) }}
+                {{ Form::select('subrace', $subraces, $attributes = ['class' => 'form-control', 'required' => '', 'id' => 'subrace']) }}
             </div>
             <div class="row mb-4">
                 {{ Form::label('background', 'Background', $attributes = ['class' => 'control-label mr-3']) }}

@@ -22,7 +22,7 @@ class CreateFeatureChoicesTable extends Migration
             $table->boolean('is_spellcasting');
 
             $table->foreignId('feature_id')->constrained();
-            $table->foreignId('description_id')->constrained()->nullable();
+            $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();
         });

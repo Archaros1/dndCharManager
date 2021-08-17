@@ -20,6 +20,7 @@ class Character extends Model
         'name',
         'level',
         'race_id',
+        'sub_race_id',
         'background_id',
         'stat_pack_id',
         'creator_id',
@@ -55,6 +56,11 @@ class Character extends Model
     public function race()
     {
         return $this->belongsTo(Race::class);
+    }
+
+    public function subrace()
+    {
+        return $this->belongsTo(SubRace::class);
     }
 
     // public function race()
@@ -193,6 +199,12 @@ class Character extends Model
         $characterFeatureIds = [];
 
         foreach ($this->background->features as $key => $feature) {
+            if ($feature->hasChoice()) {
+                array_push($characterFeatureIds, $feature);
+            }
+        }
+
+        foreach ($this->race->features as $key => $feature) {
             if ($feature->hasChoice()) {
                 array_push($characterFeatureIds, $feature);
             }

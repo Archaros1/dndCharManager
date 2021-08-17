@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Race;
+use App\Models\SubRace;
 use Illuminate\Http\Request;
 
 class RaceController extends Controller
@@ -81,5 +82,11 @@ class RaceController extends Controller
     public function destroy(Race $race)
     {
         //
+    }
+
+    public function showSubraces($idRace)
+    {
+        $subraces = Race::find($idRace)->subRaces;
+        return json_encode($subraces);
     }
 }

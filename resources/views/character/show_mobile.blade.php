@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row text-center font-weight-bold">
-            <div class="col-2">
-                <img src="{{ asset('/icons/fire.svg') }}" alt="" id="rest" class="size-150 toCenter"
+            <div class="col-3">
+                <img src="{{ asset('/icons/fire.svg') }}" alt="" id="rest" class=""
                     title="Short and long rest">
             </div>
-            <div class="col-7 size-text-4"><span class="size-text-3">{{ $character->name }}</span><br>Niveau
+            <div class="col-6 px-0 size-text-4"><span class="size-text-3">{{ $character->name }}</span><br>Niveau
                 {{ $character->level }}</div>
-            <div class="col-3 size-text-4">{{ $actualCharacter->left_health }}/{{ $character->health }}<br>PV</div>
+            <div class="col-3 px-0 size-text-4">{{ $actualCharacter->left_health }}/{{ $character->health }}<br>PV</div>
         </div>
         <div class="row mt-2 text-center size-text-3">
             <div class="col-3">+{{ $character->proficiencyBonus() }}</div>

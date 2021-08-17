@@ -36,6 +36,11 @@
     font-size: 0.65rem;
 }
 
+.size-icon {
+    /* width: 30px; */
+    height: 1.5rem;
+}
+
 .size-50 {
     transform: scale(50%);
 }

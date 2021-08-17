@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRacesTable extends Migration
+class CreateSubRacesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateRacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('races', function (Blueprint $table) {
+        Schema::create('sub_races', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('is_custom');
             $table->boolean('is_spellcaster');
             $table->string('casting_stat')->nullable();
 
-            // $table->foreignId('description')->constrained()->nullable();
-            $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            // $table->foreignId('feature_list_id')->constrained()->nullable();
-            $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('race_id')->constrained()->nullable();
             $table->unsignedBigInteger('stat_modif_id');
             $table->foreign('stat_modif_id')->references('id')->on('stat_packs');
+            $table->foreignId('description')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();
         });
@@ -38,6 +37,6 @@ class CreateRacesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('races');
+        Schema::dropIfExists('sub_races');
     }
 }
