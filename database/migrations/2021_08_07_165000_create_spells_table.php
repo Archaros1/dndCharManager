@@ -18,6 +18,7 @@ class CreateSpellsTable extends Migration
             $table->string('name');
             $table->integer('level');
             $table->boolean('has_saving_throw');
+            $table->string('saving_throw_attribute');
             $table->boolean('is_spell_attack');
             $table->boolean('do_damage');
             $table->string('roll')->nullable();

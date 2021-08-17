@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             BackgroundSeeder::class,
-            RaceSeeder::class,
             DndClassSeeder::class,
             SubClassSeeder::class,
+            RaceSeeder::class,
         ]);
     }
 }

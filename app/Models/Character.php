@@ -60,13 +60,8 @@ class Character extends Model
 
     public function subrace()
     {
-        return $this->belongsTo(SubRace::class);
+        return $this->belongsTo(SubRace::class, 'sub_race_id');
     }
-
-    // public function race()
-    // {
-    //     return Race::find($this->race_id);
-    // }
 
     /**
      * Get the creator of the character.
@@ -180,6 +175,14 @@ class Character extends Model
             }
         }
 
+        if (!empty($this->subrace)) {
+            foreach ($this->subrace->features as $key => $feature) {
+                if ($feature->level <= $this->level) {
+                    array_push($characterFeatureIds, $feature->id);
+                }
+            }
+        }
+
         foreach ($this->class_investments as $key => $investment) {
             foreach ($investment->dndClass->features as $key => $feature) {
                 if ($feature->level <= $this->level) {
@@ -204,43 +207,46 @@ class Character extends Model
 
     public function featuresWithChoices()
     {
-        $characterFeature = [];
+        $characterFeatures = [];
 
         foreach ($this->background->features as $key => $feature) {
-            if ($feature->hasChoice() && $feature->level <= $this->level && $feature->level <= $this->level) {
-                array_push($characterFeature, $feature);
+            if ($feature->hasChoice() && $feature->level <= $this->level) {
+                array_push($characterFeatures, $feature);
             }
         }
 
         foreach ($this->race->features as $key => $feature) {
             if ($feature->hasChoice() && $feature->level <= $this->level) {
-                array_push($characterFeature, $feature);
+                array_push($characterFeatures, $feature);
             }
         }
 
-        foreach ($this->race->features as $key => $feature) {
-            if ($feature->hasChoice() && $feature->level <= $this->level) {
-                array_push($characterFeature, $feature);
+        if (!empty($this->subrace)) {
+            foreach ($this->subrace->features as $key => $feature) {
+                if ($feature->hasChoice() && $feature->level <= $this->level) {
+                    array_push($characterFeatures, $feature);
+                }
             }
         }
+
 
         foreach ($this->classInvestments as $key => $investment) {
             foreach ($investment->class->features as $key => $feature) {
                 if ($feature->hasChoice() && $feature->level <= $this->level) {
-                    array_push($characterFeature, $feature);
+                    array_push($characterFeatures, $feature);
                 }
             }
 
             if (!empty($investment->subClass)) {
                 foreach ($investment->subClass->features as $key => $feature) {
                     if ($feature->hasChoice() && $feature->level <= $this->level) {
-                        array_push($characterFeature, $feature);
+                        array_push($characterFeatures, $feature);
                     }
                 }
             }
         }
 
-        return $characterFeature;
+        return $characterFeatures;
     }
 
     public function featuresWithSpellcasting()

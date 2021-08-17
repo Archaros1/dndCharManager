@@ -26,6 +26,7 @@ class CreateDndClassesTable extends Migration
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             // $table->foreignId('feature_list_id')->constrained()->nullable();
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();
         });

@@ -20,6 +20,7 @@ class CreateFeatureChoicesTable extends Migration
             $table->boolean('is_action');
             $table->string('activation_time')->nullable();
             $table->string('duration')->nullable();
+            $table->string('casting_stat')->nullable();
             $table->boolean('is_custom');
             $table->boolean('is_spellcasting');
 

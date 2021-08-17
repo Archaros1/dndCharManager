@@ -15,13 +15,26 @@ class FeatureChoice extends Model
      * @var array
      */
     protected $fillable = [
-        'description_id',
-        'is_spellcasting',
         'name',
+        'is_spellcasting',
         'display_name',
         'is_action',
         'is_custom',
+        'description_id',
         'spell_list_id',
+    ];
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'is_spellcasting' => 0,
+        'is_action' => 0,
+        'is_custom' => 0,
+        'description_id' => null,
+        'spell_list_id' => null,
     ];
 
     /**

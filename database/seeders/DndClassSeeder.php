@@ -7,6 +7,8 @@ use App\Models\Description;
 use App\Models\Feature;
 use App\Models\FeatureList;
 use App\Models\HitDice;
+use App\Models\Spell;
+use App\Models\SpellList;
 use Illuminate\Database\Seeder;
 
 class DndClassSeeder extends Seeder
@@ -66,7 +68,6 @@ class DndClassSeeder extends Seeder
             'duration' => '1 minute',
             'activation_time' => '1 action bonus',
             'is_custom' => 0,
-            'has_choice' => 0,
             'feature_list_id' => $featureList->id,
             'description_id' => $featureDescription->id,
         ]);
@@ -161,6 +162,24 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 1,
             'hitdice' => 8,
         ]);
+
+        $spellList = SpellList::create();
+        $spell = Spell::create([
+            'name' => 'Acid Splash',
+            'level' => 0,
+            'school' => 'conjuration',
+            'has_saving_throw' => 1,
+            'saving_throw_attribute' => 'dexterity',
+            'is_spell_attack' => 0,
+            'do_damage' => 1,
+            'roll' => '1d6',
+            'casting_time' => '1 action',
+            'is_custom' => 0,
+        ]);
+
+        $spell->spellLists()->attach($spellList);
+        $spell->save();
+
         DndClass::create([
             'name' => 'wizard',
             'is_custom' => 0,
@@ -168,6 +187,7 @@ class DndClassSeeder extends Seeder
             'casting_stat' => 'intelligence',
             'sub_class_obtention_level' => 2,
             'hitdice' => 6,
+            'spell_list_id' => $spellList->id,
         ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpellListSpellTable extends Migration
+class CreateSpellSpellListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSpellListSpellTable extends Migration
      */
     public function up()
     {
-        Schema::create('spell_list_spell', function (Blueprint $table) {
+        Schema::create('spell_spell_list', function (Blueprint $table) {
             $table->id();
             $table->foreignId('spell_id')->constrained();
             $table->foreignId('spell_list_id')->constrained();
@@ -28,6 +28,6 @@ class CreateSpellListSpellTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spell_list_spell');
+        Schema::dropIfExists('spell_spell_list');
     }
 }

@@ -46,7 +46,39 @@ class DndClass extends Model
      */
     public function spellList()
     {
-        return $this->hasOne(SpellList::class);
+        return $this->belongsTo(SpellList::class);
+    }
+
+    public function spells()
+    {
+        return $this->spellList->belongsToMany(Spell::class);
+
+    }
+
+    public function spellsLevelN(int $level)
+    {
+        $spells = $this->spells;
+        $spellsLevelN = [];
+        foreach ($spells as $key => $spell) {
+            if ($spell->level === $level) {
+                array_push($spellsLevelN, $spell);
+            }
+        }
+
+        return $spellsLevelN;
+    }
+
+    public function spellsLevelNOrLower(int $level)
+    {
+        $spells = $this->spells;
+        $spellsLevelN = [];
+        foreach ($spells as $key => $spell) {
+            if ($spell->level <= $level) {
+                array_push($spellsLevelN, $spell);
+            }
+        }
+
+        return $spellsLevelN;
     }
 
     public function description()

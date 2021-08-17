@@ -54,7 +54,7 @@ class BackgroundSeeder extends Seeder
             'stat_pack_id' => $statPack->id,
         ]);
 
-        $choice1 = FeatureChoice::create([
+        FeatureChoice::create([
             'description_id' => $description->id,
             'is_spellcasting' => 0,
             'name' => 'choice 1',
@@ -64,7 +64,7 @@ class BackgroundSeeder extends Seeder
             'feature_id' => $feature2->id,
         ]);
 
-        $choice1 = FeatureChoice::create([
+        FeatureChoice::create([
             'description_id' => $description->id,
             'is_spellcasting' => 0,
             'name' => 'choice 2',

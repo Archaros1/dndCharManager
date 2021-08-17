@@ -98,4 +98,9 @@ class DndClassController extends Controller
             'ko' :
             $this->showSubClass($classId);
     }
+
+    public function test($id)
+    {
+        dd(DndClass::where('name', '=', 'wizard')->first()->spellsLevelN(0));
+    }
 }

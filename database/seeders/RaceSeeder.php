@@ -5,8 +5,12 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Description;
+use App\Models\DndClass;
+use App\Models\Feature;
+use App\Models\FeatureChoice;
 use App\Models\FeatureList;
 use App\Models\Race;
+use App\Models\SpellList;
 use App\Models\StatPack;
 use App\Models\SubRace;
 use Symfony\Component\Console\Descriptor\Descriptor;
@@ -80,12 +84,42 @@ class RaceSeeder extends Seeder
             'charisma' => 0,
         ]);
 
+        //high elf
+        $featureList = FeatureList::create();
+
+        $feature = Feature::create([
+            'name' => 'cantrip',
+            'display_name' => 'Cantrip',
+            'has_choice' => 1,
+            'is_custom' => 0,
+            'feature_list_id' => $featureList->id,
+        ]);
+
+        $wizardCantrips = DndClass::where('name', '=', 'wizard')->first()->spellsLevelN(0);
+
+        foreach ($wizardCantrips as $key => $cantrip) {
+            $spellList = SpellList::create();
+            $cantrip->spellLists()->attach($spellList);
+            $cantrip->save();
+
+            FeatureChoice::create([
+                'is_spellcasting' => 1,
+                'casting_stat' => 'intelligence',
+                'name' => $cantrip->name,
+                'display_name' => $cantrip->name,
+                'is_custom' => 0,
+                'feature_id' => $feature->id,
+                'spell_list_id' => $spellList->id,
+            ]);
+        }
+
         SubRace::create([
             'name' => 'high elf',
             'is_custom' => 0,
-            'is_spellcaster' => 0,
+            'is_spellcaster' => 1,
             'race_id' => $race->id,
             'stat_modif_id' => $stats->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         // halfling
