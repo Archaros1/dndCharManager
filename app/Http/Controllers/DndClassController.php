@@ -99,8 +99,21 @@ class DndClassController extends Controller
             $this->showSubClass($classId);
     }
 
+    public function showSpellList(int $id)
+    {
+        $class = DndClass::find($id);
+        if (empty($class) || is_null($class->spell_list_id)) {
+            return 'ko';
+        }
+        $spells = $class->spells;
+        return view('spells/list', [
+            'class' => $class,
+            'spells' => $spells,
+        ]);
+    }
+
     public function test($id)
     {
-        dd(DndClass::where('name', '=', 'wizard')->first()->spellsLevelN(0));
+        dd(DndClass::find($id)->proficiencies);
     }
 }

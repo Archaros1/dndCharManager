@@ -13,11 +13,9 @@ class SpellController extends Controller
     public function list()
     {
         $spells = Spell::all();
-        // $spell = Spell::find(1);
 
         return view('spells/list', [
             'spells' => $spells,
-            // 'spells' => [$spell],
         ]);
     }
 

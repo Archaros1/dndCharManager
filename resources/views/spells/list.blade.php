@@ -6,6 +6,9 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                @isset($class)
+                    <div class="row h2">{{ ucwords($class->name)."'s spells" }}</div>
+                @endisset
                 @foreach ($spells as $spell)
                     <div class="card mt-2">
                         <div class="card-header">

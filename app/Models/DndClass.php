@@ -21,25 +21,25 @@ class DndClass extends Model
         'is_custom',
         'is_spellcaster',
         'casting_stat',
-        'description_id',
         'subClassObtentionLevel',
         'hitdice',
+        'description_id',
         'spell_list_id',
+        'proficiency_list_id',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The model's default values for attributes.
      *
      * @var array
      */
-    protected $hidden = [];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [];
+    protected $attributes = [
+        'is_spellcaster' =>0,
+        'casting_stat' => null,
+        'description_id' => null,
+        'spell_list_id' => null,
+        'proficiency_list_id' => null,
+    ];
 
     /**
      * Get the spell list.
@@ -52,7 +52,16 @@ class DndClass extends Model
     public function spells()
     {
         return $this->spellList->belongsToMany(Spell::class);
+    }
 
+    public function proficiencyList()
+    {
+        return $this->belongsTo(ProficiencyList::class);
+    }
+
+    public function proficiencies()
+    {
+        return $this->proficiencyList->belongsToMany(Skill::class);
     }
 
     public function spellsLevelN(int $level)

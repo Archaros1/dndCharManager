@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             SubClassSeeder::class,
             RaceSeeder::class,
             SpellSeeder::class,
+            SkillSeeder::class,
         ]);
     }
 }

@@ -25,6 +25,7 @@ class CreateRacesTable extends Migration
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('stat_modif_id');
             $table->foreign('stat_modif_id')->references('id')->on('stat_packs');
+            $table->foreignId('proficiency_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();
         });

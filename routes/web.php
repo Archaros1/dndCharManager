@@ -54,6 +54,7 @@ Auth::routes();
 Route::get('/class/{id}/showsubclasses', [App\Http\Controllers\DndClassController::class, 'showSubClass'])->name('show.subClass');
 Route::get('/class/{id}/showsubclassesbylevel/{level}', [App\Http\Controllers\DndClassController::class, 'showSubClassLevelN'])->name('show.subClassLevelN');
 Route::get('/class/{id}/showarchetype', [App\Http\Controllers\DndClassController::class, 'showArchetype'])->name('show.archetype');
+Route::get('/class/{id}/showspells', [App\Http\Controllers\DndClassController::class, 'showSpellList'])->name('show.spells');
 
 Route::get('/race/{id}/showsubraces', [App\Http\Controllers\RaceController::class, 'showSubraces'])->name('show.subrace');
 
