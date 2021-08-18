@@ -23,6 +23,7 @@ class Character extends Model
         'sub_race_id',
         'background_id',
         'stat_pack_id',
+        'final_stat_pack_id',
         'creator_id',
     ];
 
@@ -91,15 +92,38 @@ class Character extends Model
     {
         $statPacks = [];
 
-        $statPacks['race'] = $this->race->statsModif;
-        $statPacks['character'] = $this->statPack;
+        array_push($statPacks, $this->statPack, $this->race->statsModif);
+        if (!is_null($this->sub_race_id)) {
+            array_push($statPacks, $this->subrace->statsModif);
+        }
+        foreach ($this->features() as $key => $feature) {
+            if (!is_null($feature->stat_pack_id)) {
+                array_push($statPacks, $feature->statPack);
+            }
+        }
+
+        foreach ($this->featureChoices as $key => $choice) {
+            if (!is_null($choice->stat_pack_id)) {
+                array_push($statPacks, $feature->statPack);
+            }
+        }
 
         return $statPacks;
     }
 
+    public function statPack()
+    {
+        return $this->belongsTo(StatPack::class, 'stat_pack_id');
+    }
+
+    public function finalStatPack()
+    {
+        return $this->belongsTo(StatPack::class, 'final_stat_pack_id');
+    }
+
     public function calculateStats()
     {
-        $stats = [
+        $statsTab = [
             'strength' => 0,
             'dexterity' => 0,
             'constitution' => 0,
@@ -109,29 +133,28 @@ class Character extends Model
         ];
         $statPacks = $this->statPacks();
         foreach ($statPacks as $key => $pack) {
-            $stats['strength'] += $pack->strength;
-            $stats['dexterity'] += $pack->dexterity;
-            $stats['constitution'] += $pack->constitution;
-            $stats['intelligence'] += $pack->intelligence;
-            $stats['wisdom'] += $pack->wisdom;
-            $stats['charisma'] += $pack->charisma;
+            $statsTab['strength'] += $pack->strength;
+            $statsTab['dexterity'] += $pack->dexterity;
+            $statsTab['constitution'] += $pack->constitution;
+            $statsTab['intelligence'] += $pack->intelligence;
+            $statsTab['wisdom'] += $pack->wisdom;
+            $statsTab['charisma'] += $pack->charisma;
         }
-        $stats = StatPack::create($stats);
 
-        $this->statPack = $stats;
+        if (is_null($this->final_stat_pack_id)) {
+            $stats = StatPack::create($statsTab);
+            $this->final_stat_pack_id = $stats->id;
+        } else {
+            $stats = StatPack::find($this->final_stat_pack_id);
+            $stats->update($statsTab);
+        }
         $this->save();
         return $stats;
     }
 
-
-    public function statPack()
-    {
-        return StatPack::find($this->stat_pack_id);
-    }
-
     public function getModifier(string $statName): int
     {
-        $stat = $this->statPack()->$statName;
+        $stat = $this->finalStatPack->$statName;
         $modifier = floor(($stat - 10) / 2);
 
         return (int) $modifier;
@@ -161,43 +184,19 @@ class Character extends Model
 
     public function features()
     {
-        $characterFeatureIds = [];
+        $characterFeatures = [];
 
-        foreach ($this->background->features as $key => $feature) {
-            if ($feature->level <= $this->level) {
-                array_push($characterFeatureIds, $feature->id);
-            }
+        $characterFeatures = $this->getFeaturesOf($this->backgroud, $characterFeatures);
+        $characterFeatures = $this->getFeaturesOf($this->race, $characterFeatures);
+        $characterFeatures = $this->getFeaturesOf($this->subrace, $characterFeatures);
+
+
+        foreach ($this->classInvestments as $key => $investment) {
+            $characterFeatures = $this->getFeaturesOf($investment->dndClass, $characterFeatures);
+            $characterFeatures = $this->getFeaturesOf($investment->subClass, $characterFeatures);
         }
 
-        foreach ($this->race->features as $key => $feature) {
-            if ($feature->level <= $this->level) {
-                array_push($characterFeatureIds, $feature->id);
-            }
-        }
-
-        if (!empty($this->subrace)) {
-            foreach ($this->subrace->features as $key => $feature) {
-                if ($feature->level <= $this->level) {
-                    array_push($characterFeatureIds, $feature->id);
-                }
-            }
-        }
-
-        foreach ($this->class_investments as $key => $investment) {
-            foreach ($investment->dndClass->features as $key => $feature) {
-                if ($feature->level <= $this->level) {
-                    array_push($characterFeatureIds, $feature->id);
-                }
-            }
-
-            foreach ($investment->subClass->features as $key => $feature) {
-                if ($feature->level <= $this->level) {
-                    array_push($characterFeatureIds, $feature->id);
-                }
-            }
-        }
-
-        return $characterFeatureIds;
+        return $characterFeatures;
     }
 
     public function featureChoices()
@@ -309,7 +308,7 @@ class Character extends Model
 
     public function ArmorClass()
     {
-        return 8;
+        return 10 + $this->getModifier('dexterity');
     }
 
     public function isSpellcaster()
@@ -328,5 +327,23 @@ class Character extends Model
         }
 
         return $isSpellcaster;
+    }
+
+    public function isMulticlass()
+    {
+        return count($this->classInvestments) > 1;
+    }
+
+    public function getFeaturesOf($item, array $characterFeatures)
+    {
+        if (!empty($item) && !is_null($item->feature_list_id)) {
+            foreach ($item->features as $key => $feature) {
+                if ($feature->level <= $this->level) {
+                    array_push($characterFeatures, $feature);
+                }
+            }
+        }
+
+        return $characterFeatures;
     }
 }

@@ -114,6 +114,6 @@ class DndClassController extends Controller
 
     public function test($id)
     {
-        dd(DndClass::find($id)->proficiencies);
+        dd(DndClass::find($id)->spellsLevelN(0));
     }
 }

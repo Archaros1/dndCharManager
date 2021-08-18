@@ -86,7 +86,7 @@ class RaceController extends Controller
 
     public function showSubraces($idRace)
     {
-        $subraces = Race::find($idRace)->subRaces;
+        $subraces = Race::find($idRace)->subraces;
         return json_encode($subraces);
     }
 }

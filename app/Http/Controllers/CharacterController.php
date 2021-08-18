@@ -138,14 +138,21 @@ class CharacterController extends Controller
     private function building($idChara)
     {
         $character = Character::find($idChara);
-
-
         $nextStep = $this->checkCharacterReady($character);
 
         if (is_null($nextStep)) {
+            $character->calculateStats();
             $character->health = $character->calculateHP();
-
             $character->save();
+
+            $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
+            if (empty($actualCharacter)) {
+                $actualCharacter = ActualCharacter::create([
+                    'left_health' => $character->health,
+                    'character_id' => $idChara,
+                ]);
+            }
+
             return redirect('character/show/' . $idChara);
         }
 
@@ -430,16 +437,10 @@ class CharacterController extends Controller
     {
         $character = Character::find($idChara);
         $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
-        if (empty($actualCharacter)) {
-            $actualCharacter = ActualCharacter::create([
-                'left_health' => $character->health,
-                'character_id' => $idChara,
-            ]);
-        }
 
         $isMobile = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
         if ($isMobile) {
-            return view('character/show_mobile', [
+            return view('character/mobile/main', [
                 'character' => $character,
                 'actualCharacter' => $actualCharacter,
             ]);

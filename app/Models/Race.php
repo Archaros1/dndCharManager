@@ -63,7 +63,7 @@ class Race extends Model
 
     public function statsModif()
     {
-        return $this->hasOne(StatPack::class);
+        return $this->belongsTo(StatPack::class, 'stat_modif_id');
     }
 
     public function features()
@@ -76,7 +76,7 @@ class Race extends Model
         return FeatureList::find($this->feature_list_id);
     }
 
-    public function subRaces()
+    public function subraces()
     {
         return $this->hasMany(SubRace::class);
     }

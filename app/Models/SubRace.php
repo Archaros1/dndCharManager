@@ -64,7 +64,7 @@ class SubRace extends Model
 
     public function statsModif()
     {
-        return $this->hasOne(StatPack::class);
+        return $this->belongsTo(StatPack::class, 'stat_modif_id');
     }
 
     public function features()

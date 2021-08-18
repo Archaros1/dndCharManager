@@ -24,6 +24,9 @@ class CreateCharactersTable extends Migration
             // $table->foreignId('sub_race_id')->constrained();
             $table->foreignId('sub_race_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('stat_pack_id')->constrained();
+            $table->unsignedBigInteger('final_stat_pack_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
+            $table->foreign('final_stat_pack_id')->references('id')->on('stat_packs');
+            // $table->foreignId('final_stat_pack_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('background_id')->constrained();
 
             $table->unsignedBigInteger('creator_id');

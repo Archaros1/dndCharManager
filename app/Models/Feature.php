@@ -91,4 +91,14 @@ class Feature extends Model
     {
         return $this->hasOne(SpellList::class);
     }
+
+    public function statPack()
+    {
+        return $this->hasOne(StatPack::class);
+    }
+
+    public function choices()
+    {
+        return $this->hasMany(FeatureChoice::class);
+    }
 }
