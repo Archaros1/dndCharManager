@@ -30,7 +30,6 @@ class CreateFeaturesTable extends Migration
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('stat_pack_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-
             $table->foreignId('feature_list_id')->constrained();
 
             $table->timestamps();

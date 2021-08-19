@@ -22,6 +22,8 @@ class CreateClassInvestmentsTable extends Migration
             $table->foreign('class_id')->references('id')->on('dnd_classes');
             $table->unsignedBigInteger('subclass_id')->nullable();
             $table->foreign('subclass_id')->references('id')->on('sub_classes');
+            $table->unsignedBigInteger('known_spell_list_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
+            $table->foreign('known_spell_list_id')->references('id')->on('spell_lists');
             $table->timestamps();
         });
     }

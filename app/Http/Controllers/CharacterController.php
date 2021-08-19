@@ -266,7 +266,7 @@ class CharacterController extends Controller
     {
         if (isset($inputs['sub_class'])) {
             $subclass = SubClass::find($inputs['sub_class']);
-            if (empty($subclass) || $subclass->race_id !== $inputs['dnd_class']) {
+            if (empty($subclass) || $subclass->class_id !== (int) $inputs['dnd_class']) {
                 $inputs['sub_class'] = null;
             }
         }

@@ -19,40 +19,17 @@ class ClassInvestment extends Model
         'class_id',
         'subclass_id',
         'level',
+        'known_spell_list_id',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-
+    protected $attributes = [
+        'known_spell_list_id' => null,
     ];
 
     public function character()
     {
         return $this->belongsTo(Character::class);
     }
-
-    // public function class()
-    // {
-    //     return DndClass::find($this->class_id);
-    // }
-
-    // public function subclass()
-    // {
-    //     return SubClass::find($this->subclass_id);
-    // }
 
     public function class()
     {
