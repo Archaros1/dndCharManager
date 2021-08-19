@@ -91,6 +91,7 @@ class DndClassSeeder extends Seeder
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'bard',
             'is_custom' => 0,
@@ -100,10 +101,12 @@ class DndClassSeeder extends Seeder
             'hitdice' => 8,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'cleric',
             'is_custom' => 0,
@@ -113,10 +116,12 @@ class DndClassSeeder extends Seeder
             'hitdice' => 8,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'druid',
             'is_custom' => 0,
@@ -126,9 +131,11 @@ class DndClassSeeder extends Seeder
             'hitdice' => 8,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'fighter',
             'is_custom' => 0,
@@ -137,9 +144,11 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'monk',
             'is_custom' => 0,
@@ -148,9 +157,11 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'paladin',
             'is_custom' => 0,
@@ -159,10 +170,12 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 10,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'ranger',
             'is_custom' => 0,
@@ -172,9 +185,11 @@ class DndClassSeeder extends Seeder
             'hitdice' => 10,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'rogue',
             'is_custom' => 0,
@@ -183,10 +198,12 @@ class DndClassSeeder extends Seeder
             'sub_class_obtention_level' => 3,
             'hitdice' => 8,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'sorcerer',
             'is_custom' => 0,
@@ -196,10 +213,12 @@ class DndClassSeeder extends Seeder
             'hitdice' => 6,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'warlock',
             'is_custom' => 0,
@@ -209,10 +228,12 @@ class DndClassSeeder extends Seeder
             'hitdice' => 8,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
 
         $proficiencyList = ProficiencyList::create();
         $spellList = SpellList::create();
+        $featureList = FeatureList::create();
         DndClass::create([
             'name' => 'wizard',
             'is_custom' => 0,
@@ -222,6 +243,7 @@ class DndClassSeeder extends Seeder
             'hitdice' => 6,
             'spell_list_id' => $spellList->id,
             'proficiency_list_id' => $proficiencyList->id,
+            'feature_list_id' => $featureList->id,
         ]);
     }
 }

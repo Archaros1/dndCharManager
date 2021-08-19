@@ -16,10 +16,17 @@
                     </div>
                 @endif
 
-                <div class="row mb-4" id="">
+                @if ($feature->selected_choice_amount > 1)
+                    @for ($i = 1; $i <= $feature->selected_choice_amount; $i++)
+                        <div class="row mb-4" id="">
+                            {{ Form::label('feature_choice_' . $i, 'Options', $attributes = ['class' => 'control-label mr-3']) }}
+                            {{ Form::select('feature_choice_' . $i, $choices, $attributes = ['class' => 'form-control', 'required' => '']) }}
+                        </div>
+                    @endfor
+                @else
                     {{ Form::label('feature_choice', 'Options', $attributes = ['class' => 'control-label mr-3']) }}
                     {{ Form::select('feature_choice', $choices, $attributes = ['class' => 'form-control', 'required' => '']) }}
-                </div>
+                @endif
                 <div class="row mb-4" id="">
                     <p id="description-choice"></p>
                 </div>

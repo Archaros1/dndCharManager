@@ -389,9 +389,10 @@ class RaceSeeder extends Seeder
         ]);
 
         $feature = Feature::create([
-            'name' => 'ability score increase 1',
-            'display_name' => 'Ability Score Increase (1)',
+            'name' => 'ability score increase',
+            'display_name' => 'Ability Score Increase',
             'has_choice' => 1,
+            'selected_choice_amount' => 2,
             'is_custom' => 0,
             'feature_list_id' => $featureList->id,
         ]);

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Background;
 use App\Models\ClassInvestment;
 use App\Models\DndClass;
+use App\Models\Feature;
 use App\Models\FeatureChoice;
 use App\Models\HitDice;
 use App\Models\Race;
@@ -240,6 +241,13 @@ class CharacterController extends Controller
             'charisma' => $inputs['charisma'],
         ]);
 
+        if (isset($inputs['subrace'])) {
+            $subrace = SubRace::find($inputs['subrace']);
+            if (empty($subrace) || $subrace->race_id !== $inputs['race']) {
+                $inputs['subrace'] = null;
+            }
+        }
+
         $newCharacter = Character::create([
             'name' => $inputs['name'],
             'level' => $inputs['level'],
@@ -256,6 +264,13 @@ class CharacterController extends Controller
 
     private function storeLevel1($inputs, $idChara)
     {
+        if (isset($inputs['sub_class'])) {
+            $subclass = SubClass::find($inputs['sub_class']);
+            if (empty($subclass) || $subclass->race_id !== $inputs['dnd_class']) {
+                $inputs['sub_class'] = null;
+            }
+        }
+
         $investment = ClassInvestment::create([
             'character_id' => $idChara,
             'class_id' => $inputs['dnd_class'],
@@ -338,11 +353,29 @@ class CharacterController extends Controller
     {
         $inputs = $request->post();
 
-        SelectedFeatureChoice::create([
-            'character_id' => $idChara,
-            'feature_id' => $inputs['feature'],
-            'feature_choice_id' => $inputs['feature_choice'],
-        ]);
+        $feature = Feature::find($inputs['feature']);
+        if ($feature->selected_choice_amount > 1) {
+            $choices = [];
+            for ($i = 0; $i < $feature->selected_choice_amount; $i++) {
+                array_push($choices, $inputs['feature_choice_' . ($i + 1)]);
+                if ($choices !== array_unique($choices)) {
+                    return redirect('/character/create/building/' . $idChara);
+                }
+            }
+            for ($i = 0; $i < $feature->selected_choice_amount; $i++) {
+                SelectedFeatureChoice::create([
+                    'character_id' => $idChara,
+                    'feature_id' => $inputs['feature'],
+                    'feature_choice_id' => $inputs['feature_choice_' . ($i + 1)],
+                ]);
+            }
+        } else {
+            SelectedFeatureChoice::create([
+                'character_id' => $idChara,
+                'feature_id' => $inputs['feature'],
+                'feature_choice_id' => $inputs['feature_choice'],
+            ]);
+        }
 
         return redirect('/character/create/building/' . $idChara);
     }
