@@ -10,7 +10,6 @@ use App\Models\DndClass;
 use App\Models\Spell;
 use App\Models\SpellList;
 
-
 class SpellSeeder extends Seeder
 {
     /**

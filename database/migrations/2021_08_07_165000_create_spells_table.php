@@ -20,10 +20,12 @@ class CreateSpellsTable extends Migration
             $table->integer('level');
             $table->string('range');
             $table->string('components');
-            $table->text('material')->nullable();;
+            $table->text('material')->nullable();
+            ;
             $table->boolean('concentration');
             $table->boolean('has_saving_throw');
-            $table->string('saving_throw_attribute')->nullable();;
+            $table->string('saving_throw_attribute')->nullable();
+            ;
             $table->boolean('is_spell_attack');
             $table->string('attack_type')->nullable();
             $table->boolean('do_damage');

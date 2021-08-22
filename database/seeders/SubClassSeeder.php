@@ -8,7 +8,6 @@ use App\Models\FeatureList;
 use Illuminate\Database\Seeder;
 use App\Models\SubClass;
 
-
 class SubClassSeeder extends Seeder
 {
     /**
@@ -204,6 +203,5 @@ class SubClassSeeder extends Seeder
             'casting_stat' => 'intelligence',
             'feature_list_id' => $featureList->id,
         ]);
-
     }
 }

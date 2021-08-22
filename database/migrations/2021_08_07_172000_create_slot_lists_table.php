@@ -16,7 +16,6 @@ class CreateSlotListsTable extends Migration
         Schema::create('slot_lists', function (Blueprint $table) {
             $table->id();
             $table->integer('class_level')->nullable();
-            $table->integer('level_0');
             $table->integer('level_1');
             $table->integer('level_2');
             $table->integer('level_3');
@@ -26,6 +25,8 @@ class CreateSlotListsTable extends Migration
             $table->integer('level_7');
             $table->integer('level_8');
             $table->integer('level_9');
+            $table->unsignedBigInteger('owner_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
+            $table->foreign('owner_id')->references('id')->on('slot_list_packs');
             $table->timestamps();
         });
     }

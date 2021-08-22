@@ -362,7 +362,7 @@ class RaceSeeder extends Seeder
         ]);
 
         SubRace::create([
-            'name' => 'forest gnome',
+            'name' => 'rock gnome',
             'is_custom' => 0,
             'is_spellcaster' => 0,
             'race_id' => $race->id,

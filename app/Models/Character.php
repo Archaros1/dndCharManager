@@ -25,6 +25,7 @@ class Character extends Model
         'stat_pack_id',
         'final_stat_pack_id',
         'creator_id',
+        'slot_list_id',
     ];
 
     /**
@@ -345,5 +346,121 @@ class Character extends Model
         }
 
         return $characterFeatures;
+    }
+
+    /**
+     * If character has many spellcaster classes, except warlock
+     */
+    public function isMulticaster()
+    {
+        if ($this->isMulticlass() === false) {
+            return false;
+        }
+
+        $casterClassesCount = 0;
+        foreach ($this->classInvestments as $key => $investment) {
+            if ($investment->class->is_spellcaster === 1 && $investment->class->name !== 'warlock') {
+                $casterClassesCount++;
+            }
+        }
+
+        return $casterClassesCount > 1;
+    }
+
+    public function levelForMulticlassSlotList(): int
+    {
+        $level = 0;
+        foreach ($this->classInvestments as $key => $investment) {
+            switch ($investment->class->name) {
+                case 'bard':
+                case 'cleric':
+                case 'druid':
+                case 'sorcerer':
+                case 'wizard':
+                    $level += $investment->level;
+                    break;
+                case 'paladin':
+                case 'ranger':
+                    $level += floor($investment->level / 2);
+                    break;
+                case 'artificier':
+                    $level += ceil($investment->level / 2);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            if (isset($investment->subclass)) {
+                switch ($investment->subclass->name) {
+                    case 'eldritch knight':
+                    case 'arcane trickster':
+                        $level += floor($investment->level / 3);
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+            }
+        }
+
+        return $level;
+    }
+
+    public function getSlotList(): array
+    {
+        if ($this->isMulticaster()) {
+            $level = $this->levelForMulticlassSlotList();
+            $slotList = SlotListPack::find(SlotListPack::$multiclassSlotListId)->slotListLevelN($level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] = $slotList->$index;
+            }
+            if ($this->isWarlock()) {
+                $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($level);
+                for ($i = 1; $i <= 9; $i++) {
+                    $index = 'level_' . $i;
+                    $slotListTab[$i] += $warlockSlotList->$index;
+                }
+            }
+        } else {
+            $packId = 0;
+            foreach ($this->classInvestments as $key => $investment) {
+                if ($this->class->is_spellcaster && !is_null($this->class->slot_list_pack_id)) {
+                    $packId = $this->class->slot_list_pack_id;
+                    $level = $investment->level;
+                    break;
+                } elseif (isset($this->subclass) && $this->subclass->is_spellcaster && !is_null($this->subclass->slot_list_pack_id)) {
+                    $packId = $this->subclass->slot_list_pack_id;
+                    $level = $investment->level;
+                    break;
+                }
+            }
+            $slotList = SlotListPack::find($packId)->slotListLevelN($level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] = $slotList->$index;
+            }
+            if ($this->isWarlock()) {
+                $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($level);
+                for ($i = 1; $i <= 9; $i++) {
+                    $index = 'level_' . $i;
+                    $slotListTab[$i] += $warlockSlotList->$index;
+                }
+            }
+        }
+
+        return $slotListTab;
+    }
+
+    public function isWarlock(): bool
+    {
+        $result = false;
+        foreach ($this->classInvestments as $investment) {
+            if ($investment->class->name === 'warlock') {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 }

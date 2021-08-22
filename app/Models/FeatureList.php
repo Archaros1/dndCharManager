@@ -9,7 +9,7 @@ class FeatureList extends Model
 {
     use HasFactory;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -41,4 +41,3 @@ class FeatureList extends Model
         return $this->hasMany(Feature::class);
     }
 }
-

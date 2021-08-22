@@ -57,6 +57,9 @@ function setSubRaces() {
             } else {
                 $('#subraces').show();
                 new_options = JSON.parse(result);
+                new_options.forEach(element => {
+                    element.name = capitalizeFirstLetter(element.name);
+                });
 
                 changeSelectOption('#subrace', new_options);
                 $('#subrace_label').text(new_options[0].archetype);
@@ -65,3 +68,7 @@ function setSubRaces() {
         }
     });
 }
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }

@@ -16,7 +16,6 @@ class SlotList extends Model
      */
     protected $fillable = [
         'class_level',
-        'level_0',
         'level_1',
         'level_2',
         'level_3',
@@ -26,6 +25,7 @@ class SlotList extends Model
         'level_7',
         'level_8',
         'level_9',
+        'owner_id',
     ];
 
     /**
@@ -35,7 +35,6 @@ class SlotList extends Model
      */
     protected $attributes = [
         'class_level' => null,
-        'level_0' => 0,
         'level_1' => 0,
         'level_2' => 0,
         'level_3' => 0,
@@ -45,5 +44,11 @@ class SlotList extends Model
         'level_7' => 0,
         'level_8' => 0,
         'level_9' => 0,
+        'owner_id' => null,
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(SlotListPack::class);
+    }
 }

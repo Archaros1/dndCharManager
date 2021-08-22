@@ -46,7 +46,6 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::post('/character/store/building/hitdice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingHitDiceStore'])->name('chara.building.hitdice.store');
 
     Route::post('/character/store/fastbuilding/{idChara}', [App\Http\Controllers\CharacterController::class, 'fastBuildingLevelStore'])->name('chara.fastbuilding.level.store');
-
 });
 
 Auth::routes();
