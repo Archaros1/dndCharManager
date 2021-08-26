@@ -18,6 +18,6 @@ class SlotListPack extends Model
 
     public function slotListLevelN(int $level)
     {
-        return SlotList::where('level', '=', $level)->first();
+        return SlotList::where([['class_level', '=', $level], ['owner_id', '=', $this->id],])->first();
     }
 }

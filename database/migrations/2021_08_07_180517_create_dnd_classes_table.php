@@ -18,14 +18,12 @@ class CreateDndClassesTable extends Migration
             $table->string('name');
             $table->boolean('is_spellcaster');
             $table->boolean('is_custom');
-            $table->string('casting_stat')->nullable();
             $table->integer('sub_class_obtention_level');
             $table->integer('hitdice');
 
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('spellcasting_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('slot_list_pack_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('proficiency_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();

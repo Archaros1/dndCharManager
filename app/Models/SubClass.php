@@ -19,28 +19,12 @@ class SubClass extends Model
         'archetype',
         'class_id',
         'features',
-        'description_id',
         'is_custom',
         'is_spellcaster',
         'casting_stat',
-        'spell_list_id',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
+    protected $attributes = [
 
     ];
 

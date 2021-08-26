@@ -21,11 +21,9 @@ class DndClass extends Model
         'is_custom',
         'is_spellcaster',
         'casting_stat',
+        'prepare_spells',
         'subClassObtentionLevel',
         'hitdice',
-        'description_id',
-        'spell_list_id',
-        'proficiency_list_id',
     ];
 
     /**
@@ -34,24 +32,35 @@ class DndClass extends Model
      * @var array
      */
     protected $attributes = [
-        'is_spellcaster' =>0,
-        'casting_stat' => null,
-        'description_id' => null,
-        'spell_list_id' => null,
-        'proficiency_list_id' => null,
+        'is_spellcaster' => 0,
     ];
 
     /**
      * Get the spell list.
      */
+    // public function spellList()
+    // {
+    //     return $this->belongsTo(SpellList::class);
+    // }
+
+    // public function spells()
+    // {
+    //     return $this->spellList->belongsToMany(Spell::class);
+    // }
+
+    public function spellcasting()
+    {
+        return $this->belongsTo(Spellcasting::class);
+    }
+
     public function spellList()
     {
-        return $this->belongsTo(SpellList::class);
+        return $this->spellcasting->belongsTo(SpellList::class);
     }
 
     public function spells()
     {
-        return $this->spellList->belongsToMany(Spell::class);
+        return $this->spellcasting->spellList->belongsToMany(Spell::class);
     }
 
     public function proficiencyList()
@@ -77,17 +86,64 @@ class DndClass extends Model
         return $spellsLevelN;
     }
 
-    public function spellsLevelNOrLower(int $level)
+    public function spellsLevelNOrLower(int $level, bool $includeCantrips = true)
     {
         $spells = $this->spells;
         $spellsLevelN = [];
         foreach ($spells as $key => $spell) {
-            if ($spell->level <= $level) {
+            if ($spell->level <= $level && ($includeCantrips || $spell->level != 0)) {
                 array_push($spellsLevelN, $spell);
             }
         }
 
         return $spellsLevelN;
+    }
+
+    public function knownCantripsNumbers()
+    {
+        if ($this->is_spellcaster) {
+            return $this->belongsTo(EvolvingNumber::class, 'cantrips_known_id');
+        }
+        return null;
+    }
+
+    public function knownSpellsNumbers()
+    {
+        if ($this->is_spellcaster) {
+            return $this->belongsTo(EvolvingNumber::class, 'spells_known_id');
+        }
+        return null;
+    }
+
+    public function knownCantripsNumberLevelN(int $level)
+    {
+        if (!$this->is_spellcaster) {
+            return null;
+        }
+        if (!is_null($this->cantrips_known_id)) {
+            $level = 'level_' . $level;
+            return $this->knownCantripsNumbers->$level;
+        }
+        return null;
+    }
+
+    public function knownSpellsNumberLevelN(int $level)
+    {
+        if (!$this->is_spellcaster) {
+            return null;
+        }
+        if (!is_null($this->spellcasting->spells_known_id)) {
+            $level = 'level_' . $level;
+            return $this->knownSpellsNumbers->$level;
+        }
+        switch ($this->name) {
+            case 'wizard':
+                return 6 + 2 * ($level - 1);
+                break;
+            default:
+                return null;
+                break;
+        }
     }
 
     public function description()
@@ -159,5 +215,15 @@ class DndClass extends Model
             }
         }
         return $amount;
+    }
+
+    public function slotListPack()
+    {
+        return $this->belongsTo(SlotListPack::class);
+    }
+
+    public function slotLists()
+    {
+        return $this->spellcasting->slotListPack->belongsToMany(SlotList::class);
     }
 }

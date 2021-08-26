@@ -27,24 +27,6 @@ class SpellSeeder extends Seeder
             $spellLists[$class->name] = $class->spellList;
         }
 
-        // $spell = Spell::create([
-        //     'name' => 'acid splash',
-        //     'display_name' => 'Acid Splash',
-        //     'level' => 0,
-        //     'range' => '90 ft. / 27m',
-        //     'school' => 'conjuration',
-        //     'has_saving_throw' => 1,
-        //     'saving_throw_attribute' => 'dexterity',
-        //     'is_spell_attack' => 0,
-        //     'do_damage' => 1,
-        //     'roll' => '1d6',
-        //     'casting_time' => '1 action',
-        //     'is_custom' => 0,
-        // ]);
-
-        // $spell->spellLists()->attach($wizardSpellList);
-        // $spell->save();
-
         $json = Storage::get('content/spells.json');
         $spells = json_decode($json);
 

@@ -17,6 +17,9 @@ use App\Models\Race;
 use App\Models\SelectedFeatureChoice;
 use App\Models\SubClass;
 use App\Models\SubRace;
+use App\Models\Spell;
+use App\Models\Spellcasting;
+use App\Models\SpellList;
 use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
@@ -154,7 +157,7 @@ class CharacterController extends Controller
                 ]);
             }
 
-            return redirect('character/show/' . $idChara);
+            return redirect('character/show/' . $idChara . '/main');
         }
 
         switch ($nextStep['title']) {
@@ -179,7 +182,7 @@ class CharacterController extends Controller
                 $choices = [];
 
                 foreach ($featureChoices as $key => $choice) {
-                    $choices[$choice->id] = $choice->display_name;
+                    $choices[$choice->id] = ucwords($choice->display_name);
                 }
 
                 return view('character/forms/building/feature_choice', [
@@ -220,6 +223,37 @@ class CharacterController extends Controller
                 return redirect('character/create/level1/' . $idChara);
                 break;
 
+            case 'missing spell':
+                $investment = $nextStep['investment'];
+                $highestSlot = $investment->highestSlot();
+                $spells = $investment->class->spellcasting->spellsLevelNOrLower($highestSlot, false);
+
+                foreach ($spells as $key => $spell) {
+                    $spellTab[$spell->id] = ucwords($spell->name);
+                }
+
+                return view('character/forms/building/spell', [
+                    'character' => $character,
+                    'investment' => $investment,
+                    'spells' => $spellTab,
+                    'missingCount' => $nextStep['missingCount'],
+                ]);
+                break;
+            case 'missing cantrip':
+                $investment = $nextStep['investment'];
+                $spells = $investment->class->spellcasting->spellsLevelN(0);
+
+                foreach ($spells as $key => $spell) {
+                    $spellTab[$spell->id] = ucwords($spell->name);
+                }
+
+                return view('character/forms/building/spell', [
+                    'character' => $character,
+                    'investment' => $investment,
+                    'spells' => $spellTab,
+                    'missingCount' => $nextStep['missingCount'],
+                ]);
+                break;
             case 'value':
                 # code...
                 break;
@@ -243,7 +277,7 @@ class CharacterController extends Controller
 
         if (isset($inputs['subrace'])) {
             $subrace = SubRace::find($inputs['subrace']);
-            if (empty($subrace) || $subrace->race_id !== $inputs['race']) {
+            if (empty($subrace) || $subrace->race_id != $inputs['race']) {
                 $inputs['subrace'] = null;
             }
         }
@@ -271,11 +305,16 @@ class CharacterController extends Controller
             }
         }
 
+        $knownSpellList = SpellList::create();
+        $preparedSpellList = SpellList::create();
+
         $investment = ClassInvestment::create([
             'character_id' => $idChara,
             'class_id' => $inputs['dnd_class'],
             'subclass_id' => $inputs['sub_class'] ?? null,
             'level' => 1,
+            'known_spell_list_id' => $knownSpellList->id,
+            'prepared_spell_list_id' => $preparedSpellList->id,
         ]);
 
         $dndClass = DndClass::find($inputs['dnd_class']);
@@ -308,6 +347,24 @@ class CharacterController extends Controller
                 return [
                     'title' => 'missing subclass',
                     'investment' => $investment,
+                ];
+            }
+
+            if ($investment->hasMissingSpell() !== 0) {
+                # gotta get that spell(s)
+                return [
+                    'title' => 'missing spell',
+                    'investment' => $investment,
+                    'missingCount' => $investment->hasMissingSpell(),
+                ];
+            }
+
+            if ($investment->hasMissingCantrip() !== 0) {
+                # gotta get that spell(s)
+                return [
+                    'title' => 'missing cantrip',
+                    'investment' => $investment,
+                    'missingCount' => $investment->hasMissingCantrip(),
                 ];
             }
 
@@ -384,16 +441,21 @@ class CharacterController extends Controller
     {
         $inputs = $request->post();
 
+
         $investment = ClassInvestment::where([
             'character_id' => $idChara,
             'class_id' => $inputs['dnd_class'],
         ])->first();
 
         if (empty($investment)) {
+            $knownSpellList = SpellList::create();
+            $preparedSpellList = SpellList::create();
             $investment = ClassInvestment::create([
                 'character_id' => $idChara,
                 'class_id' => $inputs['dnd_class'],
                 'level' => 1,
+                'known_spell_list_id' => $knownSpellList->id,
+                'prepared_spell_list_id' => $preparedSpellList->id,
             ]);
         } else {
             $investment->level++;
@@ -460,19 +522,48 @@ class CharacterController extends Controller
         return redirect('/character/create/building/' . $idChara);
     }
 
+    public function buildingSpellStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
+
+        $i = 0;
+        $spells = [];
+        while (isset($inputs['spell_choice_' . ($i + 1)])) {
+            $i++;
+            array_push($spells, $inputs['spell_choice_' . $i]);
+        }
+        $spells = array_unique($spells);
+
+        if (count($spells) === $i) {
+            $investment = ClassInvestment::find($inputs['investment']);
+            foreach ($spells as $key => $spellId) {
+                $spell = Spell::find($spellId);
+                $spell->spellLists()->attach($investment->knownSpellList);
+                $spell->save();
+                if ($spell->level != 0) {
+                    $investment->spells_known_count++;
+                } else {
+                    $investment->cantrips_known_count++;
+                }
+                $investment->save();
+            }
+        }
+
+        return redirect('/character/create/building/' . $idChara);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function show($idChara)
+    public function show(int $idChara, Request $request)
     {
         $character = Character::find($idChara);
         $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
 
-        $isMobile = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
-        if ($isMobile) {
+        if ($request->isMobile) {
             return view('character/mobile/main', [
                 'character' => $character,
                 'actualCharacter' => $actualCharacter,
@@ -483,6 +574,29 @@ class CharacterController extends Controller
                 'actualCharacter' => $actualCharacter,
             ]);
         }
+    }
+
+    public function showFeaturesPage(int $idChara, Request $request)
+    {
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+
+        if ($request->isMobile) {
+            return view('character/mobile/features', [
+                'character' => $character,
+                'actualCharacter' => $actualCharacter,
+            ]);
+        } else {
+            return view('character/features', [
+                'character' => $character,
+                'actualCharacter' => $actualCharacter,
+            ]);
+        }
+    }
+
+    public function showInventoryPage(int $idChara, Request $request)
+    {
+        # code...
     }
 
     /**
@@ -524,6 +638,6 @@ class CharacterController extends Controller
     {
         $character = Character::find($idChara);
 
-        dd($character->isSpellcaster());
+        dd($character->knownSpells());
     }
 }

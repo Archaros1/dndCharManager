@@ -17,6 +17,10 @@ class CreateClassInvestmentsTable extends Migration
             $table->id();
             $table->integer('level');
 
+            $table->integer('spells_known_count');
+            $table->integer('cantrips_known_count');
+            $table->integer('stolen_spells_count');
+
             $table->foreignId('character_id')->constrained();
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('dnd_classes');
@@ -24,6 +28,8 @@ class CreateClassInvestmentsTable extends Migration
             $table->foreign('subclass_id')->references('id')->on('sub_classes');
             $table->unsignedBigInteger('known_spell_list_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
             $table->foreign('known_spell_list_id')->references('id')->on('spell_lists');
+            $table->unsignedBigInteger('prepared_spell_list_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
+            $table->foreign('prepared_spell_list_id')->references('id')->on('spell_lists');
             $table->timestamps();
         });
     }

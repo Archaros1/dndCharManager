@@ -19,11 +19,15 @@ class ClassInvestment extends Model
         'class_id',
         'subclass_id',
         'level',
+        'stolen_spells_count',
         'known_spell_list_id',
+        'prepared_spell_list_id',
     ];
 
     protected $attributes = [
-        'known_spell_list_id' => null,
+        'spells_known_count' => 0,
+        'cantrips_known_count' => 0,
+        'stolen_spells_count' => 0,
     ];
 
     public function character()
@@ -49,5 +53,53 @@ class ClassInvestment extends Model
     public function hasMissingHitDice()
     {
         return count($this->hitDices) < $this->level;
+    }
+
+    public function hasMissingSpell()
+    {
+        return
+            $this->spells_known_count < ($this->class->knownSpellsNumberLevelN($this->level) + $this->stolen_spells_count)
+            ? ($this->class->knownSpellsNumberLevelN($this->level) + $this->stolen_spells_count) - $this->spells_known_count
+            : 0;
+    }
+
+    public function hasMissingCantrip()
+    {
+        return
+            $this->cantrips_known_count < $this->class->knownCantripsNumberLevelN($this->level)
+            ? $this->class->knownCantripsNumberLevelN($this->level) - $this->cantrips_known_count
+            : 0;
+    }
+
+    public function slotList()
+    {
+        return $this->class->spellcasting->slotListPack->slotListLevelN($this->level);
+    }
+
+    public function highestSlot()
+    {
+        $slotList = $this->slotList();
+        for ($i=9; $i >= 0; $i--) {
+            $level = 'level_'.$i;
+            if ($slotList->$level != 0) {
+                return (int) $i;
+            }
+        }
+        return null;
+    }
+
+    public function knownSpellList()
+    {
+        return $this->belongsTo(SpellList::class, 'known_spell_list_id');
+    }
+
+    public function knownSpells()
+    {
+        return $this->knownSpellList->belongsToMany(Spell::class);
+    }
+
+    public function preparedSpellList()
+    {
+        return $this->belongsTo(SpellList::class, 'prepared_spell_list_id');
     }
 }

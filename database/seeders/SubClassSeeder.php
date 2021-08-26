@@ -24,7 +24,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'barbarian')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -35,7 +34,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'bard')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -46,7 +44,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'cleric')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'wisdom',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -57,7 +54,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'cleric')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'wisdom',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -68,7 +64,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'druid')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'wisdom',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -79,7 +74,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'fighter')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -90,7 +84,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'monk')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -101,7 +94,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'paladin')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'charisma',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -112,7 +104,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'ranger')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -123,7 +114,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'rogue')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -134,7 +124,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'sorcerer')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -145,7 +134,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'sorcerer')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -156,7 +144,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'warlock')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'charisma',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -167,7 +154,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'warlock')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'charisma',
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -178,7 +164,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'wizard')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -189,7 +174,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'artificer')->id,
             'is_custom' => 0,
             'is_spellcaster' => 0,
-            'casting_stat' => null,
             'feature_list_id' => $featureList->id,
         ]);
 
@@ -200,7 +184,6 @@ class SubClassSeeder extends Seeder
             'class_id' => DndClass::firstWhere('name', '=', 'artificer')->id,
             'is_custom' => 0,
             'is_spellcaster' => 1,
-            'casting_stat' => 'intelligence',
             'feature_list_id' => $featureList->id,
         ]);
     }

@@ -19,6 +19,8 @@ class Character extends Model
     protected $fillable = [
         'name',
         'level',
+        'spellsKnownCount',
+        'cantripsKnownCount',
         'race_id',
         'sub_race_id',
         'background_id',
@@ -45,10 +47,7 @@ class Character extends Model
         'health',
     ];
 
-    // public function background()
-    // {
-    //     return Background::find($this->background_id);
-    // }
+    protected $attributes = [];
 
     public function background()
     {
@@ -71,6 +70,11 @@ class Character extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function actual()
+    {
+        return $this->hasOne(ActualCharacter::class);
     }
 
     public function hitDices()
@@ -425,12 +429,12 @@ class Character extends Model
         } else {
             $packId = 0;
             foreach ($this->classInvestments as $key => $investment) {
-                if ($this->class->is_spellcaster && !is_null($this->class->slot_list_pack_id)) {
-                    $packId = $this->class->slot_list_pack_id;
+                if ($this->class->is_spellcaster && !is_null($this->class->spellcasting->slot_list_pack_id)) {
+                    $packId = $this->class->spellcasting->slot_list_pack_id;
                     $level = $investment->level;
                     break;
                 } elseif (isset($this->subclass) && $this->subclass->is_spellcaster && !is_null($this->subclass->slot_list_pack_id)) {
-                    $packId = $this->subclass->slot_list_pack_id;
+                    $packId = $this->subclass->spellcasting->slot_list_pack_id;
                     $level = $investment->level;
                     break;
                 }
@@ -462,5 +466,33 @@ class Character extends Model
         }
 
         return $result;
+    }
+
+    public function knownSpells()
+    {
+        $spells = [];
+        $investments = $this->classInvestments;
+        foreach ($investments as $key => $investment) {
+            if (!is_null($investment->known_spell_list_id)) {
+                foreach ($investment->knownSpells as $key => $knownSpell) {
+                    array_push($spells, $knownSpell);
+                }
+            }
+        }
+
+        return $spells;
+    }
+
+    public function hasSpellsPrepared()
+    {
+        $prepared = true;
+        $investments = $this->classInvestments;
+        foreach ($investments as $key => $investment) {
+            if ($investment->class->is_spellcaster && empty($investment->preparedSpellList->spells->items)) {
+                $prepared = false;
+                break;
+            }
+        }
+        return $prepared;
     }
 }

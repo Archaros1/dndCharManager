@@ -1960,14 +1960,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 $(function () {
   console.log("ready !");
-  setSubClasses();
-  setSubRaces();
-  $('#dnd_class').change(function () {
+  var path = $(location).attr('pathname');
+
+  if (path.startsWith("/character/create")) {
     setSubClasses();
-  });
-  $('#race').change(function () {
     setSubRaces();
-  });
+    $('#dnd_class').change(function () {
+      setSubClasses();
+    });
+    $('#race').change(function () {
+      setSubRaces();
+    });
+  }
+
+  switchToCase('actionsCase');
+
+  if (path.startsWith("/character/show")) {
+    $('#tabActions').on("click", function () {
+      switchToCase('actionsCase');
+    });
+    $('#tabSpells').on("click", function () {
+      switchToCase('spellsCase');
+    });
+  }
 });
 
 function changeSelectOption(yourSelectList, new_options) {
@@ -2024,6 +2039,11 @@ function setSubRaces() {
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function switchToCase(caseName) {
+  $('.case').hide();
+  $('#' + caseName).show();
 }
 
 /***/ }),
