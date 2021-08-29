@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Background;
 use App\Models\ClassInvestment;
+use App\Models\DataHandler;
 use App\Models\DndClass;
 use App\Models\Feature;
 use App\Models\FeatureChoice;
@@ -582,7 +583,7 @@ class CharacterController extends Controller
         $actualCharacter = $character->actual;
 
         if ($request->isMobile) {
-            return view('character/mobile/features', [
+            return view('character/mobile/cases/actions', [
                 'character' => $character,
                 'actualCharacter' => $actualCharacter,
             ]);
@@ -592,6 +593,64 @@ class CharacterController extends Controller
                 'actualCharacter' => $actualCharacter,
             ]);
         }
+    }
+
+    public function showSpellsPage(int $idChara, Request $request)
+    {
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+
+        if ($request->isMobile) {
+            if (!$character->hasSpellsPrepared()) {
+                $investment = $character->investmentMissingPreparedSpells();
+
+                if (is_null($investment->known_spell_list_id)) {
+                    $spells = $investment->class->spellcasting->spells->sortBy([
+                        ['level', 'asc'],
+                        ['name', 'asc'],
+                    ])->groupBy('level');
+                } else {
+                    $spells = $investment->knownSpells->sortBy([
+                        ['level', 'asc'],
+                        ['name', 'asc'],
+                    ])->groupBy('level');
+                }
+
+                return view('character/mobile/cases/spells/prepare', [
+                    'character' => $character,
+                    'investment' => $investment,
+                    'spells' => $spells,
+                ]);
+            } else {
+                return view('character/mobile/cases/spells/manager', [
+                    'character' => $character,
+                    'actualCharacter' => $actualCharacter,
+                ]);
+            }
+        }
+    }
+
+    public function prepareSpellsStore($idChara, Request $request)
+    {
+        $inputs = $request->post();
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+        $investment = $character->investmentMissingPreparedSpells();
+
+        $preparingSpells = [];
+        foreach ($inputs as $key => $input) {
+            if (str_starts_with($key, 'spell_')) {
+                $idSpell = (int) preg_replace('/^spell_/', '', $key);
+                $preparingSpells[$idSpell] = Spell::find($idSpell);
+            }
+        }
+        if (count($preparingSpells) === $investment->preparedSpellsCount()) {
+            foreach ($preparingSpells as $key => $spell) {
+                $spell->spellLists()->attach($investment->preparedSpellList);
+                $spell->save();
+            }
+        }
+        return redirect('/character/show/' . $idChara . '/features/spells');
     }
 
     public function showInventoryPage(int $idChara, Request $request)

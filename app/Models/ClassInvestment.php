@@ -102,4 +102,25 @@ class ClassInvestment extends Model
     {
         return $this->belongsTo(SpellList::class, 'prepared_spell_list_id');
     }
+
+    public function preparedSpellsCount()
+    {
+        if ($this->class->spellcasting->prepare_spells == 0) {
+            return null;
+        }
+
+        $count = $this->character->level + $this->character->getModifier($this->class->spellcasting->casting_stat);
+        return $count < 1 ? 1 : $count;
+    }
+
+    public function spellDC()
+    {
+        return 8 + $this->character->proficiencyBonus() + $this->character->getModifier($this->class->spellcasting->casting_stat);
+    }
+
+    public function spellAttackModifier()
+    {
+        return $this->character->proficiencyBonus() + $this->character->getModifier($this->class->spellcasting->casting_stat);
+
+    }
 }

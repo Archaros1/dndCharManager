@@ -27,7 +27,8 @@ class Character extends Model
         'stat_pack_id',
         'final_stat_pack_id',
         'creator_id',
-        'slot_list_id',
+        'slot_list_long_rest_id',
+        'slot_list_short_rest_id',
     ];
 
     /**
@@ -419,12 +420,57 @@ class Character extends Model
                 $index = 'level_' . $i;
                 $slotListTab[$i] = $slotList->$index;
             }
-            if ($this->isWarlock()) {
-                $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($level);
-                for ($i = 1; $i <= 9; $i++) {
-                    $index = 'level_' . $i;
-                    $slotListTab[$i] += $warlockSlotList->$index;
+        } else {
+            $packId = 0;
+            foreach ($this->classInvestments as $key => $investment) {
+                if ($this->class->is_spellcaster && !is_null($this->class->spellcasting->slot_list_pack_id)) {
+                    $packId = $this->class->spellcasting->slot_list_pack_id;
+                    $level = $investment->level;
+                    break;
+                } elseif (isset($this->subclass) && $this->subclass->is_spellcaster && !is_null($this->subclass->slot_list_pack_id)) {
+                    $packId = $this->subclass->spellcasting->slot_list_pack_id;
+                    $level = $investment->level;
+                    break;
                 }
+            }
+            $slotList = SlotListPack::find($packId)->slotListLevelN($level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] = $slotList->$index;
+            }
+        }
+        if ($this->isWarlock()) {
+            $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] += $warlockSlotList->$index;
+            }
+        }
+        return $slotListTab;
+    }
+
+    public function getSlotListShortRest()
+    {
+        $slotListTab = [];
+        if ($this->isWarlock()) {
+            $investment = $this->getWarlockInvestment();
+            $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($investment->level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] = $warlockSlotList->$index;
+            }
+        }
+        return $slotListTab;
+    }
+
+    public function getSlotListLongRest()
+    {
+        if ($this->isMulticaster()) {
+            $level = $this->levelForMulticlassSlotList();
+            $slotList = SlotListPack::find(SlotListPack::$multiclassSlotListId)->slotListLevelN($level);
+            for ($i = 1; $i <= 9; $i++) {
+                $index = 'level_' . $i;
+                $slotListTab[$i] = $slotList->$index;
             }
         } else {
             $packId = 0;
@@ -444,13 +490,6 @@ class Character extends Model
                 $index = 'level_' . $i;
                 $slotListTab[$i] = $slotList->$index;
             }
-            if ($this->isWarlock()) {
-                $warlockSlotList = SlotListPack::where('name', '=', 'warlock')->first()->slotListLevelN($level);
-                for ($i = 1; $i <= 9; $i++) {
-                    $index = 'level_' . $i;
-                    $slotListTab[$i] += $warlockSlotList->$index;
-                }
-            }
         }
 
         return $slotListTab;
@@ -465,6 +504,17 @@ class Character extends Model
             }
         }
 
+        return $result;
+    }
+
+    public function getWarlockInvestment()
+    {
+        $result = null;
+        foreach ($this->classInvestments as $investment) {
+            if ($investment->class->name === 'warlock') {
+                $result = $investment;
+            }
+        }
         return $result;
     }
 
@@ -485,14 +535,37 @@ class Character extends Model
 
     public function hasSpellsPrepared()
     {
-        $prepared = true;
+        $result = true;
         $investments = $this->classInvestments;
         foreach ($investments as $key => $investment) {
-            if ($investment->class->is_spellcaster && empty($investment->preparedSpellList->spells->items)) {
-                $prepared = false;
+            if (
+                $investment->class->is_spellcaster
+                && !is_null($investment->class->spellcasting_id)
+                && $investment->class->spellcasting->prepare_spells
+                && empty($investment->preparedSpellList->spells->all())
+            ) {
+                $result = false;
                 break;
             }
         }
-        return $prepared;
+        return $result;
+    }
+
+    public function investmentMissingPreparedSpells()
+    {
+        $result = null;
+        $investments = $this->classInvestments;
+        foreach ($investments as $key => $investment) {
+            if (
+                $investment->class->is_spellcaster
+                && !is_null($investment->class->spellcasting_id)
+                && $investment->class->spellcasting->prepare_spells
+                && empty($investment->preparedSpellList->spells->items)
+            ) {
+                $result = $investment;
+                break;
+            }
+        }
+        return $result;
     }
 }

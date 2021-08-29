@@ -20,8 +20,6 @@ class DndClass extends Model
         'name',
         'is_custom',
         'is_spellcaster',
-        'casting_stat',
-        'prepare_spells',
         'subClassObtentionLevel',
         'hitdice',
     ];

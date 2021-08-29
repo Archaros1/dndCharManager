@@ -118,3 +118,12 @@
     max-height: 150px;
     overflow: scroll;
 }
+
+.display-flex {
+    display: flex !important;
+}
+
+.nice-border {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}

@@ -15,9 +15,15 @@ class CreateActualCharactersTable extends Migration
     {
         Schema::create('actual_characters', function (Blueprint $table) {
             $table->id();
-            $table->integer('left_health');
-            $table->foreignId('character_id')->constrained();
             $table->timestamps();
+            $table->foreignId('character_id')->constrained();
+
+            $table->integer('left_health');
+
+            $table->unsignedBigInteger('left_slot_list_long_rest_id')->nullable()->constrained();
+            $table->foreign('left_slot_list_long_rest_id')->references('id')->on('slot_lists');
+            $table->unsignedBigInteger('left_slot_list_short_rest_id')->nullable()->constrained();
+            $table->foreign('left_slot_list_short_rest_id')->references('id')->on('slot_lists');
         });
     }
 

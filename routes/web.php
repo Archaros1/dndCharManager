@@ -40,7 +40,7 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
 
     Route::get('/character/destroy/{idChara}', [App\Http\Controllers\CharacterController::class, 'destroy'])->name('chara.destroy');
 
-    Route::post('/character/store/building/feature_choice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingFeatureChoiceStore'])->name('chara.building.feature_choice.store');
+    // Route::post('/character/store/building/feature_choice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingFeatureChoiceStore'])->name('chara.building.feature_choice.store');
     Route::post('/character/store/building/level/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingLevelStore'])->name('chara.building.level.store');
     Route::post('/character/store/building/subclass/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingSubClassStore'])->name('chara.building.subclass.store');
     Route::post('/character/store/building/hitdice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingHitDiceStore'])->name('chara.building.hitdice.store');
@@ -48,10 +48,15 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
 
     Route::post('/character/store/fastbuilding/{idChara}', [App\Http\Controllers\CharacterController::class, 'fastBuildingLevelStore'])->name('chara.fastbuilding.level.store');
 
+    Route::post('/character/store/prepare/spells/{idChara}', [App\Http\Controllers\CharacterController::class, 'prepareSpellsStore'])->name('chara.prepareSpells.store');
+
     Route::middleware('App\Http\Middleware\isMobile')->group(function () {
         Route::get('/character/show/{idChara}/main', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show.mainPage');
         Route::get('/character/show/{idChara}/features', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
         Route::get('/character/show/{idChara}/inventory', [App\Http\Controllers\CharacterController::class, 'showInventoryPage'])->name('chara.show.inventoryPage');
+
+        Route::get('/character/show/{idChara}/features/spells', [App\Http\Controllers\CharacterController::class, 'showSpellsPage'])->name('chara.show.spellsPage');
+
     });
 });
 

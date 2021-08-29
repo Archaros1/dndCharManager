@@ -1965,23 +1965,27 @@ $(function () {
   if (path.startsWith("/character/create")) {
     setSubClasses();
     setSubRaces();
-    $('#dnd_class').change(function () {
+    $('#dnd_class').on("change", function () {
       setSubClasses();
     });
-    $('#race').change(function () {
+    $('#race').on("change", function () {
       setSubRaces();
     });
   }
 
-  switchToCase('actionsCase');
-
   if (path.startsWith("/character/show")) {
-    $('#tabActions').on("click", function () {
-      switchToCase('actionsCase');
-    });
-    $('#tabSpells').on("click", function () {
-      switchToCase('spellsCase');
-    });
+    if (path.endsWith("/features/spells")) {
+      var _loop = function _loop(i) {
+        $('#spellInfo_' + i).on("click", function () {
+          $('[id^="spellDesc_"][id!=spellDesc_' + i + ']').slideUp(300);
+          $('#spellDesc_' + i).slideToggle(300);
+        });
+      };
+
+      for (var i = 1; i < 1000; i++) {
+        _loop(i);
+      }
+    }
   }
 });
 
