@@ -148,6 +148,7 @@ class CharacterController extends Controller
         if (is_null($nextStep)) {
             $character->calculateStats();
             $character->health = $character->calculateHP();
+
             $character->save();
 
             $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
@@ -306,19 +307,30 @@ class CharacterController extends Controller
             }
         }
 
-        $knownSpellList = SpellList::create();
-        $preparedSpellList = SpellList::create();
-
         $investment = ClassInvestment::create([
             'character_id' => $idChara,
             'class_id' => $inputs['dnd_class'],
             'subclass_id' => $inputs['sub_class'] ?? null,
             'level' => 1,
-            'known_spell_list_id' => $knownSpellList->id,
-            'prepared_spell_list_id' => $preparedSpellList->id,
         ]);
 
         $dndClass = DndClass::find($inputs['dnd_class']);
+        if (!is_null($dndClass->spellcasting_id)) {
+            if ($dndClass->spellcasting->prepare_spells) {
+                $preparedSpellList = SpellList::create();
+                $investment->update([
+                    'prepared_spell_list_id' => $preparedSpellList->id,
+                ]);
+            }
+            if ($dndClass->spellcasting->know_spells) {
+                $knownSpellList = SpellList::create();
+                $investment->update([
+                    'known_spell_list_id' => $knownSpellList->id,
+                ]);
+            }
+            $investment->save();
+        }
+
 
         $firstHitDice = HitDice::create([
             'max_value' => $dndClass->hitdice,
@@ -605,7 +617,8 @@ class CharacterController extends Controller
                 $investment = $character->investmentMissingPreparedSpells();
 
                 if (is_null($investment->known_spell_list_id)) {
-                    $spells = $investment->class->spellcasting->spells->sortBy([
+                    $spells = $investment->class->spellcasting->spellsLevelNOrLower($investment->highestSlot(), false);
+                    $spells = $spells->sortBy([
                         ['level', 'asc'],
                         ['name', 'asc'],
                     ])->groupBy('level');
@@ -622,6 +635,9 @@ class CharacterController extends Controller
                     'spells' => $spells,
                 ]);
             } else {
+
+
+
                 return view('character/mobile/cases/spells/manager', [
                     'character' => $character,
                     'actualCharacter' => $actualCharacter,

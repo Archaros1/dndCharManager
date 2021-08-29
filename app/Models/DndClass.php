@@ -100,7 +100,7 @@ class DndClass extends Model
     public function knownCantripsNumbers()
     {
         if ($this->is_spellcaster) {
-            return $this->belongsTo(EvolvingNumber::class, 'cantrips_known_id');
+            return $this->spellcasting->belongsTo(EvolvingNumber::class, 'cantrips_known_count_id');
         }
         return null;
     }
@@ -108,7 +108,7 @@ class DndClass extends Model
     public function knownSpellsNumbers()
     {
         if ($this->is_spellcaster) {
-            return $this->belongsTo(EvolvingNumber::class, 'spells_known_id');
+            return $this->spellcasting->belongsTo(EvolvingNumber::class, 'spells_known_count_id');
         }
         return null;
     }
@@ -118,7 +118,7 @@ class DndClass extends Model
         if (!$this->is_spellcaster) {
             return null;
         }
-        if (!is_null($this->cantrips_known_id)) {
+        if (!is_null($this->spellcasting->cantrips_known_count_id)) {
             $level = 'level_' . $level;
             return $this->knownCantripsNumbers->$level;
         }
@@ -130,7 +130,7 @@ class DndClass extends Model
         if (!$this->is_spellcaster) {
             return null;
         }
-        if (!is_null($this->spellcasting->spells_known_id)) {
+        if (!is_null($this->spellcasting->spells_known_count_id)) {
             $level = 'level_' . $level;
             return $this->knownSpellsNumbers->$level;
         }

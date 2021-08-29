@@ -11,10 +11,12 @@ class Spellcasting extends Model
 
     protected $fillable = [
         'casting_stat',
+        'know_spells',
         'prepare_spells',
     ];
 
     protected $attributes = [
+        'know_spells' => 0,
         'prepare_spells' => 0,
 
     ];
@@ -32,12 +34,13 @@ class Spellcasting extends Model
     public function spellsLevelN(int $level)
     {
         $spells = $this->spells;
-        $spellsLevelN = [];
-        foreach ($spells as $key => $spell) {
-            if ($spell->level === $level) {
-                array_push($spellsLevelN, $spell);
-            }
-        }
+        $spellsLevelN = $spells->where('level', '=', $level);
+        // $spellsLevelN = [];
+        // foreach ($spells as $key => $spell) {
+        //     if ($spell->level === $level) {
+        //         array_push($spellsLevelN, $spell);
+        //     }
+        // }
 
         return $spellsLevelN;
     }
@@ -45,12 +48,17 @@ class Spellcasting extends Model
     public function spellsLevelNOrLower(int $level, bool $includeCantrips = true)
     {
         $spells = $this->spells;
-        $spellsLevelN = [];
-        foreach ($spells as $key => $spell) {
-            if ($spell->level <= $level && ($includeCantrips || $spell->level != 0)) {
-                array_push($spellsLevelN, $spell);
-            }
+        if ($includeCantrips) {
+            $spellsLevelN = $spells->where('level', '<=', $level);
+        } else {
+            $spellsLevelN = $spells->whereBetween('level', [1, $level]);
         }
+        // $spellsLevelN = [];
+        // foreach ($spells as $key => $spell) {
+        //     if ($spell->level <= $level && ($includeCantrips || $spell->level != 0)) {
+        //         array_push($spellsLevelN, $spell);
+        //     }
+        // }
 
         return $spellsLevelN;
     }

@@ -28,10 +28,10 @@ class SpellSeeder extends Seeder
         }
 
         $json = Storage::get('content/spells.json');
-        echo('Decoding json file...\n');
+        echo('Decoding json file...'. PHP_EOL);
         $spells = json_decode($json);
 
-        echo('Distribuing spell lists...\n');
+        echo('Distributing spell lists...'. PHP_EOL);
         foreach ($spells as $key => $spellData) {
             $spellData = (array) $spellData;
             try {
@@ -72,6 +72,5 @@ class SpellSeeder extends Seeder
                 }
             }
         }
-        echo($key . '/' . count($spells) . '\n');
     }
 }

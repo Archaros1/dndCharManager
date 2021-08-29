@@ -3,14 +3,10 @@
 @section('case')
     <div class="case container mt-1" id="spellPrepare">
         <h5>Vous n'avez pas préparé tous vos sorts !</h5>
-        <p>Veuillez sélectionner <b>{{ $investment->preparedSpellsCount() }}</b> sorts pour votre classe {{ $investment->class->name }}. Vous ne pourrez utiliser que ces sorts jusqu'à votre prochain long repos.</p>
+        <p>Veuillez sélectionner <b>{{ $investment->preparedSpellsCount() }}</b> sorts pour votre classe <b>{{ ucwords($investment->class->name) }}</b>. Vous ne pourrez utiliser que ces sorts jusqu'à votre prochain long repos.</p>
 
         <form action="{{ url("/character/store/prepare/spells") }}/{{$character->id}}" method="post" accept-charset="UTF-8">
-        {{-- <form action="{{ route('chara.prepareSpells.store', ['idChara' => $character->id]) }}" method="POST"
-            accept-charset="UTF-8"> --}}
         @csrf
-        {{ url("/character/store/preparespells")}}/{{$character->id}}<br>
-        {{ url("/character/store/building/feature_choice")}}/{{$character->id}}
 
         <div class="row">
             {{ Form::submit("Préparer ces sorts", $attributes = ['class' => 'form-control btn btn-success mb-2']) }}

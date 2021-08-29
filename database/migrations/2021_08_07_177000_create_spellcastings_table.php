@@ -19,6 +19,7 @@ class CreateSpellcastingsTable extends Migration
 
             $table->string('casting_stat');
             $table->boolean('prepare_spells');
+            $table->boolean('know_spells');
 
             $table->unsignedBigInteger('cantrips_known_count_id')->nullable()->constrained();
             $table->foreign('cantrips_known_count_id')->references('id')->on('evolving_numbers');
