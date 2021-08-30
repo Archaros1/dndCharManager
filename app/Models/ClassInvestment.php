@@ -98,9 +98,21 @@ class ClassInvestment extends Model
         return $this->knownSpellList->belongsToMany(Spell::class);
     }
 
+    public function knownSpellsLevelN(int $level)
+    {
+        $spells = $this->knownSpells;
+        $spells = $spells->where('level', '=', 0);
+        return $spells;
+    }
+
     public function preparedSpellList()
     {
         return $this->belongsTo(SpellList::class, 'prepared_spell_list_id');
+    }
+
+    public function preparedSpells()
+    {
+        return $this->preparedSpellList->belongsToMany(Spell::class);
     }
 
     public function preparedSpellsCount()

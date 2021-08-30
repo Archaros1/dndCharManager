@@ -16,6 +16,7 @@ use App\Models\FeatureChoice;
 use App\Models\HitDice;
 use App\Models\Race;
 use App\Models\SelectedFeatureChoice;
+use App\Models\SlotList;
 use App\Models\SubClass;
 use App\Models\SubRace;
 use App\Models\Spell;
@@ -148,14 +149,47 @@ class CharacterController extends Controller
         if (is_null($nextStep)) {
             $character->calculateStats();
             $character->health = $character->calculateHP();
+            $character->slot_list_short_rest_id = $character->getSlotListShortRest()->id ?? null;
+            $character->slot_list_long_rest_id = $character->getSlotListLongRest()->id ?? null;
 
             $character->save();
 
             $actualCharacter = ActualCharacter::where('character_id', '=', $idChara)->first();
             if (empty($actualCharacter)) {
+                if (!is_null($character->slot_list_long_rest_id)) {
+                    $slotListLongRest = $character->slotListLongRest;
+                    $leftSlotsLongRest = SlotList::create([
+                        'level_1' => $slotListLongRest->level_1,
+                        'level_2' => $slotListLongRest->level_2,
+                        'level_3' => $slotListLongRest->level_3,
+                        'level_4' => $slotListLongRest->level_4,
+                        'level_5' => $slotListLongRest->level_5,
+                        'level_6' => $slotListLongRest->level_6,
+                        'level_7' => $slotListLongRest->level_7,
+                        'level_8' => $slotListLongRest->level_8,
+                        'level_9' => $slotListLongRest->level_9,
+                    ]);
+                }
+                if (!is_null($character->slot_list_short_rest_id)) {
+                    $slotListShortRest = $character->slotListShortRest;
+                    $leftSlotsShortRest = SlotList::create([
+                        'level_1' => $slotListShortRest->level_1,
+                        'level_2' => $slotListShortRest->level_2,
+                        'level_3' => $slotListShortRest->level_3,
+                        'level_4' => $slotListShortRest->level_4,
+                        'level_5' => $slotListShortRest->level_5,
+                        'level_6' => $slotListShortRest->level_6,
+                        'level_7' => $slotListShortRest->level_7,
+                        'level_8' => $slotListShortRest->level_8,
+                        'level_9' => $slotListShortRest->level_9,
+                    ]);
+                }
+
                 $actualCharacter = ActualCharacter::create([
                     'left_health' => $character->health,
                     'character_id' => $idChara,
+                    'left_slot_list_long_rest_id' => $leftSlotsLongRest->id ?? null,
+                    'left_slot_list_short_rest_id' => $leftSlotsShortRest->id ?? null,
                 ]);
             }
 
@@ -322,12 +356,10 @@ class CharacterController extends Controller
                     'prepared_spell_list_id' => $preparedSpellList->id,
                 ]);
             }
-            if ($dndClass->spellcasting->know_spells) {
-                $knownSpellList = SpellList::create();
-                $investment->update([
-                    'known_spell_list_id' => $knownSpellList->id,
-                ]);
-            }
+            $knownSpellList = SpellList::create();
+            $investment->update([
+                'known_spell_list_id' => $knownSpellList->id,
+            ]);
             $investment->save();
         }
 
@@ -616,7 +648,7 @@ class CharacterController extends Controller
             if (!$character->hasSpellsPrepared()) {
                 $investment = $character->investmentMissingPreparedSpells();
 
-                if (is_null($investment->known_spell_list_id)) {
+                if (is_null($investment->known_spell_list_id) || !$investment->class->spellcasting->know_spells) {
                     $spells = $investment->class->spellcasting->spellsLevelNOrLower($investment->highestSlot(), false);
                     $spells = $spells->sortBy([
                         ['level', 'asc'],
@@ -635,12 +667,19 @@ class CharacterController extends Controller
                     'spells' => $spells,
                 ]);
             } else {
-
-
+                $spells = $character->spellsReadyToUse()->sortBy([
+                    ['level', 'asc'],
+                    ['name', 'asc'],
+                ])->groupBy('level');
+                $slots = $character->slots();
+                $actualSlots = $actualCharacter->slots();
 
                 return view('character/mobile/cases/spells/manager', [
                     'character' => $character,
                     'actualCharacter' => $actualCharacter,
+                    'spells' => $spells,
+                    'slots' => $slots,
+                    'actualSlots' => $actualSlots,
                 ]);
             }
         }
@@ -672,6 +711,30 @@ class CharacterController extends Controller
     public function showInventoryPage(int $idChara, Request $request)
     {
         # code...
+    }
+
+    public function castSpell(int $idChara, int $idSpell)
+    {
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+        $spell = Spell::find($idSpell);
+
+        $slotLevelToUse = $actualCharacter->hasUsableSlot($spell->level);
+
+        if ($slotLevelToUse > 0) {
+            $leftSlotsSR = $actualCharacter->slotListShortRest;
+            if (!is_null($leftSlotsSR) && $leftSlotsSR[$slotLevelToUse] > 0) {
+                $index = 'level_' . $slotLevelToUse;
+                $leftSlotsSR->$index--;
+                $leftSlotsSR->save();
+            } else {
+                $leftSlotsLR = $actualCharacter->slotListLongRest;
+                $index = 'level_' . $slotLevelToUse;
+                $leftSlotsLR->$index--;
+                $leftSlotsLR->save();
+            }
+        }
+        return redirect('/character/show/' . $idChara . '/features/spells');
     }
 
     /**

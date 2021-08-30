@@ -50,6 +50,8 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
 
     Route::post('/character/store/prepare/spells/{idChara}', [App\Http\Controllers\CharacterController::class, 'prepareSpellsStore'])->name('chara.prepareSpells.store');
 
+    Route::get('/character/{idChara}/cast/{idSpell}', [App\Http\Controllers\CharacterController::class, 'castSpell'])->name('spell.cast');
+
     Route::middleware('App\Http\Middleware\isMobile')->group(function () {
         Route::get('/character/show/{idChara}/main', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show.mainPage');
         Route::get('/character/show/{idChara}/features', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
