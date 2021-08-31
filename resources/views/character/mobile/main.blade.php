@@ -3,7 +3,9 @@
 @section('tab')
     <div class="row text-center font-weight-bold">
         <div class="col-3">
-            <img src="{{ asset('/icons/fire.svg') }}" alt="" id="rest" class="" title="Short and long rest">
+            <a href="{{ url('/character/rest/select/'.$character->id) }}" id="restIcon">
+                <img src="{{ asset('/icons/fire.svg') }}" alt="" id="rest" class="" title="Short and long rest">
+            </a>
         </div>
         <div class="col-6 px-0 size-text-4"><span class="size-text-3">{{ $character->name }}</span><br>Niveau
             {{ $character->level }}</div>

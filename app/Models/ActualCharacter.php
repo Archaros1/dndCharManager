@@ -42,8 +42,8 @@ class ActualCharacter extends Model
 
     public function slots()
     {
-        $slotsShortRest = $this->slotListShortRest ?? collect();
-        $slotsLongRest = $this->slotListLongRest ?? collect();
+        $slotsShortRest = $this->leftSlotListShortRest ?? collect();
+        $slotsLongRest = $this->leftSlotListLongRest ?? collect();
 
         $slots = collect();
         $slots = $slots->merge($slotsShortRest);
@@ -52,12 +52,12 @@ class ActualCharacter extends Model
         return $slots;
     }
 
-    public function slotListShortRest()
+    public function leftSlotListShortRest()
     {
         return $this->belongsTo(SlotList::class, 'left_slot_list_short_rest_id');
     }
 
-    public function slotListLongRest()
+    public function leftSlotListLongRest()
     {
         return $this->belongsTo(SlotList::class, 'left_slot_list_long_rest_id');
     }

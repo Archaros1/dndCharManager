@@ -13,14 +13,14 @@
 
                 @for ($i = 1; $i <= $missingCount; $i++)
                     <div class="row mb-1">
-                        {{ Form::label('spell_choice_' . $i, 'Sort '.$i, $attributes = ['class' => 'control-label mr-3']) }}
+                        {{ Form::label('spell_choice_' . $i, 'Sort ' . $i, $attributes = ['class' => 'control-label mr-3']) }}
                         {{ Form::select('spell_choice_' . $i, $spells, $attributes = ['class' => 'form-control', 'required' => '']) }}
+                    </div>
+                    <div class="row mb-4 max-height nice-border overflow-auto" id="">
+                        <p id="{{ 'description-choice-' . $i }}"></p>
                     </div>
                 @endfor
 
-                <div class="row mb-4" id="">
-                    <p id="description-choice"></p>
-                </div>
                 {!! Form::hidden('investment', $investment->id) !!}
                 <div class="row">
                     {{ Form::submit("Valider et passer à l'étape suivante", $attributes = ['class' => 'form-control btn btn-success mt-3']) }}

@@ -1,8 +1,6 @@
 $(function () {
     console.log("ready !");
 
-
-
     let path = $(location).attr('pathname');
     if (path.startsWith("/character/create")) {
         setSubClasses();
@@ -14,21 +12,59 @@ $(function () {
         $('#race').on("change", function () {
             setSubRaces();
         });
+        setDescriptionsSpells()
     }
+
     if (path.startsWith("/character/show")) {
         if (path.endsWith("/features/spells")) {
             for (let i = 1; i < 1000; i++) {
                 $('#spellInfo_' + i).on("click", function () {
-                    $('[id^="spellDesc_"][id!=spellDesc_'+i+']').slideUp(300);
-                    $('#spellDesc_'+i).slideToggle(300);
+                    $('[id^="spellDesc_"][id!=spellDesc_' + i + ']').slideUp(300);
+                    $('#spellDesc_' + i).slideToggle(300);
                 });
-
             }
-
         }
+    }
+    if (path.startsWith("/character/rest/select")) {
+        $('#typeRestChoice').on("change", function () {
+            console.log('test');
+            switch ($('#typeRestChoice').val()) {
+                case 'short':
+                    $('#shortRestForm').slideDown(300);
+                    break;
+                case 'long':
+                    $('#shortRestForm').slideUp(300);
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
 });
+
+function setDescriptionsSpells() {
+    for (let i = 1; i < 1000; i++) {
+        if ($('#spell_choice_' + i).val()) {
+            $.ajax({
+                type: 'GET',
+                url: "/spells/" + $('#spell_choice_' + i).val() + "/description",
+                success: function (result) {
+                    $('#description-choice-' + i).html(result);
+                }
+            });
+            $('#spell_choice_' + i).on("change", function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "/spells/" + $('#spell_choice_' + i).val() + "/description",
+                    success: function (result) {
+                        $('#description-choice-' + i).html(result);
+                    }
+                });
+            });
+        }
+    }
+}
 
 function changeSelectOption(yourSelectList, new_options) {
     /* Remove all options from the select list */

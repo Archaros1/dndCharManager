@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 {{ Form::submit("Valider et passer à l'étape suivante", $attributes = ['class' => 'form-control btn btn-success mt-3', 'name' => 'submit']) }}
-                {{ Form::submit("Prendre tous mes niveaux disponibles dans cette classe (en développement)", $attributes = ['class' => 'form-control btn btn-danger mt-3', 'name' => 'submit']) }}
+                {{ Form::submit("Prendre tous mes niveaux disponibles &#x00A;dans cette classe (en développement)", $attributes = ['class' => 'w-100 btn btn-danger mt-3', 'name' => 'submit']) }}
                 {{-- <a href="{{ route('chara.fastbuilding.level.store', ['idChara' => $character->id]) }}" class="btn btn-danger form-control mt-2">Prendre tous mes niveaux disponibles dans cette classe</a> --}}
             </div>
 

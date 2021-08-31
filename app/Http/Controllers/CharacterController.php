@@ -263,6 +263,10 @@ class CharacterController extends Controller
                 $investment = $nextStep['investment'];
                 $highestSlot = $investment->highestSlot();
                 $spells = $investment->class->spellcasting->spellsLevelNOrLower($highestSlot, false);
+                $spells = $spells->sortBy([
+                    ['level', 'desc'],
+                    ['name', 'asc'],
+                ]);
 
                 foreach ($spells as $key => $spell) {
                     $spellTab[$spell->id] = ucwords($spell->name);
@@ -567,7 +571,7 @@ class CharacterController extends Controller
         return redirect('/character/create/building/' . $idChara);
     }
 
-    public function buildingSpellStore($idChara, Request $request)
+    public function buildingSpellStore(int $idChara, Request $request)
     {
         $inputs = $request->post();
 
@@ -722,19 +726,87 @@ class CharacterController extends Controller
         $slotLevelToUse = $actualCharacter->hasUsableSlot($spell->level);
 
         if ($slotLevelToUse > 0) {
-            $leftSlotsSR = $actualCharacter->slotListShortRest;
+            $leftSlotsSR = $actualCharacter->leftSlotListShortRest;
             if (!is_null($leftSlotsSR) && $leftSlotsSR[$slotLevelToUse] > 0) {
                 $index = 'level_' . $slotLevelToUse;
                 $leftSlotsSR->$index--;
                 $leftSlotsSR->save();
             } else {
-                $leftSlotsLR = $actualCharacter->slotListLongRest;
+                $leftSlotsLR = $actualCharacter->leftSlotListLongRest;
                 $index = 'level_' . $slotLevelToUse;
                 $leftSlotsLR->$index--;
                 $leftSlotsLR->save();
             }
         }
         return redirect('/character/show/' . $idChara . '/features/spells');
+    }
+
+    public function selectRest(int $idChara)
+    {
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+        $hitdices = $character->hitDices->groupBy('max_value');
+        $hitdicesSelect = [];
+        foreach ($hitdices as $key => $tab) {
+            $numberHitdice = count($tab);
+            $hitdicesSelect[$key] = [];
+            for ($i = 0; $i <= $numberHitdice; $i++) {
+                array_push($hitdicesSelect[$key], $i);
+            }
+        }
+
+        return view('character/rest/select_rest', [
+            'character' => $character,
+            'actualCharacter' => $actualCharacter,
+            'hitdicesSelect' => $hitdicesSelect,
+        ]);
+    }
+
+    public function rest(int $idChara, Request $request)
+    {
+        $inputs = $request->post();
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+
+        if ($inputs['restType'] === 'short') {
+            # code...
+        } else {
+            if (!is_null($character->slot_list_long_rest_id)) {
+                $slotListLongRest = $character->slotListLongRest;
+                $actualCharacter->leftSlotListLongRest->update([
+                    'level_1' => $slotListLongRest->level_1,
+                    'level_2' => $slotListLongRest->level_2,
+                    'level_3' => $slotListLongRest->level_3,
+                    'level_4' => $slotListLongRest->level_4,
+                    'level_5' => $slotListLongRest->level_5,
+                    'level_6' => $slotListLongRest->level_6,
+                    'level_7' => $slotListLongRest->level_7,
+                    'level_8' => $slotListLongRest->level_8,
+                    'level_9' => $slotListLongRest->level_9,
+                ]);
+            }
+            if (!is_null($character->slot_list_short_rest_id)) {
+                $slotListShortRest = $character->slotListShortRest;
+                $actualCharacter->leftSlotListShortRest->update([
+                    'level_1' => $slotListShortRest->level_1,
+                    'level_2' => $slotListShortRest->level_2,
+                    'level_3' => $slotListShortRest->level_3,
+                    'level_4' => $slotListShortRest->level_4,
+                    'level_5' => $slotListShortRest->level_5,
+                    'level_6' => $slotListShortRest->level_6,
+                    'level_7' => $slotListShortRest->level_7,
+                    'level_8' => $slotListShortRest->level_8,
+                    'level_9' => $slotListShortRest->level_9,
+                ]);
+            }
+
+            $actualCharacter->update([
+                'left_health' => $character->health,
+            ]);
+
+            $actualCharacter->save();
+        }
+        return redirect('character/show/' . $idChara . '/main');
     }
 
     /**
@@ -775,7 +847,14 @@ class CharacterController extends Controller
     public function test($idChara)
     {
         $character = Character::find($idChara);
+        $investments = $character->classInvestments;
+        $highestSlot = $investments[0]->highestSlot();
+        $spells = $investments[0]->class->spellcasting->spellsLevelNOrLower($highestSlot, false);
+        $spells = $spells->sortBy([
+            ['level', 'desc'],
+            ['name', 'asc'],
+        ]);
 
-        dd($character->knownSpells());
+        dd($highestSlot, $character->knownSpells());
     }
 }

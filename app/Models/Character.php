@@ -83,6 +83,18 @@ class Character extends Model
         return $this->hasManyThrough(HitDice::class, ClassInvestment::class);
     }
 
+    public function numberhitDicesWithNFaces(int $faceNumber)
+    {
+        $hitdices = $this->hitDices;
+        $result = 0;
+        foreach ($hitdices as $key => $hitdice) {
+            if ($hitdice->max_value === $faceNumber) {
+                $result++;
+            }
+        }
+        return $result;
+    }
+
     public function calculateHP()
     {
         $totalHp = 0;

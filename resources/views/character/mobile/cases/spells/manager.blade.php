@@ -28,11 +28,11 @@
         </div>
         <div class="row">
             @foreach ($spells as $spellLevel)
-                <div class="row">
+                <div class="row mx-0">
                     <h5 class="mt-2">Niveau {{ $spellLevel[0]->level }}</h5>
                 </div>
                 @foreach ($spellLevel as $spell)
-                    <div class="row form-control display-flex mt-2" id="{{ 'spellBar_'.$spell->id }}">
+                    <div class="row form-control display-flex mt-2 mx-0" id="{{ 'spellBar_'.$spell->id }}">
                         <div class="col-2 p-0">
                             @if ($spellLevel[0]->level != 0)
                                 <a href="{{ url('/character/'.$character->id.'/cast/'.$spell->id) }}" class="btn btn-danger w-100 h-100 p-0">Cast</a>

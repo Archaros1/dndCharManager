@@ -40,7 +40,7 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
 
     Route::get('/character/destroy/{idChara}', [App\Http\Controllers\CharacterController::class, 'destroy'])->name('chara.destroy');
 
-    // Route::post('/character/store/building/feature_choice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingFeatureChoiceStore'])->name('chara.building.feature_choice.store');
+    Route::post('/character/store/building/feature_choice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingFeatureChoiceStore'])->name('chara.building.feature_choice.store');
     Route::post('/character/store/building/level/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingLevelStore'])->name('chara.building.level.store');
     Route::post('/character/store/building/subclass/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingSubClassStore'])->name('chara.building.subclass.store');
     Route::post('/character/store/building/hitdice/{idChara}', [App\Http\Controllers\CharacterController::class, 'buildingHitDiceStore'])->name('chara.building.hitdice.store');
@@ -51,8 +51,11 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::post('/character/store/prepare/spells/{idChara}', [App\Http\Controllers\CharacterController::class, 'prepareSpellsStore'])->name('chara.prepareSpells.store');
 
     Route::get('/character/{idChara}/cast/{idSpell}', [App\Http\Controllers\CharacterController::class, 'castSpell'])->name('spell.cast');
+    Route::get('/character/rest/select/{idChara}', [App\Http\Controllers\CharacterController::class, 'selectRest'])->name('chara.select.rest');
+    Route::post('/character/rest/{idChara}', [App\Http\Controllers\CharacterController::class, 'rest'])->name('chara.rest');
 
     Route::middleware('App\Http\Middleware\isMobile')->group(function () {
+
         Route::get('/character/show/{idChara}/main', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show.mainPage');
         Route::get('/character/show/{idChara}/features', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
         Route::get('/character/show/{idChara}/inventory', [App\Http\Controllers\CharacterController::class, 'showInventoryPage'])->name('chara.show.inventoryPage');
@@ -73,5 +76,6 @@ Route::get('/race/{id}/showsubraces', [App\Http\Controllers\RaceController::clas
 
 Route::get('/spells/show/{id}', [App\Http\Controllers\SpellController::class, 'show'])->name('show.spell');
 Route::get('/spells/list', [App\Http\Controllers\SpellController::class, 'list'])->name('list.spell');
+Route::get('/spells/{idSpell}/description', [App\Http\Controllers\SpellController::class, 'description'])->name('description.spell');
 
 Route::get('/test/{id}/', [App\Http\Controllers\CharacterController::class, 'test'])->name('test');

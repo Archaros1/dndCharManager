@@ -17,26 +17,14 @@ class HitDice extends Model
     protected $fillable = [
         'max_value',
         'rolled_value',
+        'rolled_short_rest',
         'class_investment_id',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-
+    protected $attributes = [
+        'rolled_short_rest' => 0,
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-
-    ];
 
     public function character()
     {

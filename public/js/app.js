@@ -1971,6 +1971,7 @@ $(function () {
     $('#race').on("change", function () {
       setSubRaces();
     });
+    setDescriptionsSpells();
   }
 
   if (path.startsWith("/character/show")) {
@@ -1987,7 +1988,53 @@ $(function () {
       }
     }
   }
+
+  if (path.startsWith("/character/rest/select")) {
+    $('#typeRestChoice').on("change", function () {
+      console.log('test');
+
+      switch ($('#typeRestChoice').val()) {
+        case 'short':
+          $('#shortRestForm').slideDown(300);
+          break;
+
+        case 'long':
+          $('#shortRestForm').slideUp(300);
+          break;
+
+        default:
+          break;
+      }
+    });
+  }
 });
+
+function setDescriptionsSpells() {
+  var _loop2 = function _loop2(i) {
+    if ($('#spell_choice_' + i).val()) {
+      $.ajax({
+        type: 'GET',
+        url: "/spells/" + $('#spell_choice_' + i).val() + "/description",
+        success: function success(result) {
+          $('#description-choice-' + i).html(result);
+        }
+      });
+      $('#spell_choice_' + i).on("change", function () {
+        $.ajax({
+          type: 'GET',
+          url: "/spells/" + $('#spell_choice_' + i).val() + "/description",
+          success: function success(result) {
+            $('#description-choice-' + i).html(result);
+          }
+        });
+      });
+    }
+  };
+
+  for (var i = 1; i < 1000; i++) {
+    _loop2(i);
+  }
+}
 
 function changeSelectOption(yourSelectList, new_options) {
   /* Remove all options from the select list */

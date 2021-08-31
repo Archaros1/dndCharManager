@@ -84,4 +84,10 @@ class SpellController extends Controller
     {
         //
     }
+
+    public function description(int $idSpell)
+    {
+        $spell = Spell::find($idSpell);
+        return $spell->description->text;
+    }
 }
