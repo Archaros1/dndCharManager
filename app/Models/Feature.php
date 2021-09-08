@@ -65,10 +65,12 @@ class Feature extends Model
         'duration' => null,
         'is_custom' => 0,
         'has_choice' => 0,
-        'selected_choice_amount' => 1,
+        'has_generated_choices' => 0,
+        'selected_choice_amount' => null,
         'description_id' => null,
         'spell_list_id' => null,
         'stat_pack_id' => null,
+        'displayed_in_ui' => 0,
     ];
 
     public function description()

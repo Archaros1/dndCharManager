@@ -24,8 +24,11 @@ class CreateFeaturesTable extends Migration
             $table->string('duration')->nullable();
             $table->boolean('is_custom');
             $table->boolean('has_choice');
-            $table->integer('selected_choice_amount');
+            $table->boolean('has_generated_choices');
+            $table->integer('selected_choice_amount')->nullable();
             $table->boolean('modify_stats');
+
+            $table->boolean('displayed_in_ui');
 
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('stat_pack_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');

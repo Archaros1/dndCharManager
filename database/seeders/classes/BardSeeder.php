@@ -6,13 +6,16 @@ use Illuminate\Database\Seeder;
 
 use App\Models\DndClass;
 use App\Models\Description;
+use App\Models\DataHandler;
 use App\Models\EvolvingNumber;
 use App\Models\Feature;
+use App\Models\FeatureChoice;
 use App\Models\FeatureList;
 use App\Models\HitDice;
 use App\Models\ProficiencyList;
 use App\Models\SlotList;
 use App\Models\SlotListPack;
+use App\Models\Spell;
 use App\Models\Spellcasting;
 use App\Models\SpellList;
 
@@ -25,6 +28,9 @@ class BardSeeder extends Seeder
      */
     public function run()
     {
+        $dh = new DataHandler;
+        $datas = $dh->decodeJson('classes');
+
         $cantripsKnownTab = [
             'level_1' => 2,
             'level_2' => 2,
@@ -86,7 +92,7 @@ class BardSeeder extends Seeder
             'spells_known_count_id' => $spellsKnown->id,
         ]);
 
-        DndClass::create([
+        $class = DndClass::create([
             'name' => 'bard',
             'is_custom' => 0,
             'is_spellcaster' => 1,
@@ -96,6 +102,7 @@ class BardSeeder extends Seeder
             'feature_list_id' => $featureList->id,
             'spellcasting_id' => $spellcasting->id,
         ]);
+        $className = $class->name;
 
         $slotLists = [
             [
@@ -251,7 +258,7 @@ class BardSeeder extends Seeder
 
         foreach ($slotLists as $key => $slotList) {
             SlotList::create([
-                'class_level' => $key+1,
+                'class_level' => $key + 1,
                 'level_1' => $slotList['level_1'] ?? 0,
                 'level_2' => $slotList['level_2'] ?? 0,
                 'level_3' => $slotList['level_3'] ?? 0,

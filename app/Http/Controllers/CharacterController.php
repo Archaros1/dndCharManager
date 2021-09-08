@@ -6,6 +6,7 @@ use App\Models\ActualCharacter;
 use App\Models\Character;
 use App\Models\StatPack;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Background;
 use App\Models\ClassInvestment;
@@ -846,15 +847,12 @@ class CharacterController extends Controller
 
     public function test($idChara)
     {
-        $character = Character::find($idChara);
-        $investments = $character->classInvestments;
-        $highestSlot = $investments[0]->highestSlot();
-        $spells = $investments[0]->class->spellcasting->spellsLevelNOrLower($highestSlot, false);
-        $spells = $spells->sortBy([
-            ['level', 'desc'],
-            ['name', 'asc'],
-        ]);
+        $dh = new DataHandler;
 
-        dd($highestSlot, $character->knownSpells());
+        $data = $dh->decodeJson('classes');
+        $className = 'cleric';
+        $description = $dh->getFeatureDescription($data, $className, 'Destroy Undead');
+
+        echo($description);
     }
 }

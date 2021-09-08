@@ -21,13 +21,15 @@ class CreateFeatureChoicesTable extends Migration
             $table->string('activation_time')->nullable();
             $table->string('duration')->nullable();
             $table->string('casting_stat')->nullable();
+            $table->boolean('add_to_known_spells');
+            $table->boolean('modify_stats');
             $table->boolean('is_custom');
             $table->boolean('is_spellcasting');
-            $table->boolean('modify_stats');
 
             $table->foreignId('feature_id')->constrained();
             $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('spell_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('spell_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('stat_pack_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();

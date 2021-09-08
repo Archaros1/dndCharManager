@@ -20,9 +20,11 @@ class FeatureChoice extends Model
         'display_name',
         'is_action',
         'is_custom',
+        'add_to_known_spells',
         'modify_stats',
         'description_id',
         'spell_list_id',
+        'spell_id',
         'stat_pack_id',
     ];
 
@@ -35,6 +37,7 @@ class FeatureChoice extends Model
         'is_spellcasting' => 0,
         'is_action' => 0,
         'is_custom' => 0,
+        'add_to_known_spells' => 0,
         'modify_stats' => 0,
         'description_id' => null,
         'spell_list_id' => null,
@@ -75,5 +78,10 @@ class FeatureChoice extends Model
     public function spellList()
     {
         return $this->hasOne(SpellList::class);
+    }
+
+    public function spell()
+    {
+        return $this->belongsTo(Spell::class);
     }
 }
