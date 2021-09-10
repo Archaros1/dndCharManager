@@ -75,7 +75,7 @@ class Feature extends Model
 
     public function description()
     {
-        return Description::find($this->description_id);
+        return $this->belongsTo(Description::class);
     }
 
     public function list()
@@ -98,7 +98,7 @@ class Feature extends Model
 
     public function statPack()
     {
-        return $this->hasOne(StatPack::class);
+        return $this->belongsTo(StatPack::class);
     }
 
     public function choices()

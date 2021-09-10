@@ -17,12 +17,10 @@ $(function () {
 
     if (path.startsWith("/character/show")) {
         if (path.endsWith("/features/spells")) {
-            for (let i = 1; i < 1000; i++) {
-                $('#spellInfo_' + i).on("click", function () {
-                    $('[id^="spellDesc_"][id!=spellDesc_' + i + ']').slideUp(300);
-                    $('#spellDesc_' + i).slideToggle(300);
-                });
-            }
+            descDisplayer('spellInfo', 'spellDesc');
+        }
+        if (path.endsWith("/features/traits")) {
+            descDisplayer('traitInfo', 'traitDesc');
         }
     }
     if (path.startsWith("/character/rest/select")) {
@@ -42,6 +40,15 @@ $(function () {
     }
 
 });
+
+function descDisplayer(buttonIdModel, descIdModel) {
+    for (let i = 1; i < 1000; i++) {
+        $('#'+buttonIdModel+'_' + i).on("click", function () {
+            $('[id^="'+descIdModel+'_"][id!='+descIdModel+'_' + i + ']').slideUp(300);
+            $('#'+descIdModel+'_' + i).slideToggle(300);
+        });
+    }
+}
 
 function setDescriptionsSpells() {
     for (let i = 1; i < 1000; i++) {

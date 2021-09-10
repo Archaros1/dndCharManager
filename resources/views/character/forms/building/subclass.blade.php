@@ -11,7 +11,7 @@
                 <h2>Vous devez choisir une sous-classe pour la classe {{ ucwords($investment->class->name) }}.</h2>
                 @if (!is_null($investment->class->description_id))
                     <div class="row mb-4" id="class">
-                        <p id="description-class">{{ $investment->class->description()->text }}</p>
+                        <p id="description-class">{{ $investment->class->description->text }}</p>
                     </div>
                 @endif
                 <div class="row mb-4" id="subclasses">

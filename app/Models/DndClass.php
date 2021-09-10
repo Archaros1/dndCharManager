@@ -146,7 +146,7 @@ class DndClass extends Model
 
     public function description()
     {
-        return Description::find($this->description_id);
+        return $this->belongsTo(Description::class);
     }
 
     public function stats()

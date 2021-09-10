@@ -1976,16 +1976,11 @@ $(function () {
 
   if (path.startsWith("/character/show")) {
     if (path.endsWith("/features/spells")) {
-      var _loop = function _loop(i) {
-        $('#spellInfo_' + i).on("click", function () {
-          $('[id^="spellDesc_"][id!=spellDesc_' + i + ']').slideUp(300);
-          $('#spellDesc_' + i).slideToggle(300);
-        });
-      };
+      descDisplayer('spellInfo', 'spellDesc');
+    }
 
-      for (var i = 1; i < 1000; i++) {
-        _loop(i);
-      }
+    if (path.endsWith("/features/traits")) {
+      descDisplayer('traitInfo', 'traitDesc');
     }
   }
 
@@ -2008,6 +2003,19 @@ $(function () {
     });
   }
 });
+
+function descDisplayer(buttonIdModel, descIdModel) {
+  var _loop = function _loop(i) {
+    $('#' + buttonIdModel + '_' + i).on("click", function () {
+      $('[id^="' + descIdModel + '_"][id!=' + descIdModel + '_' + i + ']').slideUp(300);
+      $('#' + descIdModel + '_' + i).slideToggle(300);
+    });
+  };
+
+  for (var i = 1; i < 1000; i++) {
+    _loop(i);
+  }
+}
 
 function setDescriptionsSpells() {
   var _loop2 = function _loop2(i) {

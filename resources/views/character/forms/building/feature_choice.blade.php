@@ -10,9 +10,9 @@
                 <h1>Votre personnage n'est pas terminé</h1>
                 <h2>Vous avez un choix à faire</h2>
                 <h4>{{ $feature->display_name }}</h4>
-                @if (null !== $feature->description())
+                @if (null !== $feature->description)
                     <div class="row mb-4" id="">
-                        <p id="description-feature">{{ $feature->description()->text }}</p>
+                        <p id="description-feature">{{ $feature->description->text }}</p>
                     </div>
                 @endif
 

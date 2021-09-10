@@ -61,6 +61,7 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
         Route::get('/character/show/{idChara}/inventory', [App\Http\Controllers\CharacterController::class, 'showInventoryPage'])->name('chara.show.inventoryPage');
 
         Route::get('/character/show/{idChara}/features/spells', [App\Http\Controllers\CharacterController::class, 'showSpellsPage'])->name('chara.show.spellsPage');
+        Route::get('/character/show/{idChara}/features/traits', [App\Http\Controllers\CharacterController::class, 'showTraitsPage'])->name('chara.show.traitsPage');
 
     });
 });

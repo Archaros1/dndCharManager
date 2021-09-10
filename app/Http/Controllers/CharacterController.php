@@ -690,6 +690,18 @@ class CharacterController extends Controller
         }
     }
 
+    public function showTraitsPage(int $idChara, Request $request)
+    {
+        $character = Character::find($idChara);
+        $actualCharacter = $character->actual;
+
+        if ($request->isMobile) {
+        }
+        return view('character/mobile/cases/traits/list', [
+            'character' => $character,
+        ]);
+    }
+
     public function prepareSpellsStore($idChara, Request $request)
     {
         $inputs = $request->post();
@@ -801,6 +813,22 @@ class CharacterController extends Controller
                 ]);
             }
 
+            $investments = $character->classInvestments;
+            foreach ($investments as $key => $investment) {
+                if (
+                    $investment->class->is_spellcaster
+                    && !is_null($investment->class->spellcasting_id)
+                    && $investment->class->spellcasting->prepare_spells
+                    && !empty($investment->preparedSpellList->spells->all())
+                ) {
+                    foreach ($investment->preparedSpellList->spells->all() as $key => $spell) {
+                        $spell->spellLists()->detach($investment->preparedSpellList);
+                        $spell->save();
+                    }
+                    dd($investment->preparedSpellList->spells);
+                }
+            }
+
             $actualCharacter->update([
                 'left_health' => $character->health,
             ]);
@@ -847,12 +875,9 @@ class CharacterController extends Controller
 
     public function test($idChara)
     {
-        $dh = new DataHandler;
+        $dh = new DataHandler();
+        $datas = $dh->decodeJson('classes');
 
-        $data = $dh->decodeJson('classes');
-        $className = 'cleric';
-        $description = $dh->getFeatureDescription($data, $className, 'Destroy Undead');
-
-        echo($description);
+        return $dh->getFeatureDescription($datas, 'barbarian', 'Unarmored Defense');
     }
 }

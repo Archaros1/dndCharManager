@@ -45,7 +45,7 @@
                             <img src="{{ asset('/icons/plus.svg') }}" alt="+" id="{{ 'spellInfo_'.$spell->id }}" class="">
                         </div>
                     </div>
-                    <div class="row nice-border w-100" id="{{ 'spellDesc_'.$spell->id }}" style="display: none">
+                    <div class="row nice-border w-100 mx-0" id="{{ 'spellDesc_'.$spell->id }}" style="display: none">
                         <div class="col-6">
                             <div class="row pl-1">
                                 @if ($spell->level == 0)

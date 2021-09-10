@@ -204,13 +204,13 @@ class Character extends Model
     {
         $characterFeatures = [];
 
-        $characterFeatures = $this->getFeaturesOf($this->backgroud, $characterFeatures);
+        $characterFeatures = $this->getFeaturesOf($this->background, $characterFeatures);
         $characterFeatures = $this->getFeaturesOf($this->race, $characterFeatures);
         $characterFeatures = $this->getFeaturesOf($this->subrace, $characterFeatures);
 
 
         foreach ($this->classInvestments as $key => $investment) {
-            $characterFeatures = $this->getFeaturesOf($investment->dndClass, $characterFeatures);
+            $characterFeatures = $this->getFeaturesOf($investment->class, $characterFeatures);
             $characterFeatures = $this->getFeaturesOf($investment->subClass, $characterFeatures);
         }
 
@@ -317,6 +317,13 @@ class Character extends Model
             }
         }
         return $choicesWithSpellcasting;
+    }
+
+    public function traits()
+    {
+        $features = collect($this->features());
+        $traits = $features->where('is_action', '=', 0);
+        return $traits;
     }
 
     public function proficiencyBonus()
@@ -449,7 +456,7 @@ class Character extends Model
         return $this->belongsTo(SlotList::class, 'slot_list_short_rest_id');
     }
 
-    public function getSlotListLongRest() : SlotList
+    public function getSlotListLongRest()
     {
         if ($this->isMulticaster()) {
             $level = $this->levelForMulticlassSlotList();
@@ -467,7 +474,10 @@ class Character extends Model
                     break;
                 }
             }
-            $slotList = SlotListPack::find($packId)->slotListLevelN($level);
+            $slotList = null;
+            if (0 !== $packId) {
+                $slotList = SlotListPack::find($packId)->slotListLevelN($level);
+            }
         }
 
         return $slotList;

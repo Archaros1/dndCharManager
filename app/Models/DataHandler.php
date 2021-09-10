@@ -11,9 +11,9 @@ class DataHandler extends Model
 {
     use HasFactory;
 
-    public function decodeJson(string $doc, string $location = 'content') : object
+    public function decodeJson(string $doc, string $location = 'content'): object
     {
-        $json = Storage::get($location.'/'.$doc.'.json');
+        $json = Storage::get($location . '/' . $doc . '.json');
         $decodedJson = json_decode($json);
 
         return $decodedJson;
@@ -32,7 +32,9 @@ class DataHandler extends Model
         }
 
         $str = '';
-        if (gettype($description) == 'object') {
+        if (gettype($description) == 'string') {
+            $str = $description;
+        } elseif (gettype($description) == 'object') {
             if (gettype($description->content) == 'array') {
                 $str = $this->mergeArrayToString($description->content);
             } else {
@@ -47,24 +49,23 @@ class DataHandler extends Model
                             $newTable[$headLine] = $column[$key];
                         }
                     }
-                    $str = $str.'<table><tr>';
+                    $str = $str . '<table><tr>';
                     foreach ($table as $key => $value) {
-                        $str = $str.'<th>'.$key.'</th>';
+                        $str = $str . '<th>' . $key . '</th>';
                     }
-                    $str = $str.'</tr>';
+                    $str = $str . '</tr>';
                     foreach ($newTable as $key => $line) {
-                        $str = $str.'<tr>';
-                        $str = $str.'<td>'.$key.'</td>';
-                        $str = $str.'<td>'.$line.'</td>';
-                        $str = $str.'</tr>';
+                        $str = $str . '<tr>';
+                        $str = $str . '<td>' . $key . '</td>';
+                        $str = $str . '<td>' . $line . '</td>';
+                        $str = $str . '</tr>';
                     }
-                    $str = $str.'</table>';
+                    $str = $str . '</table>';
                 } elseif (isset($description->$nextStepSpellcasting) && isset($description->$nextStepSpellcasting->content)) {
                     $str = $this->mergeArrayToString($description->$nextStepSpellcasting->content);
                 }
             }
         }
-
         return $str;
     }
 
@@ -74,17 +75,17 @@ class DataHandler extends Model
         foreach ($array as $key => $elem) {
             if (gettype($elem) == 'array') {
                 $elem = $this->mergeArrayToString($elem, true);
-                $str = $str.'<ul>';
-                $str = $str.$elem;
-                $str = $str.'</ul>';
+                $str = $str . '<ul>';
+                $str = $str . $elem;
+                $str = $str . '</ul>';
             } else {
                 if ($toList === true) {
-                    $str = $str.'<li>'.$elem.'</li>';
+                    $str = $str . '<li>' . $elem . '</li>';
                 } else {
                     if ($str !== '') {
-                        $str = $str.'</br>';
+                        $str = $str . '</br>';
                     }
-                    $str = $str.$elem;
+                    $str = $str . $elem;
                 }
             }
         }
@@ -92,11 +93,11 @@ class DataHandler extends Model
         return $str;
     }
 
-    public function createFeature(object $datas, DndClass $class, array $attributes) : Feature
+    public function createFeature(object $datas, DndClass $class, array $attributes): Feature
     {
         $featureName = $attributes['display_name'];
         $className = $class->name;
-        echo('Creating feature : '.$featureName. PHP_EOL);
+        echo ('Creating feature : ' . $featureName . PHP_EOL);
         $descriptionText = $this->getFeatureDescription($datas, $className, $featureName);
         $description = Description::create([
             'text' => $descriptionText,
