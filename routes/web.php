@@ -54,6 +54,8 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::get('/character/rest/select/{idChara}', [App\Http\Controllers\CharacterController::class, 'selectRest'])->name('chara.select.rest');
     Route::post('/character/rest/{idChara}', [App\Http\Controllers\CharacterController::class, 'rest'])->name('chara.rest');
 
+    Route::get('/break-concentration/{idChara}', [App\Http\Controllers\CharacterController::class, 'breakConcentration'])->name('chara.breakConcentration');
+
     Route::middleware('App\Http\Middleware\isMobile')->group(function () {
 
         Route::get('/character/show/{idChara}/main', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show.mainPage');

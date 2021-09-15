@@ -19,25 +19,22 @@ class ActualCharacter extends Model
         'character_id',
         'left_slot_list_long_rest_id',
         'left_slot_list_short_rest_id',
+        'concentration_spell_id',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [];
 
     public function character()
     {
         return $this->belongsTo(Character::class);
+    }
+
+    public function concentrationSpell()
+    {
+        return $this->belongsTo(Spell::class, 'concentration_spell_id');
+    }
+
+    public function isConcentrating() : bool
+    {
+        return !is_null($this->concentration_spell_id);
     }
 
     public function slots()

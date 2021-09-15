@@ -24,6 +24,9 @@ class CreateActualCharactersTable extends Migration
             $table->foreign('left_slot_list_long_rest_id')->references('id')->on('slot_lists');
             $table->unsignedBigInteger('left_slot_list_short_rest_id')->nullable()->constrained();
             $table->foreign('left_slot_list_short_rest_id')->references('id')->on('slot_lists');
+
+            $table->unsignedBigInteger('concentration_spell_id')->nullable()->constrained();
+            $table->foreign('concentration_spell_id')->references('id')->on('spells');
         });
     }
 

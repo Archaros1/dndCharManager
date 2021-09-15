@@ -750,6 +750,11 @@ class CharacterController extends Controller
                 $leftSlotsLR->$index--;
                 $leftSlotsLR->save();
             }
+
+            if ($spell->concentration == 1) {
+                $actualCharacter->concentration_spell_id = $idSpell;
+                $actualCharacter->save();
+            }
         }
         return redirect('/character/show/' . $idChara . '/features/spells');
     }
@@ -825,7 +830,6 @@ class CharacterController extends Controller
                         $spell->spellLists()->detach($investment->preparedSpellList);
                         $spell->save();
                     }
-                    dd($investment->preparedSpellList->spells);
                 }
             }
 
@@ -836,6 +840,15 @@ class CharacterController extends Controller
             $actualCharacter->save();
         }
         return redirect('character/show/' . $idChara . '/main');
+    }
+
+    public function breakConcentration(int $idChara)
+    {
+        $actualCharacter = Character::find($idChara)->actual;
+        $actualCharacter->concentration_spell_id = null;
+        $actualCharacter->save();
+
+        return redirect('/character/show/' . $idChara . '/features/spells');
     }
 
     /**
