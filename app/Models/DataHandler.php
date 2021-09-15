@@ -83,7 +83,9 @@ class DataHandler extends Model
                     $str = $str . '<li>' . $elem . '</li>';
                 } else {
                     if ($str !== '') {
-                        $str = $str . '</br>';
+                        if (!str_ends_with($str, '</ul>')) {
+                            $str = $str . '</br>';
+                        }
                     }
                     $str = $str . $elem;
                 }

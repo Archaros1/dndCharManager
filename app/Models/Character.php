@@ -326,6 +326,13 @@ class Character extends Model
         return $traits;
     }
 
+    public function actions()
+    {
+        $features = collect($this->features());
+        $actions = $features->where('is_action', '=', 1);
+        return $actions;
+    }
+
     public function proficiencyBonus()
     {
         return (1 + ceil($this->level / 4));

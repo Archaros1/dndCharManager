@@ -1982,6 +1982,10 @@ $(function () {
     if (path.endsWith("/features/traits")) {
       descDisplayer('traitInfo', 'traitDesc');
     }
+
+    if (path.endsWith("/features/actions")) {
+      descDisplayer('actionInfo', 'actionDesc');
+    }
   }
 
   if (path.startsWith("/character/rest/select")) {

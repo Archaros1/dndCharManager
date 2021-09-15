@@ -6,7 +6,7 @@
             <a href="{{ url('/character/show/' . $character->id . '/main') }}" class="col border">
                 <div class="text-center" id="tabMain">STATS</div>
             </a>
-            <a href="{{ url('/character/show/' . $character->id . '/features') }}" class="col border">
+            <a href="{{ url('/character/show/' . $character->id . '/features/actions') }}" class="col border">
                 <div class="text-center" id="tabFeatures">FEATURES</div>
             </a>
             <a href="{{ url('/character/show/' . $character->id . '/inventory') }}" class="col border">

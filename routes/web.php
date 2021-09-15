@@ -59,7 +59,8 @@ Route::middleware('App\Http\Middleware\Authenticate')->group(function () {
     Route::middleware('App\Http\Middleware\isMobile')->group(function () {
 
         Route::get('/character/show/{idChara}/main', [App\Http\Controllers\CharacterController::class, 'show'])->name('chara.show.mainPage');
-        Route::get('/character/show/{idChara}/features', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
+        // Route::get('/character/show/{idChara}/features', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
+        Route::get('/character/show/{idChara}/features/actions', [App\Http\Controllers\CharacterController::class, 'showFeaturesPage'])->name('chara.show.featuresPage');
         Route::get('/character/show/{idChara}/inventory', [App\Http\Controllers\CharacterController::class, 'showInventoryPage'])->name('chara.show.inventoryPage');
 
         Route::get('/character/show/{idChara}/features/spells', [App\Http\Controllers\CharacterController::class, 'showSpellsPage'])->name('chara.show.spellsPage');
