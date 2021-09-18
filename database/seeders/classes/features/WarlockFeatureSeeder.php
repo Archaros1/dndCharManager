@@ -5,19 +5,9 @@ namespace Database\Seeders\Classes\Features;
 use Illuminate\Database\Seeder;
 
 use App\Models\DndClass;
-use App\Models\Description;
 use App\Models\DataHandler;
-use App\Models\EvolvingNumber;
-use App\Models\Feature;
-use App\Models\FeatureChoice;
-use App\Models\FeatureList;
-use App\Models\SlotList;
-use App\Models\SlotListPack;
-use App\Models\Spell;
-use App\Models\Spellcasting;
-use App\Models\SpellList;
 
-class FighterFeatureSeeder extends Seeder
+class WarlockFeatureSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,47 +19,54 @@ class FighterFeatureSeeder extends Seeder
         $dh = new DataHandler;
         $datas = $dh->decodeJson('classes');
 
-        $class = DndClass::firstWhere('name', '=', 'fighter');
+        $class = DndClass::firstWhere('name', '=', 'warlock');
         $className = $class->name;
 
-        $featureName = 'Fighting Style';
+        $featureName = 'Pact Magic';
         $dh->createFeature($datas, $class, [
             'level' => 1,
-            'name' => 'fighting style fighter',
+            'name' => 'spellcasting warlock',
             'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Second Wind';
-        $dh->createFeature($datas, $class, [
-            'level' => 1,
-            'name' => strtolower($featureName),
-            'display_name' => $featureName,
-            'is_action' => 1,
-            'activation_time' => '1 action bonus',
-            'displayed_in_ui' => 1,
-            'is_custom' => 0,
-        ]);
-
-        $featureName = 'Action Surge';
+        $featureName = 'Eldritch Invocations';
         $dh->createFeature($datas, $class, [
             'level' => 2,
             'name' => strtolower($featureName),
+            'has_choice' => 1,
+            'selected_choice_amount' => 2,
             'display_name' => $featureName,
-            'is_action' => 1,
-            'activation_time' => '1 action libre',
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Indomitable';
+        $featureName = 'Pact Boon';
         $dh->createFeature($datas, $class, [
-            'level' => 9,
+            'level' => 3,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
-            'is_action' => 1,
-            'activation_time' => '1 action libre',
+            'has_choice' => 1,
+            'selected_choice_amount' => 1,
+            'displayed_in_ui' => 1,
+            'is_custom' => 0,
+        ]);
+
+        $featureName = 'Mystic Arcanum';
+        $dh->createFeature($datas, $class, [
+            'level' => 11,
+            'name' => strtolower($featureName),
+            'display_name' => $featureName,
+            'displayed_in_ui' => 1,
+            'is_custom' => 0,
+        ]);
+
+        $featureName = 'Eldritch Master';
+        $dh->createFeature($datas, $class, [
+            'level' => 20,
+            'name' => strtolower($featureName),
+            'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);

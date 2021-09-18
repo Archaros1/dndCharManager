@@ -28,10 +28,11 @@ class SpellSeeder extends Seeder
         }
 
         $json = Storage::get('content/spells.json');
-        echo('Decoding json file...'. PHP_EOL);
+        echo ('Decoding json file...' . PHP_EOL);
         $spells = json_decode($json);
 
-        echo('Distributing spell lists...'. PHP_EOL);
+        echo ('Distributing spell lists...' . PHP_EOL);
+        $amountOfSpells = count($spells);
         foreach ($spells as $key => $spellData) {
             $spellData = (array) $spellData;
             try {
@@ -41,24 +42,27 @@ class SpellSeeder extends Seeder
                 ]);
 
                 $spell = Spell::create([
-                'name' => strtolower($spellData['name']),
-                'display_name' => $spellData['name'],
-                'level' => $spellData['level'] === 'Cantrip' ? 0 : substr($spellData['level'], 0, 1),
-                'range' => $spellData['range'],
-                'school' => strtolower($spellData['school']),
-                'has_saving_throw' => 0,
-                'saving_throw_attribute' => null,
-                'is_spell_attack' => 0,
-                'do_damage' => 0,
-                'roll' => null,
-                'casting_time' => $spellData['casting_time'],
-                'is_custom' => 0,
-                'components' => $spellData['components'],
-                'material' => $spellData['material'] ?? null,
-                'concentration' => $spellData['concentration'] === 'yes' ? 1 : 0,
-                'ritual' => $spellData['ritual'] === 'yes' ? 1 : 0,
-                'description_id' => $desc->id,
-            ]);
+                    'name' => strtolower($spellData['name']),
+                    'display_name' => $spellData['name'],
+                    'level' => $spellData['level'] === 'Cantrip' ? 0 : substr($spellData['level'], 0, 1),
+                    'range' => $spellData['range'],
+                    'school' => strtolower($spellData['school']),
+                    'has_saving_throw' => 0,
+                    'saving_throw_attribute' => null,
+                    'is_spell_attack' => 0,
+                    'do_damage' => 0,
+                    'roll' => null,
+                    'casting_time' => $spellData['casting_time'],
+                    'is_custom' => 0,
+                    'components' => $spellData['components'],
+                    'material' => $spellData['material'] ?? null,
+                    'concentration' => $spellData['concentration'] === 'yes' ? 1 : 0,
+                    'ritual' => $spellData['ritual'] === 'yes' ? 1 : 0,
+                    'description_id' => $desc->id,
+                ]);
+                if ($key%100 === 0 && $key != 0) {
+                    echo($key.' spells of '.$amountOfSpells.' have been distributed.' . PHP_EOL);
+                }
             } catch (\Throwable $th) {
                 dd($spellData, $th);
             }

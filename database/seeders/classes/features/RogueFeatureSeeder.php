@@ -5,19 +5,9 @@ namespace Database\Seeders\Classes\Features;
 use Illuminate\Database\Seeder;
 
 use App\Models\DndClass;
-use App\Models\Description;
 use App\Models\DataHandler;
-use App\Models\EvolvingNumber;
-use App\Models\Feature;
-use App\Models\FeatureChoice;
-use App\Models\FeatureList;
-use App\Models\SlotList;
-use App\Models\SlotListPack;
-use App\Models\Spell;
-use App\Models\Spellcasting;
-use App\Models\SpellList;
 
-class PaladinFeatureSeeder extends Seeder
+class RogueFeatureSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,10 +19,10 @@ class PaladinFeatureSeeder extends Seeder
         $dh = new DataHandler;
         $datas = $dh->decodeJson('classes');
 
-        $class = DndClass::firstWhere('name', '=', 'paladin');
+        $class = DndClass::firstWhere('name', '=', 'rogue');
         $className = $class->name;
 
-        $featureName = 'Divine Sense';
+        $featureName = "Expertise";
         $dh->createFeature($datas, $class, [
             'level' => 1,
             'name' => strtolower($featureName),
@@ -41,36 +31,25 @@ class PaladinFeatureSeeder extends Seeder
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Lay on Hands';
+        $featureName = "Sneak Attack";
         $dh->createFeature($datas, $class, [
             'level' => 1,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
-            'is_action' => 1,
-            'activation_time' => '1 action',
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Fighting Style';
+        $featureName = "Thieves’ Cant";
         $dh->createFeature($datas, $class, [
-            'level' => 2,
-            'name' => 'fighting style paladin',
+            'level' => 1,
+            'name' => strtolower($featureName),
             'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Spellcasting';
-        $dh->createFeature($datas, $class, [
-            'level' => 2,
-            'name' => 'spellcasting paladin',
-            'display_name' => $featureName,
-            'displayed_in_ui' => 1,
-            'is_custom' => 0,
-        ]);
-
-        $featureName = 'Divine Smite';
+        $featureName = 'Cunning Action';
         $dh->createFeature($datas, $class, [
             'level' => 2,
             'name' => strtolower($featureName),
@@ -79,50 +58,65 @@ class PaladinFeatureSeeder extends Seeder
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Divine Health';
+        $featureName = 'Uncanny Dodge';
         $dh->createFeature($datas, $class, [
-            'level' => 3,
+            'level' => 5,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Aura of Protection';
+        $featureName = 'Evasion';
         $dh->createFeature($datas, $class, [
-            'level' => 6,
+            'level' => 7,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Aura of Courage';
+        $featureName = 'Reliable Talent';
         $dh->createFeature($datas, $class, [
-            'level' => 6,
+            'level' => 11,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);
 
-        $featureName = 'Improved Divine Smite';
-        $dh->createFeature($datas, $class, [
-            'level' => 10,
-            'name' => strtolower($featureName),
-            'display_name' => $featureName,
-            'displayed_in_ui' => 1,
-            'is_custom' => 0,
-        ]);
-
-        $featureName = 'Cleansing Touch';
+        $featureName = "Blindsense";
         $dh->createFeature($datas, $class, [
             'level' => 14,
             'name' => strtolower($featureName),
             'display_name' => $featureName,
-            'has_choice' => 1,
-            'has_generated_choices' => 1,
-            'selected_choice_amount' => 2,
+            'displayed_in_ui' => 1,
+            'is_custom' => 0,
+        ]);
+
+        $featureName = 'Slippery Mind';
+        $dh->createFeature($datas, $class, [
+            'level' => 15,
+            'name' => strtolower($featureName),
+            'display_name' => $featureName,
+            'displayed_in_ui' => 1,
+            'is_custom' => 0,
+        ]);
+
+        $featureName = 'Elusive';
+        $dh->createFeature($datas, $class, [
+            'level' => 18,
+            'name' => strtolower($featureName),
+            'display_name' => $featureName,
+            'displayed_in_ui' => 1,
+            'is_custom' => 0,
+        ]);
+
+        $featureName = 'Stroke of Luck';
+        $dh->createFeature($datas, $class, [
+            'level' => 20,
+            'name' => strtolower($featureName),
+            'display_name' => $featureName,
             'displayed_in_ui' => 1,
             'is_custom' => 0,
         ]);

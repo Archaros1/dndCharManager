@@ -25,19 +25,19 @@ class ClassFeatureSeeder extends Seeder
     public function run()
     {
         $this->call([
-            // classes\features\ArtificerFeatureSeeder::class,
+            classes\features\ArtificerFeatureSeeder::class,
             classes\features\BarbarianFeatureSeeder::class,
             classes\features\BardFeatureSeeder::class,
             classes\features\ClericFeatureSeeder::class,
-            // classes\features\DruidFeatureSeeder::class,
-            // classes\features\FighterFeatureSeeder::class,
-            // classes\features\MonkFeatureSeeder::class,
-            // classes\features\PaladinFeatureSeeder::class,
-            // classes\features\RangerFeatureSeeder::class,
-            // classes\features\RogueFeatureSeeder::class,
-            // classes\features\SorcererFeatureSeeder::class,
-            // classes\features\WarlockFeatureSeeder::class,
-            // classes\features\WizardFeatureSeeder::class,
+            classes\features\DruidFeatureSeeder::class,
+            classes\features\FighterFeatureSeeder::class,
+            classes\features\MonkFeatureSeeder::class,
+            classes\features\PaladinFeatureSeeder::class,
+            classes\features\RangerFeatureSeeder::class,
+            classes\features\RogueFeatureSeeder::class,
+            classes\features\SorcererFeatureSeeder::class,
+            classes\features\WarlockFeatureSeeder::class,
+            classes\features\WizardFeatureSeeder::class,
         ]);
     }
 }
