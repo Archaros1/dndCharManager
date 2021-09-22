@@ -83,6 +83,11 @@ class Character extends Model
         return $this->hasManyThrough(HitDice::class, ClassInvestment::class);
     }
 
+    public function inventory()
+    {
+        return $this->hasOne(Inventory::class);
+    }
+
     public function numberhitDicesWithNFaces(int $faceNumber)
     {
         $hitdices = $this->hitDices;

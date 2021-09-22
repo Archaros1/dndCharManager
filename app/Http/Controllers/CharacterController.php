@@ -283,6 +283,7 @@ class CharacterController extends Controller
             case 'missing cantrip':
                 $investment = $nextStep['investment'];
                 $spells = $investment->class->spellcasting->spellsLevelN(0);
+                $spellTab = [];
 
                 foreach ($spells as $key => $spell) {
                     $spellTab[$spell->id] = ucwords($spell->name);
