@@ -9,12 +9,14 @@ class SpellController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
-        //
+        $spells = Spell::all();
+
+        return view('spells/list', [
+            'spells' => $spells,
+        ]);
     }
 
     /**
@@ -81,5 +83,11 @@ class SpellController extends Controller
     public function destroy(Spell $spell)
     {
         //
+    }
+
+    public function description(int $idSpell)
+    {
+        $spell = Spell::find($idSpell);
+        return $spell->description->text;
     }
 }

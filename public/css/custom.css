@@ -1,0 +1,133 @@
+#rollOneStat{
+    width: 25px;
+    height: 25px;
+    background: url('../icons/dices.svg')
+}
+
+.pt-nav {
+    padding-top: 55px !important;
+}
+
+.navbar {
+    z-index: 10000;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.size-text-3 {
+    font-size: 1.575rem;
+}
+
+.size-text-4 {
+    font-size: 1.3rem;
+}
+
+.size-text-5 {
+    font-size: 1.2rem;
+}
+
+.size-text-5-5 {
+    font-size: 0.8rem;
+}
+
+.size-text-6 {
+    font-size: 0.65rem;
+}
+
+.size-icon {
+    /* width: 30px; */
+    height: 1.5rem;
+}
+
+.size-50 {
+    transform: scale(50%);
+}
+
+.size-75 {
+    transform: scale(75%);
+}
+
+.size-150 {
+    transform: scale(150%);
+}
+
+.size-50.toTop {
+    transform: translateY(-25%) scale(50%);
+}
+
+.size-75.toTop {
+    transform: translateY(-17%) scale(75%);
+}
+
+.size-150.toTop {
+    transform: scale(150%) translateY(20%);
+}
+
+.size-150.toCenter {
+    transform: scale(150%) translateY(50%);
+}
+
+.statName {
+    text-align: center !important;
+    font-size: 0.65rem;
+}
+
+.statModifier {
+    text-align: center !important;
+    font-size: 1.1rem;
+}
+
+.statFlat {
+    text-align: center !important;
+    font-size: 0.9rem;
+}
+
+.border.border-str {
+    border: 1px solid orangered !important;
+
+}
+
+.border.border-dex {
+    border: 1px solid rgb(0, 255, 0) !important;
+
+}
+
+.border.border-con {
+    border: 1px solid red !important;
+
+}
+
+.border.border-int {
+    border: 1px solid lightskyblue !important;
+
+}
+
+.border.border-wis {
+    border: 1px solid purple !important;
+
+}
+
+.border.border-cha {
+    border: 1px solid green !important;
+
+}
+
+.card-text.card-text-height-limit {
+    max-height: 150px;
+    overflow: scroll;
+}
+
+.display-flex {
+    display: flex !important;
+}
+
+.nice-border {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.max-height {
+    max-height: 200px;
+}

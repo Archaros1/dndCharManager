@@ -16,14 +16,28 @@ class CreateSpellsTable extends Migration
         Schema::create('spells', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('display_name');
             $table->integer('level');
+            $table->string('range');
+            $table->string('components');
+            $table->text('material')->nullable();
+            ;
+            $table->boolean('concentration');
             $table->boolean('has_saving_throw');
+            $table->string('saving_throw_attribute')->nullable();
+            ;
             $table->boolean('is_spell_attack');
+            $table->string('attack_type')->nullable();
             $table->boolean('do_damage');
             $table->string('roll')->nullable();
             $table->string('casting_time');
             $table->string('school');
+            $table->boolean('ritual');
             $table->boolean('is_custom');
+            $table->boolean('enpowerable');
+
+            $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+
             $table->timestamps();
         });
     }
