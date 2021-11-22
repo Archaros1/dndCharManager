@@ -21,7 +21,7 @@ class CreateClassInvestmentsTable extends Migration
             $table->integer('cantrips_known_count');
             $table->integer('stolen_spells_count');
 
-            $table->foreignId('character_id')->constrained();
+            $table->foreignId('character_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('dnd_classes');
             $table->unsignedBigInteger('subclass_id')->nullable();

@@ -17,9 +17,9 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('item_data_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+
             $table->foreignId('inventory_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('description_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
 
         });
     }

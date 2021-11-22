@@ -19,7 +19,7 @@ class CreateInventoriesTable extends Migration
 
             $table->text('stuff');
 
-            $table->foreignId('feature_list_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('character_id')->nullable()->constrained()/* ->onUpdate('cascade')->onDelete('set null') */;
 
         });
     }

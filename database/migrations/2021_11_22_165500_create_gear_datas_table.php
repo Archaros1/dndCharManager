@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWeaponsTable extends Migration
+class CreateGearDatasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateWeaponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('weapons', function (Blueprint $table) {
+        Schema::create('gear_datas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
-            $table->unsignedBigInteger('equipment_data_id')->nullable()->constrained();
-            $table->foreign('equipment_data_id')->references('id')->on('equipments');
 
         });
     }
@@ -30,6 +27,7 @@ class CreateWeaponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weapons');
+        Schema::dropIfExists('gear_datas');
+
     }
 }

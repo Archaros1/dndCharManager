@@ -34,8 +34,6 @@ class CreateCharactersTable extends Migration
             $table->unsignedBigInteger('slot_list_short_rest_id')->nullable()->constrained();
             $table->foreign('slot_list_short_rest_id')->references('id')->on('slot_lists');
 
-            $table->foreignId('inventory_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-
             $table->unsignedBigInteger('creator_id');
             $table->foreign('creator_id')->references('id')->on('users');
 

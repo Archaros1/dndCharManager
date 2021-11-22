@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Equipment;
+use Illuminate\Database\Eloquent\Model;
 
-class Weapon extends Equipment
+class GearData extends Model
 {
     use HasFactory;
 }
